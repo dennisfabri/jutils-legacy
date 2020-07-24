@@ -18,8 +18,8 @@ import org.jdesktop.swingx.util.ComboBoxUtil;
 
 /**
  * @author Dennis Fabri
- * @date 16.01.2005
- *       Validation based on: https://github.com/aterai/java-swing-tips/blob/master/ComboBoxEditorVerifier/src/java/example/MainPanel.java
+ * @date 16.01.2005 Validation based on:
+ *       https://github.com/aterai/java-swing-tips/blob/master/ComboBoxEditorVerifier/src/java/example/MainPanel.java
  */
 public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
 
@@ -43,17 +43,17 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long  serialVersionUID = 3257005466784445492L;
+    private static final long serialVersionUID = 3257005466784445492L;
 
-    private static final Color YELLOW           = new Color(255, 255, 200);
-    private static final Color RED              = new Color(255, 200, 200);
+    private static final Color YELLOW = new Color(255, 255, 200);
+    private static final Color RED = new Color(255, 200, 200);
 
-    private Color              enabled          = null;
-    private Color              disabled         = null;
+    private Color enabled = null;
+    private Color disabled = null;
 
-    private boolean            required         = false;
+    private boolean required = false;
 
-    private boolean            isWindowsLaF     = false;
+    private boolean isWindowsLaF = false;
 
     public JCompletingComboBox() {
         this(false);
@@ -90,7 +90,8 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
     }
 
     private void checkWindowsLaF() {
-        isWindowsLaF = SystemUtils.IS_OS_WINDOWS && UIManager.getLookAndFeel().getClass().getName().equals(UIManager.getSystemLookAndFeelClassName());
+        isWindowsLaF = SystemUtils.IS_OS_WINDOWS
+                && UIManager.getLookAndFeel().getClass().getName().equals(UIManager.getSystemLookAndFeelClassName());
     }
 
     private void initialize() {
@@ -103,11 +104,14 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
 
                 @Override
                 public Component getEditorComponent() {
-                    editorComponent = Optional.ofNullable(editorComponent)
-                            .orElseGet(() -> new JLayer<>((JTextComponent) super.getEditorComponent(), new ValidationLayerUI<>()));
-                    editorComponent.setOpaque(false);
-                    editorComponent.getView().setOpaque(false);
-                    editorComponent.getView().setBorder(new EmptyBorder(0, 4, 0, 4));
+                    editorComponent = Optional.ofNullable(editorComponent).orElseGet(() -> {
+                        JLayer<JTextComponent> layer = new JLayer<>((JTextComponent) super.getEditorComponent(),
+                                new ValidationLayerUI<>());
+                        layer.setOpaque(false);
+                        layer.getView().setOpaque(false);
+                        layer.getView().setBorder(new EmptyBorder(0, 4, 0, 4));
+                        return layer;
+                    });
                     return editorComponent;
                 }
             });
@@ -164,9 +168,11 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
         if (next != null) {
             if (getEditor() != null) {
                 for (Component c : getComponents()) {
-                    c.setBackground(next);
-                    if (c instanceof JComponent) {
-                        ((JComponent) c).setOpaque(true);
+                    if (!next.equals(c.getBackground())) {
+                        c.setBackground(next);
+                        if (c instanceof JComponent) {
+                            ((JComponent) c).setOpaque(true);
+                        }
                     }
                 }
                 Component c = ComboBoxUtil.getEditorComponent(this);
