@@ -2,15 +2,21 @@ package de.df.jutils.gui.plaf;
 
 import static de.df.jutils.gui.util.GraphicsUtils.paintGradient;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.ComponentUI;
 
-import com.l2fprod.common.swing.JTaskPaneGroup;
-import com.l2fprod.common.swing.plaf.basic.BasicTaskPaneGroupUI;
+import com.l2fprod.common.tasks.JTaskPaneGroup;
+import com.l2fprod.common.tasks.plaf.basic.BasicTaskPaneGroupUI;
 
 import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.border.ShadowBorder;
@@ -31,7 +37,8 @@ public class GradientTaskPaneGroupUI extends BasicTaskPaneGroupUI {
         super.installDefaults();
         LookAndFeel.installColorsAndFont(group, "control", "TaskPaneGroup.foreground", "TitledBorder.font");
 
-        LookAndFeel.installColorsAndFont((JComponent) group.getContentPane(), "control", "TaskPaneGroup.foreground", "TitledBorder.font");
+        LookAndFeel.installColorsAndFont((JComponent) group.getContentPane(), "control", "TaskPaneGroup.foreground",
+                "TitledBorder.font");
         group.setOpaque(false);
         group.setBackground(UIManager.getColor("control"));
     }
@@ -47,7 +54,8 @@ public class GradientTaskPaneGroupUI extends BasicTaskPaneGroupUI {
     }
 
     /**
-     * The border of the taskpane group paints the "text", the "icon", the "expanded" status and the "special" type.
+     * The border of the taskpane group paints the "text", the "icon", the
+     * "expanded" status and the "special" type.
      */
     class JAuswertungPaneBorder extends PaneBorder {
 
@@ -104,8 +112,8 @@ public class GradientTaskPaneGroupUI extends BasicTaskPaneGroupUI {
                 }
                 i = b.getBorderInsets(jt);
             }
-            mix = paintGradient((Graphics2D) g.create(), i.left, i.top, jt.getWidth() - i.left - i.right, getTitleHeight() - i.top - i.bottom,
-                    titleBackgroundGradientStart, titleBackgroundGradientEnd);
+            mix = paintGradient((Graphics2D) g.create(), i.left, i.top, jt.getWidth() - i.left - i.right,
+                    getTitleHeight() - i.top - i.bottom, titleBackgroundGradientStart, titleBackgroundGradientEnd);
             titleForeground = ColorUtils.contrastColor(mix, defaultTitleForeground);
         }
 

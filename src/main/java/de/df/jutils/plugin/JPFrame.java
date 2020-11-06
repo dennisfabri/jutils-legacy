@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import com.l2fprod.common.swing.StatusBar;
+import com.l2fprod.common.shared.swing.StatusBar;
 
 import de.df.jutils.gui.JGlassFrame;
 import de.df.jutils.gui.border.ExtendedLineBorder;

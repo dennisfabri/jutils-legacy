@@ -9,9 +9,9 @@ import java.awt.Window;
 import java.io.File;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 
-import com.l2fprod.common.swing.JDirectoryChooser;
+import com.l2fprod.common.directorychooser.JDirectoryChooser;
 
 import de.df.jutils.gui.filefilter.SimpleFileFilter;
 
