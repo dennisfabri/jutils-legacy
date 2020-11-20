@@ -14,10 +14,12 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.lisasp.swing.filechooser.FileChooserUtils;
+import org.lisasp.swing.filechooser.filefilter.FileFilterPDF;
+
 import de.df.jutils.gui.JInfiniteProgressFrame;
 import de.df.jutils.gui.JIntSpinner;
 import de.df.jutils.gui.border.ShadowBorder;
-import de.df.jutils.gui.filefilter.FileFilterPDF;
 import de.df.jutils.gui.util.*;
 import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.io.PdfOutput;

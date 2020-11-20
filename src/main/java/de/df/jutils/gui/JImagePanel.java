@@ -13,12 +13,13 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.lisasp.swing.filechooser.FileChooserUtils;
+import org.lisasp.swing.filechooser.filefilter.SimpleFileFilter;
+
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.df.jutils.gui.filefilter.SimpleFileFilter;
 import de.df.jutils.gui.util.DialogUtils;
-import de.df.jutils.gui.util.FileChooserUtils;
 import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.io.BytesOutputStream;
 import de.df.jutils.io.FileUtils;
