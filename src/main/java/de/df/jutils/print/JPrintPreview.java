@@ -590,7 +590,7 @@ public class JPrintPreview extends JInfiniteProgressFrame {
 
     void doSave() {
         pauseRendering(true);
-        String filename = FileChooserUtils.chooseFile(JUtilsI18n.get("SaveAs"), JUtilsI18n.get("de.dm.print.Save"), new FileFilterPDF(), JPrintPreview.this);
+        String filename = FileChooserUtils.saveFile(JPrintPreview.this, JUtilsI18n.get("SaveAs"), new FileFilterPDF());
         if (filename != null) {
             boolean result = true;
             if (new File(filename).exists()) {

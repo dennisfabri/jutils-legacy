@@ -29,15 +29,15 @@ public class JImagePanel extends JPanel {
 
     private static final long serialVersionUID = -7575410845373166492L;
 
-    private BufferedImage     image;
-    private byte[]            imagedata;
+    private BufferedImage image;
+    private byte[] imagedata;
 
-    private JIcon             icon;
-    private JButton           noimage;
+    private JIcon icon;
+    private JButton noimage;
 
-    public static long        MAX_DEFAULT      = 1024 * 1024;
+    public static long MAX_DEFAULT = 1024 * 1024;
 
-    private final long        maxsize;
+    private final long maxsize;
 
     public JImagePanel() {
         this(null, 200, 200, MAX_DEFAULT);
@@ -81,7 +81,8 @@ public class JImagePanel extends JPanel {
         });
         noimage.setEnabled(false);
 
-        FormLayout layout = new FormLayout("4dlu,0dlu:grow,fill:default,4dlu,fill:default,4dlu", "4dlu,fill:0dlu:grow,4dlu,fill:default,4dlu");
+        FormLayout layout = new FormLayout("4dlu,0dlu:grow,fill:default,4dlu,fill:default,4dlu",
+                "4dlu,fill:0dlu:grow,4dlu,fill:default,4dlu");
         setLayout(layout);
 
         add(icon, CC.xyw(2, 2, 4, "fill,fill"));
@@ -153,19 +154,19 @@ public class JImagePanel extends JPanel {
     }
 
     void readImage() {
-        String name = FileChooserUtils.chooseFile(JUtilsI18n.get("de.dm.gui.imagepanel.OpenImage"), JUtilsI18n.get("Ok"),
-                new SimpleFileFilter[] { new SimpleFileFilter(JUtilsI18n.get("de.dm.gui.imagepanel.Images"), ImageIO.getReaderFileSuffixes()) },
-                SwingUtilities.getWindowAncestor(JImagePanel.this));
+        String name = FileChooserUtils.openFile(SwingUtilities.getWindowAncestor(JImagePanel.this),
+                JUtilsI18n.get("de.dm.gui.imagepanel.OpenImage"),
+                new SimpleFileFilter(JUtilsI18n.get("de.dm.gui.imagepanel.Images"), ImageIO.getReaderFileSuffixes()));
         if (name != null) {
             try {
                 File f = new File(name);
                 if (maxsize > 0) {
                     if (f.length() > maxsize) {
                         DialogUtils.warn(SwingUtilities.getWindowAncestor(JImagePanel.this),
-                                JUtilsI18n.get("de.dm.gui.imagepanel.FileTooBigText", name, StringTools.sizeToString(f.length()),
-                                        StringTools.sizeToString(maxsize)),
-                                JUtilsI18n.get("de.dm.gui.imagepanel.FileTooBigText.Note", name, StringTools.sizeToString(f.length()),
-                                        StringTools.sizeToString(maxsize)));
+                                JUtilsI18n.get("de.dm.gui.imagepanel.FileTooBigText", name,
+                                        StringTools.sizeToString(f.length()), StringTools.sizeToString(maxsize)),
+                                JUtilsI18n.get("de.dm.gui.imagepanel.FileTooBigText.Note", name,
+                                        StringTools.sizeToString(f.length()), StringTools.sizeToString(maxsize)));
                     }
                 }
 
@@ -174,11 +175,13 @@ public class JImagePanel extends JPanel {
                 if (bi != null) {
                     setImage(bi, false);
                 } else {
-                    DialogUtils.warn(SwingUtilities.getWindowAncestor(JImagePanel.this), JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText", name),
+                    DialogUtils.warn(SwingUtilities.getWindowAncestor(JImagePanel.this),
+                            JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText", name),
                             JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText", name));
                 }
             } catch (IOException io) {
-                DialogUtils.warn(SwingUtilities.getWindowAncestor(JImagePanel.this), JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText", name),
+                DialogUtils.warn(SwingUtilities.getWindowAncestor(JImagePanel.this),
+                        JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText", name),
                         JUtilsI18n.get("de.dm.gui.imagepanel.ErrorText.Note", name));
                 io.printStackTrace();
             }
