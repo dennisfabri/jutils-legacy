@@ -23,51 +23,23 @@
  */
 package com.xduke.xswing;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.Rectangle;
+import java.awt.Window;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
-@SuppressWarnings("unchecked")
 abstract class DataTipListener extends MouseInputAdapter implements ComponentListener {
-    private DataTipPopup          dataTipPopup;
-
-    // When running under JDK 1.5 (or higher) DataTipListener will check if the
-    // tip must be updated when the parent
-    // component changes size or moves.
-    // With JDK 1.4 or earlier this does not work, because no mouse event gets
-    // posted (even though the relative mouse
-    // position changes) - yet to be able to compile with 1.4 the necessary JDK
-    // 1.5 methods are called by reflection.
-    // On JDK 1.4 the popup is just always hidden qwhen the component changes
-    // (and reshown when the user first moves
-    // the mouse again).
-    @SuppressWarnings("rawtypes")
-    private static final Class[]  NO_PARAMETERS = new Class[0];
-    private static final Object[] NO_ARGUMENTS  = new Object[0];
-    @SuppressWarnings("rawtypes")
-    private static Class          mouseInfoClass;
-    private static Method         getPointerInfoMethod;
-    @SuppressWarnings("rawtypes")
-    private static Class          pointerInfoClass;
-    private static Method         getLocationMethod;
-
-    static {
-        try {
-            mouseInfoClass = Class.forName("java.awt.MouseInfo");
-            getPointerInfoMethod = mouseInfoClass.getMethod("getPointerInfo", NO_PARAMETERS);
-            pointerInfoClass = Class.forName("java.awt.PointerInfo");
-            getLocationMethod = pointerInfoClass.getMethod("getLocation", NO_PARAMETERS);
-        } catch (NoSuchMethodException e) {
-            // fine probably running on pre-1.5-JDK
-        } catch (ClassNotFoundException e) {
-            // fine probably running on pre-1.5-JDK
-        }
-    }
+    private DataTipPopup dataTipPopup;
 
     DataTipListener() {
         // Nothing to do
@@ -80,12 +52,12 @@ abstract class DataTipListener extends MouseInputAdapter implements ComponentLis
     abstract DataTipCell getCell(JComponent component, Point point);
 
     /**
-     * If the user presses a mouse button on a popup, Swing's behaviour depends
-     * on the popup type: - lightweight popup: This case is handled here.
-     * Because the TipComponent.contains(int x, int y) is overriden to always
-     * return false Swing will dispath the event directly to the parent
-     * component. - heavyweight popup: Swing will dispatch the event to the
-     * popup's window, which is handled in DataTipPopup.
+     * If the user presses a mouse button on a popup, Swing's behaviour depends on
+     * the popup type: - lightweight popup: This case is handled here. Because the
+     * TipComponent.contains(int x, int y) is overriden to always return false Swing
+     * will dispath the event directly to the parent component. - heavyweight popup:
+     * Swing will dispatch the event to the popup's window, which is handled in
+     * DataTipPopup.
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -235,19 +207,6 @@ abstract class DataTipListener extends MouseInputAdapter implements ComponentLis
     }
 
     private static Point getCurrentMousePosition() {
-        if (mouseInfoClass == null) {
-            return null;
-        }
-        try {
-            Object pointerInfo = getPointerInfoMethod.invoke(null, NO_ARGUMENTS);
-            Point mousePosition = (Point) getLocationMethod.invoke(pointerInfo, NO_ARGUMENTS);
-            return mousePosition;
-        } catch (IllegalAccessException e) {
-            // strange, but nothing I can do here
-        } catch (InvocationTargetException e) {
-            // strange, but nothing I can do here
-        }
-
-        return null;
+        return MouseInfo.getPointerInfo().getLocation();
     }
 }

@@ -129,7 +129,7 @@ public class DataTipManager {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
         long when = mouseEvent.getWhen();
-        int modifiers = mouseEvent.getModifiers();
+        int modifiers = mouseEvent.getModifiersEx();
         int clickCount = mouseEvent.getClickCount();
         boolean isPopupTrigger = mouseEvent.isPopupTrigger();
         if (id == MouseEvent.MOUSE_EXITED) {
@@ -140,8 +140,7 @@ public class DataTipManager {
                 // If the datatip has been hidden as a result, then process the
                 // exit event, too, so that
                 // e.g. tooltips will hide.
-                boolean stillVisible = parentComponent != null;
-                return stillVisible;
+                return parentComponent != null;
             }
         }
         return false;
@@ -159,7 +158,7 @@ public class DataTipManager {
                 return;
             }
             long when = mouseEvent.getWhen();
-            int modifiers = mouseEvent.getModifiers();
+            int modifiers = mouseEvent.getModifiersEx();
             int clickCount = mouseEvent.getClickCount();
             boolean isPopupTrigger = mouseEvent.isPopupTrigger();
             MouseEvent newEvent;
@@ -175,7 +174,7 @@ public class DataTipManager {
             }
             Component parentComponentBackup = parentComponent;
             parentComponent.dispatchEvent(newEvent);
-            if (parentComponent == null && id != MouseEvent.MOUSE_EXITED) {
+            if (id != MouseEvent.MOUSE_EXITED) {
                 MouseEvent exitEvent = new MouseEvent(parentComponentBackup, MouseEvent.MOUSE_EXITED, when, modifiers, point.x, point.y, clickCount,
                         isPopupTrigger);
                 parentComponentBackup.dispatchEvent(exitEvent);

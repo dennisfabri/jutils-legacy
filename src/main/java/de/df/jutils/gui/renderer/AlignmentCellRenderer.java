@@ -3,13 +3,21 @@
  */
 package de.df.jutils.gui.renderer;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Insets;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 
-import javax.swing.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -23,7 +31,7 @@ import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.border.ExtendedLineBorder;
 import de.df.jutils.io.csv.FixedDecimal;
 
-public class AlignmentCellRenderer implements TableCellRenderer {
+public class AlignmentCellRenderer<T> implements TableCellRenderer {
 
     public static enum BorderPositions {
         NONE, LEFT, RIGHT, BOTH
@@ -32,24 +40,25 @@ public class AlignmentCellRenderer implements TableCellRenderer {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    static final long                serialVersionUID = 3257848792169330232L;
+    static final long serialVersionUID = 3257848792169330232L;
 
-    private final int                defaultAlign;
+    private final int defaultAlign;
 
-    private final int[]              alignments;
+    private final int[] alignments;
 
-    private final JList              list             = new JList();
-    private final JPanel             listPanel        = new JPanel(new FormLayout("0dlu,fill:default:grow,0dlu", "0dlu,fill:default:grow,0dlu"));
-    private final JLabel             label            = new JLabel();
+    private final JList<Object> list = new JList<>();
+    private final JPanel listPanel = new JPanel(
+            new FormLayout("0dlu,fill:default:grow,0dlu", "0dlu,fill:default:grow,0dlu"));
+    private final JLabel label = new JLabel();
 
-    private static TableCellRenderer fallback         = new DefaultTableCellRenderer();
+    private static TableCellRenderer fallback = new DefaultTableCellRenderer();
 
-    private DateFormatter            df               = new DateFormatter();
-    private NumberFormat             nf               = NumberFormat.getInstance();
+    private DateFormatter df = new DateFormatter();
+    private NumberFormat nf = NumberFormat.getInstance();
 
-    private double[]                 colors           = new double[0];
-    private boolean[]                visible          = new boolean[0];
-    private BorderPositions[]        borders          = new BorderPositions[0];
+    private double[] colors = new double[0];
+    private boolean[] visible = new boolean[0];
+    private BorderPositions[] borders = new BorderPositions[0];
 
     public AlignmentCellRenderer(int[] aligns, int align) {
         if (aligns == null) {
@@ -63,10 +72,11 @@ public class AlignmentCellRenderer implements TableCellRenderer {
         list.setCellRenderer(new DefaultListCellRenderer() {
             private static final long serialVersionUID = -1855198070805025589L;
 
-            private final JLabel      listlabel        = new JLabel();
+            private final JLabel listlabel = new JLabel();
 
             @Override
-            public Component getListCellRendererComponent(JList parent, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            public Component getListCellRendererComponent(JList<?> parent, Object value, int index, boolean isSelected,
+                    boolean cellHasFocus) {
                 if (value instanceof Component) {
                     return (Component) value;
                 }
@@ -134,7 +144,8 @@ public class AlignmentCellRenderer implements TableCellRenderer {
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
         int alignment = defaultAlign;
         if (column < alignments.length) {
             alignment = alignments[column];
@@ -173,7 +184,7 @@ public class AlignmentCellRenderer implements TableCellRenderer {
                 value = s[0];
             } else {
                 for (int x = 0; x < s.length; x++) {
-                    s[x] = s[x].replace(' ', '\u00A0');
+                     s[x] = s[x].replace(' ', '\u00A0');
                 }
             }
         }
@@ -192,8 +203,6 @@ public class AlignmentCellRenderer implements TableCellRenderer {
 
         updateColors(label, isSelected);
 
-        // Color fg = null;
-        // Color bg = null;
         if (column < colors.length) {
             if ((column < visible.length) && (visible[column])) {
                 if (colors[column] < 1.0) {
@@ -202,7 +211,8 @@ public class AlignmentCellRenderer implements TableCellRenderer {
                     Color c1 = label.getForeground();
                     Color c2 = label.getBackground();
 
-                    Color fg = new Color((int) (v * c1.getRed() + (1.0 - v) * c2.getRed()), (int) (v * c1.getGreen() + (1.0 - v) * c2.getGreen()),
+                    Color fg = new Color((int) (v * c1.getRed() + (1.0 - v) * c2.getRed()),
+                            (int) (v * c1.getGreen() + (1.0 - v) * c2.getGreen()),
                             (int) (v * c1.getBlue() + (1.0 - v) * c2.getBlue()));
                     label.setForeground(fg);
                 }

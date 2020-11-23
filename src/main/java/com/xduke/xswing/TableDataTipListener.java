@@ -41,7 +41,6 @@ class TableDataTipListener extends DataTipListener {
         if (rowIndex < 0 || columnIndex < 0) {
             return DataTipCell.NONE;
         }
-        TableDataTipCell cellPosition = new TableDataTipCell(table, rowIndex, columnIndex);
-        return cellPosition;
+        return new TableDataTipCell(table, rowIndex, columnIndex);
     }
 }

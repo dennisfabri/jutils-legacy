@@ -11,7 +11,7 @@ import java.util.ListIterator;
 
 import javax.imageio.ImageIO;
 
-public class PageContainer {
+public class PageContainer implements AutoCloseable {
 
     private LinkedList<File> files = new LinkedList<File>();
 
@@ -20,7 +20,7 @@ public class PageContainer {
     }
 
     public synchronized void clear() {
-        if (files.size() > 0) {
+        if (!files.isEmpty()) {
             ListIterator<File> li = files.listIterator();
             while (li.hasNext()) {
                 File file = li.next();
@@ -38,12 +38,6 @@ public class PageContainer {
                 li.remove();
             }
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        clear();
-        super.finalize();
     }
 
     public synchronized int size() {
@@ -78,5 +72,10 @@ public class PageContainer {
             // Nothing to do
         }
         return null;
+    }
+
+    @Override
+    public void close() throws Exception {
+        clear();        
     }
 }

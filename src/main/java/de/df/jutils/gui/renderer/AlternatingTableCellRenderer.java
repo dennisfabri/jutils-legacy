@@ -12,8 +12,8 @@ import javax.swing.table.TableCellRenderer;
 
 public class AlternatingTableCellRenderer implements TableCellRenderer {
 
-    protected Color             odd;
-    protected Color             even;
+    protected Color odd;
+    protected Color even;
     protected TableCellRenderer tcr;
 
     public AlternatingTableCellRenderer(Color odd, Color even, TableCellRenderer tcr) {
@@ -27,7 +27,8 @@ public class AlternatingTableCellRenderer implements TableCellRenderer {
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
         if (value == null) {
             value = "\u00a0";
         } else {

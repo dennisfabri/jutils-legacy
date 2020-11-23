@@ -26,7 +26,7 @@ public class RandomUtils {
 
     private static final char[] validChars = "ABCDEFGHIJKLMNOPQRSTUVW23456789".toCharArray();
 
-    public static char getChar(Random rng) {
+    private static char getChar(Random rng) {
         return validChars[rng.nextInt(validChars.length)];
     }
 

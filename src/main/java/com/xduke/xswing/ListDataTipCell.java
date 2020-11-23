@@ -47,8 +47,7 @@ class ListDataTipCell implements DataTipCell {
 
     @Override
     public Rectangle getCellBounds() {
-        Rectangle cellRect = list.getCellBounds(rowIndex, rowIndex);
-        return cellRect;
+        return list.getCellBounds(rowIndex, rowIndex);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -58,8 +57,7 @@ class ListDataTipCell implements DataTipCell {
         boolean isSelected = list.isSelectedIndex(rowIndex);
         boolean isFocussed = list.hasFocus() && rowIndex == list.getLeadSelectionIndex();
         ListCellRenderer renderer = list.getCellRenderer();
-        Component component = renderer.getListCellRendererComponent(list, item, rowIndex, isSelected, isFocussed);
-        return component;
+        return renderer.getListCellRendererComponent(list, item, rowIndex, isSelected, isFocussed);
     }
 
     @Override
@@ -71,13 +69,7 @@ class ListDataTipCell implements DataTipCell {
             return false;
         }
 
-        ListDataTipCell listDataTipCell = (ListDataTipCell) o;
-
-        if (rowIndex != listDataTipCell.rowIndex) {
-            return false;
-        }
-
-        return true;
+        return rowIndex == ((ListDataTipCell) o).rowIndex;
     }
 
     @Override

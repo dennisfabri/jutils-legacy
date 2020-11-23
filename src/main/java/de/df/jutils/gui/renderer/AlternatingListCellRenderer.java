@@ -6,35 +6,40 @@ package de.df.jutils.gui.renderer;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-public class AlternatingListCellRenderer implements ListCellRenderer {
+public class AlternatingListCellRenderer<E> implements ListCellRenderer<E> {
 
-    protected Color            odd;
-    protected Color            even;
-    protected ListCellRenderer tcr;
+    protected Color odd;
+    protected Color even;
+    protected ListCellRenderer<E> tcr;
 
-    public AlternatingListCellRenderer(Color odd, Color even, ListCellRenderer tcr) {
+    public AlternatingListCellRenderer(Color odd, Color even, ListCellRenderer<E> tcr) {
         this.odd = odd;
         this.even = even;
         this.tcr = tcr;
     }
 
-    public ListCellRenderer getListCellRenderer() {
+    public ListCellRenderer<E> getListCellRenderer() {
         return tcr;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int row, boolean isSelected, boolean hasFocus) {
+    public Component getListCellRendererComponent(JList<? extends E> list, E value, int row, boolean isSelected,
+            boolean hasFocus) {
         if (value == null) {
-            value = "\u00a0";
+            value = (E) "\u00a0";
         } else {
             if ((value instanceof String) && (value.toString().length() == 0)) {
-                value = "\u00a0";
+                value = (E) "\u00a0";
             }
             if (value instanceof String) {
-                value = value.toString().replace(' ', '\u00A0');
+                value = (E) value.toString().replace(' ', '\u00A0');
             }
             if (value instanceof String[]) {
                 String[] s = (String[]) value;

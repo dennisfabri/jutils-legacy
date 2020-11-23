@@ -33,7 +33,7 @@ public final class OSUtils {
     }
 
     public static boolean isWindows10() {
-        return NAME.equals("windows nt (10.0)");
+        return SystemUtils.IS_OS_WINDOWS_10;
     }
 
     public static boolean isWindows8OrHigher() {

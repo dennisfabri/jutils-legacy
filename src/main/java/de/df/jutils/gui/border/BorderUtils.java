@@ -4,9 +4,11 @@
 package de.df.jutils.gui.border;
 
 import javax.swing.UIManager;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
-import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.Paddings;
 
 public final class BorderUtils {
 
@@ -16,7 +18,7 @@ public final class BorderUtils {
 
     public static Border createSpaceBorder(int space) {
         space = Math.max(1, (int) Math.round(0.8 * space));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(space);
         sb.append("dlu,");
         sb.append(space);
@@ -25,7 +27,7 @@ public final class BorderUtils {
         sb.append("dlu,");
         sb.append(space);
         sb.append("dlu");
-        return Borders.createEmptyBorder(sb.toString());
+        return Paddings.createPadding(sb.toString());
     }
 
     public static Border createSpaceBorder() {
@@ -53,7 +55,7 @@ public final class BorderUtils {
         if (shadow) {
             result = new CompoundBorder(new ShadowBorder(), result);
         } else {
-            result = new CompoundBorder(new LineBorder(UIManager.getColor("controlShadow"), 1), result);
+            result = new CompoundBorder(new LineBorder(UIManager.getColor("ToolBar.shadow"), 1), result);
         }
         if (innergap) {
             result = new CompoundBorder(result, createSpaceBorder());
