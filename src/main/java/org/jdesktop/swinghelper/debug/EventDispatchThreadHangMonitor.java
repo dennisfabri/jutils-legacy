@@ -28,34 +28,34 @@ import java.util.*;
  *         from Alexander Potochkin and Oleg Sukhodolsky.
  */
 public final class EventDispatchThreadHangMonitor extends EventQueue {
-    private static final EventDispatchThreadHangMonitor INSTANCE                          = new EventDispatchThreadHangMonitor();
+    private static final EventDispatchThreadHangMonitor INSTANCE = new EventDispatchThreadHangMonitor();
 
     // Time to wait between checks that the event dispatch thread isn't hung.
-    private static final long                           CHECK_INTERVAL_MS                 = 100;
+    private static final long CHECK_INTERVAL_MS = 100;
 
     // Maximum time we won't warn about. This used to be 500 ms, but 1.5 on
     // late-2004 hardware isn't really up to it; there are too many parts of
     // the JDK that can go away for that long (often code that has to be
     // called on the event dispatch thread, like font loading).
-    private static final long                           UNREASONABLE_DISPATCH_DURATION_MS = 1000;
+    private static final long UNREASONABLE_DISPATCH_DURATION_MS = 1000;
 
     // Help distinguish multiple hangs in the log, and match start and end too.
     // Only access this via getNewHangNumber.
-    private static int                                  hangCount                         = 0;
+    private static int hangCount = 0;
 
     // Prevents us complaining about hangs during start-up, which are probably
     // the JVM vendor's fault.
-    boolean                                             haveShownSomeComponent            = false;
+    boolean haveShownSomeComponent = false;
 
     // The currently outstanding event dispatches. The implementation of
     // modal dialogs is a common cause for multiple outstanding dispatches.
-    final LinkedList<DispatchInfo>                      dispatches                        = new LinkedList<DispatchInfo>();
+    final LinkedList<DispatchInfo> dispatches = new LinkedList<DispatchInfo>();
 
     private static class DispatchInfo {
         // The last-dumped hung stack trace for this dispatch.
         private StackTraceElement[] lastReportedStack;
         // If so; what was the identifying hang number?
-        private int                 hangNumber;
+        private int hangNumber;
 
         // The EDT for this dispatch (for the purpose of getting stack traces).
         // I don't know of any API for getting the event dispatch thread,
@@ -63,11 +63,11 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         // middle of dispatching an AWT event...
         // We can't cache this because the EDT can die and be replaced by a
         // new EDT if there's an uncaught exception.
-        final Thread                eventDispatchThread    = Thread.currentThread();
+        final Thread eventDispatchThread = Thread.currentThread();
 
         // The last time in milliseconds at which we saw a dispatch on the above
         // thread.
-        long                        lastDispatchTimeMillis = System.currentTimeMillis();
+        long lastDispatchTimeMillis = System.currentTimeMillis();
 
         public DispatchInfo() {
             // All initialization is done by the field initializers.
@@ -82,8 +82,10 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         // We can't use StackTraceElement.equals because that insists on
         // checking the filename and line number.
         // That would be version-specific.
-        private static boolean stackTraceElementIs(StackTraceElement e, String className, String methodName, boolean isNative) {
-            return e.getClassName().equals(className) && e.getMethodName().equals(methodName) && e.isNativeMethod() == isNative;
+        private static boolean stackTraceElementIs(StackTraceElement e, String className, String methodName,
+                boolean isNative) {
+            return e.getClassName().equals(className) && e.getMethodName().equals(methodName)
+                    && e.isNativeMethod() == isNative;
         }
 
         // Checks whether the given stack looks like it's waiting for another
@@ -115,7 +117,8 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
             hangNumber = getNewHangNumber();
             String stackTrace = stackTraceToString(currentStack);
             lastReportedStack = currentStack;
-            Log.warn("(hang #" + hangNumber + ") event dispatch thread stuck processing event for " + timeSoFar() + " ms:" + stackTrace);
+            Log.warn("(hang #" + hangNumber + ") event dispatch thread stuck processing event for " + timeSoFar()
+                    + " ms:" + stackTrace);
             checkForDeadlock();
         }
 
@@ -189,8 +192,8 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
     }
 
     /**
-     * Overrides EventQueue.dispatchEvent to call our pre and post hooks either
-     * side of the system's event dispatch code.
+     * Overrides EventQueue.dispatchEvent to call our pre and post hooks either side
+     * of the system's event dispatch code.
      */
     @Override
     protected void dispatchEvent(AWTEvent event) {
@@ -205,18 +208,26 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         }
     }
 
+    private boolean isDetailedLoggingEnabled = false;
+
+    public void setDetailedLogging(boolean enabled) {
+        isDetailedLoggingEnabled = enabled;
+    }
+
     private void debug(String which) {
-        for (int i = dispatches.size(); i >= 0; --i) {
-            System.out.print(' ');
+        if (isDetailedLoggingEnabled) {
+            for (int i = dispatches.size(); i >= 0; --i) {
+                System.out.print(' ');
+            }
+            System.out.println(which);
         }
-        System.out.println(which);
     }
 
     /**
      * Starts tracking a dispatch.
      */
     private synchronized void preDispatchEvent() {
-        debug("pre");
+        debug("preDispatchEvent");
         synchronized (dispatches) {
             dispatches.addLast(new DispatchInfo());
         }
@@ -243,7 +254,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
                 }
             }
         }
-        debug("post");
+        debug("postDispatchEvent");
     }
 
     static void checkForDeadlock() {
@@ -255,8 +266,9 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         Log.warn("deadlock detected involving the following threads:");
         ThreadInfo[] threadInfos = threadBean.getThreadInfo(threadIds, Integer.MAX_VALUE);
         for (ThreadInfo info : threadInfos) {
-            Log.warn("Thread #" + info.getThreadId() + " " + info.getThreadName() + " (" + info.getThreadState() + ") waiting on " + info.getLockName()
-                    + " held by " + info.getLockOwnerName() + stackTraceToString(info.getStackTrace()));
+            Log.warn("Thread #" + info.getThreadId() + " " + info.getThreadName() + " (" + info.getThreadState()
+                    + ") waiting on " + info.getLockName() + " held by " + info.getLockOwnerName()
+                    + stackTraceToString(info.getStackTrace()));
         }
     }
 

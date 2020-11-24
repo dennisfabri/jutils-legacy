@@ -2,7 +2,7 @@ package de.df.jutils.gui.util;
 
 import java.awt.Window;
 
-import de.df.uistate.UIStateManager;
+import org.lisasp.legacy.uistate.UIStateManager;
 
 public class UIStateUtils {
     private static class UIStateManageRunnable implements Runnable {
