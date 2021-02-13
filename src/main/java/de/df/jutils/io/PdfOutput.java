@@ -8,9 +8,8 @@ import java.awt.Insets;
 import java.awt.print.*;
 import java.io.*;
 
-import com.itextpdf.awt.*;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.*;
 
 import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.util.Feedback;
@@ -113,7 +112,7 @@ public class PdfOutput {
                         document.newPage();
                     }
 
-                    Graphics2D g2 = new PdfGraphics2D(cb, size.getWidth(), size.getHeight(), getFontMapper());
+                    Graphics2D g2 = new PdfGraphics2D(cb, size.getWidth(), size.getHeight(), getFontMapper(), false, false, 0);
 
                     // Print the table to the graphics
                     g2.clipRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
