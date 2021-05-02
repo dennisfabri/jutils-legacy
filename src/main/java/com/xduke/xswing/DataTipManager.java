@@ -49,27 +49,20 @@ import javax.swing.SwingUtilities;
 public class DataTipManager {
     private static DataTipManager instance;
 
-    private ListDataTipListener   listMouseListener  = new ListDataTipListener();
-    private TableDataTipListener  tableMouseListener = new TableDataTipListener();
-    private TreeDataTipListener   treeMouseListener  = new TreeDataTipListener();
-    Component                     parentComponent;
-    Window                        tipComponentWindow;
-    MouseEvent                    lastMouseEvent;
-    private static boolean        allowUntrustedUsage;
-
+    private ListDataTipListener listMouseListener = new ListDataTipListener();
+    private TableDataTipListener tableMouseListener = new TableDataTipListener();
+    private TreeDataTipListener treeMouseListener = new TreeDataTipListener();
+    private Component parentComponent;
+    private Window tipComponentWindow;
+    private MouseEvent lastMouseEvent;
     private DataTipManager() {
         try {
-            long eventMask = AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK;
+            long eventMask = AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK
+                    | AWTEvent.MOUSE_WHEEL_EVENT_MASK;
             Toolkit.getDefaultToolkit().addAWTEventListener(new MouseEventModifier(), eventMask);
         } catch (AccessControlException e) {
-            if (!allowUntrustedUsage) {
                 throw new RuntimeException("DataTipManager needs to run in a trusted application", e);
-            }
         }
-    }
-
-    static void enableUntrustedUsage(boolean enable) {
-        allowUntrustedUsage = enable;
     }
 
     /**
@@ -85,8 +78,7 @@ public class DataTipManager {
     /**
      * Enable data tips for a list component.
      * 
-     * @param list
-     *            the list which should be enhanced with data tips.
+     * @param list the list which should be enhanced with data tips.
      */
     @SuppressWarnings("rawtypes")
     public synchronized void register(JList list) {
@@ -98,8 +90,7 @@ public class DataTipManager {
     /**
      * Enable data tips for a tree component.
      * 
-     * @param tree
-     *            the tree which should be enhanced with data tips.
+     * @param tree the tree which should be enhanced with data tips.
      */
     public synchronized void register(JTree tree) {
         tree.addMouseListener(treeMouseListener);
@@ -110,8 +101,7 @@ public class DataTipManager {
     /**
      * Enable data tips for a list component.
      * 
-     * @param table
-     *            the table which should be enhanced with data tips.
+     * @param table the table which should be enhanced with data tips.
      */
     public synchronized void register(JTable table) {
         table.addMouseListener(tableMouseListener);
@@ -124,7 +114,7 @@ public class DataTipManager {
         tipComponentWindow = dataTipComponent;
     }
 
-    public boolean handleEventFromParentComponent(MouseEvent mouseEvent) {
+    boolean handleEventFromParentComponent(MouseEvent mouseEvent) {
         // filter out events that come from client explicitly calling this
         // method, but we have already handled in awt event listener
         if (mouseEvent == lastMouseEvent) {
@@ -144,7 +134,8 @@ public class DataTipManager {
         if (id == MouseEvent.MOUSE_EXITED) {
             Point point = SwingUtilities.convertPoint(parentComponent, x, y, tipComponentWindow);
             if (tipComponentWindow.contains(point)) {
-                MouseEvent newEvent = new MouseEvent(parentComponent, MouseEvent.MOUSE_MOVED, when, modifiers, x, y, clickCount, isPopupTrigger);
+                MouseEvent newEvent = new MouseEvent(parentComponent, MouseEvent.MOUSE_MOVED, when, modifiers, x, y,
+                        clickCount, isPopupTrigger);
                 parentComponent.dispatchEvent(newEvent);
                 // If the datatip has been hidden as a result, then process the
                 // exit event, too, so that
@@ -155,7 +146,7 @@ public class DataTipManager {
         return false;
     }
 
-    public void handleEventFromDataTipComponent(MouseEvent mouseEvent) {
+    void handleEventFromDataTipComponent(MouseEvent mouseEvent) {
         mouseEvent.consume();
         int id = mouseEvent.getID();
         if (id != MouseEvent.MOUSE_ENTERED) {
@@ -176,16 +167,17 @@ public class DataTipManager {
                 int scrollType = mouseWheelEvent.getScrollType();
                 int scrollAmount = mouseWheelEvent.getScrollAmount();
                 int wheelRotation = mouseWheelEvent.getWheelRotation();
-                newEvent = new MouseWheelEvent(parentComponent, id, when, modifiers, point.x, point.y, clickCount, isPopupTrigger, scrollType, scrollAmount,
-                        wheelRotation);
+                newEvent = new MouseWheelEvent(parentComponent, id, when, modifiers, point.x, point.y, clickCount,
+                        isPopupTrigger, scrollType, scrollAmount, wheelRotation);
             } else {
-                newEvent = new MouseEvent(parentComponent, id, when, modifiers, point.x, point.y, clickCount, isPopupTrigger);
+                newEvent = new MouseEvent(parentComponent, id, when, modifiers, point.x, point.y, clickCount,
+                        isPopupTrigger);
             }
             Component parentComponentBackup = parentComponent;
             parentComponent.dispatchEvent(newEvent);
             if (id != MouseEvent.MOUSE_EXITED) {
-                MouseEvent exitEvent = new MouseEvent(parentComponentBackup, MouseEvent.MOUSE_EXITED, when, modifiers, point.x, point.y, clickCount,
-                        isPopupTrigger);
+                MouseEvent exitEvent = new MouseEvent(parentComponentBackup, MouseEvent.MOUSE_EXITED, when, modifiers,
+                        point.x, point.y, clickCount, isPopupTrigger);
                 parentComponentBackup.dispatchEvent(exitEvent);
             }
             if (tipComponentWindow != null && id != MouseEvent.MOUSE_MOVED) {
