@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import de.df.jutils.util.Converter;
-
 /**
  * @author Dennis
  */

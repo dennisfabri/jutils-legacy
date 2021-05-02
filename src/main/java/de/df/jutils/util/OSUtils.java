@@ -4,8 +4,6 @@ import org.apache.commons.lang3.SystemUtils;
 
 public final class OSUtils {
 
-    private static final String NAME    = System.getProperty("os.name").toLowerCase();
-
     private static final String VERSION = System.getProperty("os.version");
 
     public static boolean isWindows() {
