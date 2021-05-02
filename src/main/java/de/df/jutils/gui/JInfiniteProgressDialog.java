@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 
 import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
-import net.java.swingfx.waitwithstyle.InfiniteProgressUtils;
 
 public class JInfiniteProgressDialog extends JDialog {
 
@@ -75,7 +74,7 @@ public class JInfiniteProgressDialog extends JDialog {
     }
 
     private void init() {
-        glass = InfiniteProgressUtils.createPanel();
+        glass = new InfiniteProgressPanel("");
         setGlassPane(glass);
     }
 
@@ -97,7 +96,7 @@ public class JInfiniteProgressDialog extends JDialog {
             stopProgress();
 
             if (a) {
-                glass = InfiniteProgressUtils.createPanel();
+                glass = new InfiniteProgressPanel("");
             } else {
                 glass = new JGlassPane();
             }

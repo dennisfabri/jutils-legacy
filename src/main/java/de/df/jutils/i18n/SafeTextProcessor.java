@@ -3,7 +3,6 @@
  */
 package de.df.jutils.i18n;
 
-import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 /**
@@ -13,19 +12,6 @@ public final class SafeTextProcessor extends ATextProcessor {
 
     public SafeTextProcessor(final ResourceBundle rb) {
         super(rb);
-    }
-
-    @Override
-    public String process(final String id, final Hashtable<String, Object> dynamics) {
-        try {
-            return process(getString(id), hashtableToArray(dynamics));
-        } catch (Exception e) {
-            try {
-                return getString(id);
-            } catch (RuntimeException re) {
-                return id;
-            }
-        }
     }
 
     @Override

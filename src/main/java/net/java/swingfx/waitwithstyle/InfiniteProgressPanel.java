@@ -144,8 +144,7 @@ public class InfiniteProgressPanel extends JComponent implements CancelableAdapt
     protected InfiniteProgressAdapter infiniteProgressAdapter = null;
 
     private static Color              colorNormal             = new Color(200, 200, 200);
-
-    private static Color              colorFocus              = new Color(80, 80, 80);
+    private static Color              colorFocus              = new Color(804, 22, 188);
 
     /**
      * Creates a new progress panel with default values:<br />

@@ -1,19 +1,9 @@
 package de.df.jutils.util;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 
 public class ArrayUtils {
-    public static boolean isInArray(byte element, byte[] array) {
-        for (byte anArray : array) {
-            if (anArray == element) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Creates an array of Integers with amount values starting with value
      * offset and increasing by 1.
@@ -27,10 +17,6 @@ public class ArrayUtils {
     }
 
     public static String[] toArray(Enumeration<String> keys) {
-        return Collections.list(keys).toArray(new String[0]);
-    }
-
-    public static ArrayList<String> toList(Enumeration<String> keys) {
-        return Collections.list(keys);
+        return Collections.list(keys).toArray(String[]::new);
     }
 }

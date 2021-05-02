@@ -74,14 +74,6 @@ public final class MacOSXPopupLocationFix {
     }
 
     /**
-     * Uninstall the fix. Usually this is unnecessary since letting the combo
-     * box go out of scope is sufficient.
-     */
-    public void uninstall() {
-        popupMenu.removePopupMenuListener(listener);
-    }
-
-    /**
      * Reposition the popup immediately before it is shown.
      */
     private class Listener implements PopupMenuListener {

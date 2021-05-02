@@ -5,8 +5,6 @@ package de.df.jutils.graphics;
 
 import java.awt.Color;
 
-import de.df.jutils.util.Calculator;
-
 /**
  * @author Dennis
  */

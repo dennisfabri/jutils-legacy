@@ -29,7 +29,7 @@ import javax.swing.text.StyledDocument;
 /**
  * @author Karl George Schaefer
  */
-public class AutoCompleteStyledDocument extends AutoCompleteDocument implements StyledDocument {
+class AutoCompleteStyledDocument extends AutoCompleteDocument implements StyledDocument {
     /**
      * @param adaptor
      * @param strictMatching

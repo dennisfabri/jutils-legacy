@@ -1,9 +1,6 @@
 package de.df.jutils.gui.jtable;
 
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 
 public class JFittingTable extends JTable {
 

@@ -3,6 +3,7 @@
  */
 package de.df.jutils.gui.util;
 
+@Deprecated
 public interface ISimpleCallback<T extends Object> {
     void callback(T t);
 }

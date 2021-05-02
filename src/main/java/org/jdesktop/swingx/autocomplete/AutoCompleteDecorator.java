@@ -73,22 +73,21 @@ import org.jdesktop.swingx.util.ComboBoxUtil;
  */
 public class AutoCompleteDecorator {
     // these keys were pulled from BasicComboBoxUI from Sun JDK 1.6.0_20
-    private static final List<String> COMBO_BOX_ACTIONS   = unmodifiableList(
+    private static final List<String> COMBO_BOX_ACTIONS = unmodifiableList(
             asList("selectNext", "selectNext2", "selectPrevious", "selectPrevious2", "pageDownPassThrough",
                     "pageUpPassThrough", "homePassThrough", "endPassThrough"));
     /**
      * A TextAction that provides an error feedback for the text component that
      * invoked the action. The error feedback is most likely a "beep".
      */
-    private static final Object       errorFeedbackAction = new TextAction("provide-error-feedback") {
-                                                              private static final long serialVersionUID = -5779509623449562062L;
+    private static final Object errorFeedbackAction = new TextAction("provide-error-feedback") {
+        private static final long serialVersionUID = -5779509623449562062L;
 
-                                                              @Override
-                                                              public void actionPerformed(ActionEvent e) {
-                                                                  UIManager.getLookAndFeel()
-                                                                          .provideErrorFeedback(getTextComponent(e));
-                                                              }
-                                                          };
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            UIManager.getLookAndFeel().provideErrorFeedback(getTextComponent(e));
+        }
+    };
 
     private AutoCompleteDecorator() {
         // prevents instantiation
@@ -157,7 +156,7 @@ public class AutoCompleteDecorator {
      * @param comboBox        a combo box
      * @param stringConverter the converter used to transform items to strings
      */
-    public static <T> void decorate(JComboBox<T> comboBox, ObjectToStringConverter stringConverter) {
+    private static <T> void decorate(JComboBox<T> comboBox, ObjectToStringConverter stringConverter) {
         undecorate(comboBox);
 
         boolean strictMatching = !comboBox.isEditable();
@@ -194,7 +193,7 @@ public class AutoCompleteDecorator {
         }
     }
 
-    static <T> void undecorate(JComboBox<T> comboBox) {
+    private static <T> void undecorate(JComboBox<T> comboBox) {
         JTextComponent editorComponent = ComboBoxUtil.getEditorComponent(comboBox);
 
         if (editorComponent.getDocument() instanceof AutoCompleteDocument) {
@@ -252,27 +251,13 @@ public class AutoCompleteDecorator {
      * contained in the given JList. The two components will be synchronized. The
      * automatic completion will always be strict.
      * 
-     * @param list          a <tt>JList</tt> containing the items for automatic
-     *                      completion
-     * @param textComponent the text component that will be enabled for automatic
-     *                      completion
-     */
-    public static <T> void decorate(JList<T> list, JTextComponent textComponent) {
-        decorate(list, textComponent, null);
-    }
-
-    /**
-     * Enables automatic completion for the given JTextComponent based on the items
-     * contained in the given JList. The two components will be synchronized. The
-     * automatic completion will always be strict.
-     * 
      * @param list            a <tt>JList</tt> containing the items for automatic
      *                        completion
      * @param textComponent   the text component that will be used for automatic
      *                        completion
      * @param stringConverter the converter used to transform items to strings
      */
-    public static <T> void decorate(JList<T> list, JTextComponent textComponent,
+    private static <T> void decorate(JList<T> list, JTextComponent textComponent,
             ObjectToStringConverter stringConverter) {
         undecorate(list);
 
@@ -282,27 +267,13 @@ public class AutoCompleteDecorator {
         decorate(textComponent, document, adaptor);
     }
 
-    static void undecorate(JList<?> list) {
+    private static void undecorate(JList<?> list) {
         for (ListSelectionListener l : list.getListSelectionListeners()) {
             if (l instanceof ListAdaptor) {
                 list.removeListSelectionListener(l);
                 break;
             }
         }
-    }
-
-    /**
-     * Enables automatic completion for the given JTextComponent based on the items
-     * contained in the given <tt>List</tt>.
-     * 
-     * @param textComponent  the text component that will be used for automatic
-     *                       completion.
-     * @param items          contains the items that are used for autocompletion
-     * @param strictMatching <tt>true</tt>, if only given items should be allowed to
-     *                       be entered
-     */
-    public static <T> void decorate(JTextComponent textComponent, List<T> items, boolean strictMatching) {
-        decorate(textComponent, items, strictMatching, null);
     }
 
     /**
@@ -316,7 +287,7 @@ public class AutoCompleteDecorator {
      *                        to be entered
      * @param stringConverter the converter used to transform items to strings
      */
-    public static <T> void decorate(JTextComponent textComponent, List<T> items, boolean strictMatching,
+    private static <T> void decorate(JTextComponent textComponent, List<T> items, boolean strictMatching,
             ObjectToStringConverter stringConverter) {
         AbstractAutoCompleteAdaptor adaptor = new TextComponentAdaptor(textComponent, items);
         AutoCompleteDocument document = createAutoCompleteDocument(adaptor, strictMatching, stringConverter,
@@ -396,14 +367,14 @@ public class AutoCompleteDecorator {
         }
     }
 
-    static class NonStrictBackspaceAction extends TextAction {
+    private static class NonStrictBackspaceAction extends TextAction {
         private static final long serialVersionUID = -7906597453604445521L;
-        
-        Action                      backspace;
-        Action                      selectionBackward;
-        AbstractAutoCompleteAdaptor adaptor;
 
-        public NonStrictBackspaceAction(Action backspace, Action selectionBackward,
+        private final Action backspace;
+        private final Action selectionBackward;
+        private final AbstractAutoCompleteAdaptor adaptor;
+
+        private NonStrictBackspaceAction(Action backspace, Action selectionBackward,
                 AbstractAutoCompleteAdaptor adaptor) {
             super("nonstrict-backspace");
             this.backspace = backspace;

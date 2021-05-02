@@ -17,7 +17,7 @@ public class Seconds {
         return seconds;
     }
 
-    public String getString(char sep) {
+    String getString(char sep) {
         return StringTools.zeitString(seconds, sep);
     }
 

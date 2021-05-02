@@ -26,30 +26,27 @@ import javax.swing.text.JTextComponent;
  * 
  * @author Thomas Bierhance
  */
-public class TextComponentAdaptor extends AbstractAutoCompleteAdaptor {
+class TextComponentAdaptor extends AbstractAutoCompleteAdaptor {
 
     /**
-     * a <tt>List</tt> containing the strings to be used for automatic
-     * completion
+     * a <tt>List</tt> containing the strings to be used for automatic completion
      */
-    List<?>        items;
+    private List<?> items;
     /** the text component that is used for automatic completion */
-    JTextComponent textComponent;
+    private JTextComponent textComponent;
     /** the item that is currently selected */
-    Object         selectedItem;
+    private Object selectedItem;
 
     /**
      * Creates a new <tt>TextComponentAdaptor</tt> for the given list and text
      * component.
      * 
-     * @param items
-     *            a <tt>List</tt> that contains the items that are used for
-     *            automatic completion
-     * @param textComponent
-     *            the text component that will be used automatic
-     *            completion
+     * @param items         a <tt>List</tt> that contains the items that are used
+     *                      for automatic completion
+     * @param textComponent the text component that will be used automatic
+     *                      completion
      */
-    public TextComponentAdaptor(JTextComponent textComponent, List<?> items) {
+    TextComponentAdaptor(JTextComponent textComponent, List<?> items) {
         this.items = items;
         this.textComponent = textComponent;
     }

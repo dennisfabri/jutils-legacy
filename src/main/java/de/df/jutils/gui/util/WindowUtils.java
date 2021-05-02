@@ -36,13 +36,13 @@ public final class WindowUtils {
         window.getRootPane().getActionMap().put(name, new EscapeAction(exe));
     }
 
-    public static void addAction(JDialog window, Runnable exe, int key, int modifiers, String name) {
+    private static void addAction(JDialog window, Runnable exe, int key, int modifiers, String name) {
         KeyStroke escape = KeyStroke.getKeyStroke(key, modifiers, false);
         window.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, name);
         window.getRootPane().getActionMap().put(name, new EscapeAction(exe));
     }
 
-    public static void addEnterAction(JFrame window) {
+    private static void addEnterAction(JFrame window) {
         addEnterAction(window, new CloseRunnable(window));
     }
 

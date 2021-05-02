@@ -34,10 +34,6 @@ public final class StringTools {
         }
     }
 
-    public static String shorten(String text, int length) {
-        return shorten(text, length, "");
-    }
-
     public static String shorten(String text, int length, String suffix) {
         if (text == null) {
             return null;
@@ -75,7 +71,7 @@ public final class StringTools {
         return ort;
     }
 
-    public static final String[] UNITS = new String[] { "B", "KB", "MB", "GB", "TB" };
+    private static final String[] UNITS = new String[] { "B", "KB", "MB", "GB", "TB" };
 
     public static String sizeToString(long size) {
         long start = 1;
@@ -117,36 +113,6 @@ public final class StringTools {
         return sb.toString();
     }
 
-    public static String bytesToHex2(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
-        for (int x = 0; x < bytes.length; x++) {
-            int i = bytes[x];
-            if (i < 0) {
-                i = 256 + i;
-            }
-            int a = i % 16;
-            int b = i / 16;
-            sb.append(toHex((byte) b));
-            sb.append(toHex((byte) a));
-            if (x + 1 < bytes.length) {
-                sb.append(" ");
-            }
-        }
-        return sb.toString();
-    }
-
-    public static String bytesAsChar(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
-        for (int x = 0; x < bytes.length; x++) {
-            char c = (char) bytes[x];
-            sb.append(c);
-            if (x + 1 < bytes.length) {
-                sb.append("");
-            }
-        }
-        return sb.toString();
-    }
-
     public static byte[] hexToBytes(String s) {
         byte[] bytes = new byte[s.length() / 2];
         for (int x = 0; x < bytes.length; x++) {
@@ -170,7 +136,7 @@ public final class StringTools {
         return "" + toHex((byte) (value / 16)) + toHex((byte) (value % 16));
     }
 
-    public static int hexToByte(char c) {
+    private static int hexToByte(char c) {
         switch (c) {
         default:
             return -1;
@@ -209,25 +175,7 @@ public final class StringTools {
         }
     }
 
-    public static String toHexText(int integer) {
-        StringBuilder sb = new StringBuilder();
-        long value = integer;
-        if (value < 0) {
-            long amount = ((long) Integer.MAX_VALUE) * 2 + 2;
-            value = amount + value;
-        }
-        while (value > 0) {
-            byte b = (byte) (value % 16);
-            value = value / 16;
-            sb.insert(0, b);
-        }
-        while (sb.length() < 8) {
-            sb.insert(0, "0");
-        }
-        return sb.toString();
-    }
-
-    public static char toHex(byte i) {
+    private static char toHex(byte i) {
         switch (i) {
         default:
             return ' ';
@@ -282,10 +230,10 @@ public final class StringTools {
         return sb.toString();
     }
 
-    public static final char[] CRC = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ".toCharArray();
+    private static final char[] CRC = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ".toCharArray();
 
     public static String asCode(long i) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (i == 0) {
             return "" + CRC[0];
         }
@@ -299,7 +247,7 @@ public final class StringTools {
     }
 
     public static String getCellName(String sheet, int row, int column) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         if (sheet != null) {
             result.append(sheet);
             result.append(' ');
@@ -343,32 +291,6 @@ public final class StringTools {
         return result.toString();
     }
 
-    public static String removeFirst(String s, char x) {
-        int index = s.indexOf(x);
-        if (index < 0) {
-            return s;
-        }
-        StringBuffer neu = new StringBuffer();
-        if (index > 0) {
-            neu.append(s.substring(0, index));
-        }
-        if (index < s.length() - 1) {
-            neu.append(s.substring(index + 1));
-        }
-        return neu.toString();
-    }
-
-    public static int count(String s, char c) {
-        char[] chars = s.toCharArray();
-        int counter = 0;
-        for (char aChar : chars) {
-            if (aChar == c) {
-                counter++;
-            }
-        }
-        return counter;
-    }
-
     public static String removeAll(String s, char c) {
         if (s == null) {
             return null;
@@ -393,7 +315,7 @@ public final class StringTools {
         }
     }
 
-    public static int skip(final char[] chars, final int pos, final char marker, final boolean after) {
+    static int skip(final char[] chars, final int pos, final char marker, final boolean after) {
         int position = pos;
         while (position < chars.length) {
             if (chars[position] == marker) {
@@ -430,37 +352,9 @@ public final class StringTools {
         return result.toArray(new String[result.size()]);
     }
 
-    public static String uncapitalize(final String s) {
-        char[] chars = s.toCharArray();
-        chars[0] = Character.toLowerCase(chars[0]);
-        return new String(chars);
-    }
-
     private static final String DOT = ".";
 
-    public static String[] separatePackages(final String name) {
-        if (name == null) {
-            throw new NullPointerException();
-        }
-        if (name.length() == 0) {
-            return EMPTY_STRINGS;
-        }
-        if (name.endsWith(DOT)) {
-            throw new IllegalArgumentException();
-        }
-        String temp = name;
-        LinkedList<String> result = new LinkedList<String>();
-        String segment;
-        for (; temp.indexOf(DOT) > -1; result.addLast(segment)) {
-            segment = temp.substring(0, temp.indexOf(DOT));
-            temp = temp.substring(temp.indexOf(DOT) + 1);
-        }
-
-        result.addLast(temp);
-        return result.toArray(new String[result.size()]);
-    }
-
-    public static String concatPackages(final String p1, final String p2) {
+    private static String concatPackages(final String p1, final String p2) {
         if (p1 == null && p2 == null) {
             throw new NullPointerException();
         }
@@ -476,7 +370,7 @@ public final class StringTools {
         return p1 + DOT + p2;
     }
 
-    public static String concatFileName(final String dir, final String file) {
+    static String concatFileName(final String dir, final String file) {
         if (dir == null || file == null) {
             throw new NullPointerException();
         }
@@ -516,26 +410,16 @@ public final class StringTools {
         return sb.toString();
     }
 
-    public static String concatFileName(final String dir1, final String dir2, final String file) {
+    static String concatFileName(final String dir1, final String dir2, final String file) {
         String temp = concatFileName(dir1, dir2);
         return concatFileName(temp, file);
-    }
-
-    public static String concat(final String s1, final String s2, final String s3) {
-        if (s1 == null && s2 == null) {
-            if (s3 == null) {
-                throw new NullPointerException();
-            }
-            return s3;
-        }
-        return concatPackages(concatPackages(s1, s2), s3);
     }
 
     public static String concat(String separator, String... s) {
         if (s.length == 0) {
             return "";
         }
-        StringBuffer sb = new StringBuffer(s[0]);
+        StringBuilder sb = new StringBuilder(s[0]);
         for (int x = 1; x < s.length; x++) {
             sb.append(separator);
             sb.append(s[x]);
@@ -604,52 +488,8 @@ public final class StringTools {
         return "" + Math.round(punkte);
     }
 
-    /**
-     * Erzeugt einen String, der die Zahl zahl enth\u00e4lt und insgesamt mindestens die L\u00e4nge laenge hat. Dabei
-     * werden links Leerzeichen hinzugef\u00fcgt, bis die gew\u00fcnschte L\u00e4nge erreicht ist.
-     * 
-     * @param zahl
-     *            Die umzuwandelnde Zahl @param laenge Die gew\u00fcnschte L\u00e4nge @return Die Zahl als String
-     */
-    public static String valueString(final int z, final int laenge) {
-        NumberFormat nf = NumberFormat.getIntegerInstance();
-        return valueString(nf.format(z), laenge);
-    }
-
-    public static String valueString(final double z, final int laenge) {
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setGroupingUsed(false);
-        nf.setMaximumFractionDigits(2);
-        nf.setMinimumFractionDigits(2);
-        return valueString(nf.format(z), laenge);
-    }
-
-    /**
-     * Erzeugt einen String, der die Zahl zahl enth\u00e4lt und insgesamt mindestens die L\u00e4nge laenge hat. Dabei
-     * werden links Leerzeichen hinzugef\u00fcgt, bis die gew\u00fcnschte L\u00e4nge erreicht ist.
-     * 
-     * @param zahl
-     *            Die umzuwandelnde Zahl @param laenge Die gew\u00fcnschte L\u00e4nge @return Die Zahl als String
-     */
-    public static String valueString(String zahl, final int laenge) {
-        while (zahl.length() < laenge) {
-            zahl = ' ' + zahl;
-        }
-        return zahl;
-    }
-
-    public static String fillWith(String zahl, char c, final int laenge) {
-        StringBuffer sb = new StringBuffer(zahl);
-        while (zahl.length() < laenge) {
-            sb.append(c);
-        }
-        return sb.toString();
-    }
-
-    private static final String[] EMPTY_STRINGS = { "" };
-
     public static String[] separateCsvLine(String data, char separator) {
-        LinkedList<String> result = new LinkedList<String>();
+        LinkedList<String> result = new LinkedList<>();
         char[] chars = data.toCharArray();
         int x = 0;
         while (x < chars.length) {
@@ -668,7 +508,7 @@ public final class StringTools {
                     x++;
                 }
             } else {
-                StringBuffer entry = new StringBuffer();
+                StringBuilder entry = new StringBuilder();
                 while ((x < chars.length) && (chars[x] != separator)) {
                     entry.append(chars[x]);
                     x++;
@@ -705,7 +545,7 @@ public final class StringTools {
         return s;
     }
 
-    public static void fill(StringBuffer sb, int length) {
+    public static void fill(StringBuilder sb, int length) {
         for (int i = 0; i < length; i++) {
             sb.append(" ");
         }
@@ -720,7 +560,7 @@ public final class StringTools {
         int hour = gc.get(Calendar.HOUR_OF_DAY);
         int min = gc.get(Calendar.MINUTE);
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(year);
         if (month < 10) {
             sb.append("0");
@@ -752,34 +592,9 @@ public final class StringTools {
             e.printStackTrace();
             ps = new PrintStream(bos);
         }
-        // ps = new PrintStream(bos);
         ps.print(pre);
         CRC32 crc = new CRC32();
         crc.update(bos.toByteArray());
         return StringTools.asCode(crc.getValue());
-    }
-
-    public static String[] Separate(String text, int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("amount must be higher than 0 but was " + amount);
-        }
-        if (text == null) {
-            throw new IllegalArgumentException("text must not be null.");
-        }
-
-        String[] parts = new String[amount];
-        if (amount == 1) {
-            parts[0] = text;
-            return parts;
-        }
-        int size = text.length() / amount;
-        int offset = 0;
-        for (int x = 0; x < amount; x++) {
-            int s = size + (x < text.length() % amount ? 1 : 0);
-            parts[x] = text.substring(offset, offset + s);
-            offset += s;
-        }
-
-        return parts;
     }
 }

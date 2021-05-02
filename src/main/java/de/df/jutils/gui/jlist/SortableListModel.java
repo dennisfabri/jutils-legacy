@@ -1,6 +1,5 @@
 package de.df.jutils.gui.jlist;
 
-import java.util.Collection;
 import java.util.Collections;
 
 public class SortableListModel<T extends Comparable<? super T>> extends ModifiableListModel<T> {

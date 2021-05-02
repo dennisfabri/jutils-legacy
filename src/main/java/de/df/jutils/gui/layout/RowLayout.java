@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.io.Serializable;
 
+@Deprecated
 public class RowLayout implements LayoutManager, Serializable {
 
     /**

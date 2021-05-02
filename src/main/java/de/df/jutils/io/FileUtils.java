@@ -4,6 +4,7 @@
 package de.df.jutils.io;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -122,17 +123,15 @@ public final class FileUtils {
     }
 
     public static byte[] readFile(InputStream is) throws IOException {
-        BytesOutputStream bos = new BytesOutputStream();
-        try {
+        
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             byte[] temp = new byte[1024];
             int size = is.read(temp);
             while (size >= 0) {
                 bos.write(temp, 0, size);
                 size = is.read(temp);
             }
-            return bos.getData();
-        } finally {
-            bos.close();
+            return bos.toByteArray();
         }
     }
 }

@@ -8,8 +8,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.SystemColor;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
@@ -19,8 +17,6 @@ import javax.swing.event.DocumentListener;
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
-import de.df.jutils.gui.listener.ValueListener;
-
 /**
  * @author Dennis Mueller
  */
@@ -29,22 +25,21 @@ public final class JTimeField extends javax.swing.JPanel {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long         serialVersionUID = 3257282517894771768L;
+    private static final long serialVersionUID = 3257282517894771768L;
 
-    public static final int           MAX_TIME         = 9996000;
+    public static final int MAX_TIME = 9996000;
 
-    private static final String       ZERO             = "0";
-    private static final String       ZEROZERO         = "00";
+    private static final String ZERO = "0";
+    private static final String ZEROZERO = "00";
 
-    private Color                     color;
+    private Color color;
 
-    private JIntegerField             source           = null;
-    private JLabel                    minuten;
-    private JLabel                    sekunden;
-    private JLabel                    hundertstel;
-    private int                       value            = 0;
-    private LinkedList<ValueListener> listeners        = new LinkedList<ValueListener>();
-    private Insets                    insets           = new Insets(2, 2, 2, 2);
+    private JIntegerField source = null;
+    private JLabel minuten;
+    private JLabel sekunden;
+    private JLabel hundertstel;
+    private int value = 0;
+    private Insets insets = new Insets(2, 2, 2, 2);
 
     /** Creates new form JTimeField */
     public JTimeField(final JIntegerField jnf) {
@@ -96,7 +91,9 @@ public final class JTimeField extends javax.swing.JPanel {
     }
 
     private void meinInit() {
-        FormLayout layout = new FormLayout("pref:grow,right:pref,1dlu,fill:pref,1dlu,fill:pref,1dlu" + ",fill:pref,1dlu,fill:pref", "center:pref:grow");
+        FormLayout layout = new FormLayout(
+                "pref:grow,right:pref,1dlu,fill:pref,1dlu,fill:pref,1dlu" + ",fill:pref,1dlu,fill:pref",
+                "center:pref:grow");
         layout.setColumnGroups(new int[][] { { 6, 10 }, { 4, 8 } });
         setLayout(layout);
 
@@ -137,22 +134,6 @@ public final class JTimeField extends javax.swing.JPanel {
         zeitUmwandeln();
     }
 
-    private void callValueListeners() {
-        try {
-            ListIterator<ValueListener> li = listeners.listIterator();
-            while (li.hasNext()) {
-                try {
-                    ValueListener vl = li.next();
-                    vl.valueChanged(this);
-                } catch (Exception e) {
-                    // Safety
-                }
-            }
-        } catch (Exception e) {
-            // Nothing to do
-        }
-    }
-
     public int getTimeAsInt() {
         zeitUmwandeln();
         return value;
@@ -164,7 +145,7 @@ public final class JTimeField extends javax.swing.JPanel {
         super.paint(arg0);
     }
 
-    void zeitUmwandeln() {
+    private void zeitUmwandeln() {
         int integer = source.getInt();
         if (integer > MAX_TIME) {
             integer = 0;
@@ -187,26 +168,6 @@ public final class JTimeField extends javax.swing.JPanel {
         sekunden.setText("" + (s < 10 ? "0" : "") + s);
         hundertstel.setText("" + (z < 10 ? "0" : "") + z);
 
-        int newValue = (m * 6000) + (s * 100) + z;
-        if (value != newValue) {
-            value = newValue;
-            callValueListeners();
-        }
-    }
-
-    public void addValueListener(final ValueListener listener) {
-        if (listener == null) {
-            throw new NullPointerException();
-        }
-        listeners.addLast(listener);
-    }
-
-    public void removeValueListener(final ValueListener listener) {
-        if (listener == null) {
-            throw new NullPointerException();
-        }
-        while (listeners.contains(listener)) {
-            listeners.remove(listener);
-        }
+        value = (m * 6000) + (s * 100) + z;
     }
 }

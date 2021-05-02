@@ -12,7 +12,7 @@ public class CsvTableModel extends DefaultTableModel {
     private final Object[]    title;
     private final Object[][]  data;
 
-    public CsvTableModel(Object[][] d, Object[] t) {
+    CsvTableModel(Object[][] d, Object[] t) {
         super(d, t);
         data = d;
         title = t;

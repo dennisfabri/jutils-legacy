@@ -20,7 +20,7 @@ import javax.swing.JViewport;
  * @author mueller
  * @since 01.08.2005
  */
-public final class ScrollUtils {
+final class ScrollUtils {
 
     public static final int      DIRECTION_TOP_BIT      = 0;
     public static final int      DIRECTION_RIGHT_BIT    = 1;

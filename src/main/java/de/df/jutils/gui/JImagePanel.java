@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,7 +27,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.df.jutils.gui.util.DialogUtils;
 import de.df.jutils.i18n.util.JUtilsI18n;
-import de.df.jutils.io.BytesOutputStream;
 import de.df.jutils.io.FileUtils;
 import de.df.jutils.util.StringTools;
 
@@ -143,10 +143,9 @@ public class JImagePanel extends JPanel {
             if (i == null) {
                 imagedata = null;
             } else {
-                try {
-                    BytesOutputStream bos = new BytesOutputStream();
+                try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
                     ImageIO.write(i, "png", bos);
-                    imagedata = bos.getData();
+                    imagedata = bos.toByteArray();
                 } catch (IOException io) {
                     throw new RuntimeException("Could not set Imagedata");
                 }
@@ -158,7 +157,7 @@ public class JImagePanel extends JPanel {
         notifyChangeListeners();
     }
 
-    void readImage() {
+    private void readImage() {
         String name = FileChooserUtils.openFile(SwingUtilities.getWindowAncestor(JImagePanel.this),
                 JUtilsI18n.get("de.dm.gui.imagepanel.OpenImage"),
                 new SimpleFileFilter(JUtilsI18n.get("de.dm.gui.imagepanel.Images"), ImageIO.getReaderFileSuffixes()));

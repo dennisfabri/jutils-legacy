@@ -34,14 +34,12 @@ import javax.swing.text.PlainDocument;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
 
-import org.jdesktop.swingx.util.Contract;
-
 /**
  * A document that can be plugged into any JTextComponent to enable automatic completion.
  * It finds and selects matching items using any implementation of the AbstractAutoCompleteAdaptor.
  */
 @SuppressWarnings("nls")
-public class AutoCompleteDocument implements Document {
+class AutoCompleteDocument implements Document {
     private class Handler implements DocumentListener, UndoableEditListener {
         private final EventListenerList listenerList = new EventListenerList();
 

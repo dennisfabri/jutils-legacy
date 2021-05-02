@@ -9,7 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
-import net.java.swingfx.waitwithstyle.InfiniteProgressUtils;
 
 public class JInfiniteProgressFrame extends JFrame {
 
@@ -38,7 +37,7 @@ public class JInfiniteProgressFrame extends JFrame {
     }
 
     private void init() {
-        glass = InfiniteProgressUtils.createPanel();
+        glass = new InfiniteProgressPanel("");
         setGlassPane(glass);
     }
 
@@ -67,7 +66,7 @@ public class JInfiniteProgressFrame extends JFrame {
             stopProgress();
 
             if (a) {
-                glass = InfiniteProgressUtils.createPanel();
+                glass = new InfiniteProgressPanel("");
             } else {
                 glass = new JGlassPane();
             }

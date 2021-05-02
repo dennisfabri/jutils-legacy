@@ -3,7 +3,7 @@
  */
 package de.df.jutils.io.csv;
 
-public class CsvStringConverter implements CsvDataWriter {
+class CsvStringConverter implements CsvDataWriter {
     @Override
     public boolean canConvert(Object o) {
         return o instanceof String || o instanceof String[];

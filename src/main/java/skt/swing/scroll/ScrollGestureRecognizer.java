@@ -19,8 +19,7 @@ import javax.swing.SwingUtilities;
  * 
  * @author Santhosh Kumar T
  * @email santhosh@in.fiorano.com
- * @link
- *       http://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing
+ * @link http://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing
  */
 public final class ScrollGestureRecognizer implements AWTEventListener {
     private static ScrollGestureRecognizer instance = new ScrollGestureRecognizer();
@@ -33,11 +32,11 @@ public final class ScrollGestureRecognizer implements AWTEventListener {
         return instance;
     }
 
-    public void start() {
+    void start() {
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.MOUSE_EVENT_MASK);
     }
 
-    public void stop() {
+    void stop() {
         Toolkit.getDefaultToolkit().removeAWTEventListener(this);
     }
 
@@ -75,7 +74,7 @@ public final class ScrollGestureRecognizer implements AWTEventListener {
         }
     }
 
-    public static boolean canScroll(JViewport viewport) {
+    private static boolean canScroll(JViewport viewport) {
         return (ScrollUtils.getDirections(viewport) != 0);
     }
 }

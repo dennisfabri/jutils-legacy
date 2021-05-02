@@ -36,12 +36,12 @@ public final class PageSetup {
         ps = null;
         defaultPageFormat = createPageFormat();
         psPrintable = new PageSetupPrintable();
-        prasTable = new Hashtable<String, PageFormat>();
+        prasTable = new Hashtable<>();
     }
 
     public static void setPRASTable(Hashtable<String, PageFormat> pt) {
         if (pt == null) {
-            pt = new Hashtable<String, PageFormat>();
+            pt = new Hashtable<>();
         }
         prasTable = pt;
     }
@@ -83,7 +83,7 @@ public final class PageSetup {
         return pf;
     }
 
-    public static void setDefaultPageFormat(PageFormat pras) {
+    private static void setDefaultPageFormat(PageFormat pras) {
         prasTable.clear();
         defaultPageFormat = pras;
     }
@@ -153,7 +153,7 @@ public final class PageSetup {
         }
     }
 
-    public static PrinterJob getPrinterJob(String jobname, Printable p) throws PrinterException {
+    static PrinterJob getPrinterJob(String jobname, Printable p) throws PrinterException {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setJobName(jobname);
         job.setPrintService(getLastUsedPrinter());
@@ -162,7 +162,7 @@ public final class PageSetup {
         return job;
     }
 
-    public static PrinterJob printDialog(String jobname, Printable p) throws PrinterException {
+    static PrinterJob printDialog(String jobname, Printable p) throws PrinterException {
         PrinterJob job = getPrinterJob(jobname, p);
         boolean result = job.printDialog();
         if (result) {
@@ -179,15 +179,11 @@ public final class PageSetup {
         job.print();
     }
 
-    public static void setPageFormat(String jobname, PageFormat pf) {
+    private static void setPageFormat(String jobname, PageFormat pf) {
         if (jobname == null) {
             jobname = "JUtils";
         }
         prasTable.put(jobname, pf);
-    }
-
-    public static boolean knowsLastUsedPrinter() {
-        return (ps != null);
     }
 
     private static synchronized PrintService getLastUsedPrinter() {
@@ -226,7 +222,7 @@ public final class PageSetup {
         return services[0];
     }
 
-    public static synchronized void setLastUsedPrinter(PrintService printer) {
+    private static synchronized void setLastUsedPrinter(PrintService printer) {
         if (printer == null) {
             return;
         }
@@ -250,15 +246,15 @@ public final class PageSetup {
         return pras;
     }
 
-    public static boolean isPortrait(String jobname) {
+    static boolean isPortrait(String jobname) {
         return getOrientation(jobname) == PageFormat.PORTRAIT;
     }
 
-    public static int getOrientation(String jobname) {
+    private static int getOrientation(String jobname) {
         return getPageFormat(jobname).getOrientation();
     }
 
-    static final class PageSetupPrintable implements Printable {
+    private static final class PageSetupPrintable implements Printable {
         @Override
         public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
             return NO_SUCH_PAGE;

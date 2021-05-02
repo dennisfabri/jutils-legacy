@@ -1,5 +1,6 @@
 package de.df.jutils.util;
 
+@Deprecated
 public class Tripel<A, B, C> {
 
     private A first;

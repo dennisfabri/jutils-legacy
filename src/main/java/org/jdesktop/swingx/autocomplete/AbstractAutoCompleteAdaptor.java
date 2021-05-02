@@ -30,7 +30,7 @@ import javax.swing.text.JTextComponent;
  * @see ListAdaptor
  * @author Thomas Bierhance
  */
-public abstract class AbstractAutoCompleteAdaptor {
+abstract class AbstractAutoCompleteAdaptor {
 
     /** the string representation in use for the currently selected item */
     private String selectedItemAsString;

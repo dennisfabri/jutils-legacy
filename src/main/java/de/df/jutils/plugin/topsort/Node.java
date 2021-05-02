@@ -1,7 +1,7 @@
 /*
  * Created on 21.11.2004
  */
-package de.df.jutils.topsort;
+package de.df.jutils.plugin.topsort;
 
 import java.util.Enumeration;
 import java.util.Hashtable;

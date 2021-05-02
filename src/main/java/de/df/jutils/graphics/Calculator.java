@@ -1,18 +1,18 @@
 /*
  * Created on 01.11.2003
  */
-package de.df.jutils.util;
+package de.df.jutils.graphics;
 
 /**
  * @author Dennis Mueller
  */
-public final class Calculator {
+final class Calculator {
 
     private Calculator() {
         // Never used
     }
 
-    public static int calculateValue(final double start, final double end, final double percent) {
+    private static int calculateValue(final double start, final double end, final double percent) {
         return (int) (start + (Math.max(Math.min(percent, 1.0), -1.0) * (end - start)));
     }
 

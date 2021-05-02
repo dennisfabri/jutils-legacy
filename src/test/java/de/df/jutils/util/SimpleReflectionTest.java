@@ -69,15 +69,6 @@ public class SimpleReflectionTest {
     }
 
     @Test
-    public void testCheck() {
-        b = ReflectionUtils.check("java.lang.String");
-        assertTrue(b);
-
-        b = ReflectionUtils.check("java.lang.String2");
-        assertFalse(b);
-    }
-
-    @Test
     public void testExecuteMethod() throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
         o = ReflectionUtils.executeMethod("java.lang.System", "currentTimeMillis");

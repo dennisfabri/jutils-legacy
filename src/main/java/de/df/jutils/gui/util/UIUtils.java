@@ -48,11 +48,7 @@ public class UIUtils {
         return surroundWithScroller(c, 10, horizontal, vertical);
     }
 
-    public static JScrollPane surroundWithScroller(JComponent c, int unitIncrement) {
-        return surroundWithScroller(c, unitIncrement, true, true);
-    }
-
-    public static JScrollPane surroundWithScroller(JComponent c, int unitIncrement, boolean horizontal, boolean vertical) {
+    private static JScrollPane surroundWithScroller(JComponent c, int unitIncrement, boolean horizontal, boolean vertical) {
         JScrollPane scroller = new JScrollPane(c);
         if (unitIncrement > 0) {
             scroller.getHorizontalScrollBar().setUnitIncrement(unitIncrement);
@@ -139,7 +135,7 @@ public class UIUtils {
 
     private static ImageIcon getInformationIcon() {
         Object o = UIManager.getDefaults().get("OptionPane.informationIcon");
-        if ((o != null) && (o instanceof ImageIcon)) {
+        if (o instanceof ImageIcon) {
             return (ImageIcon) o;
         }
         return null;
@@ -147,7 +143,7 @@ public class UIUtils {
 
     private static ImageIcon getWarningIcon() {
         Object o = UIManager.getDefaults().get("OptionPane.warningIcon");
-        if ((o != null) && (o instanceof ImageIcon)) {
+        if (o instanceof ImageIcon) {
             return (ImageIcon) o;
         }
         return null;

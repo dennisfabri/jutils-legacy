@@ -11,7 +11,7 @@ import java.util.ListIterator;
 
 import javax.imageio.ImageIO;
 
-public class PageContainer implements AutoCloseable {
+class PageContainer implements AutoCloseable {
 
     private LinkedList<File> files = new LinkedList<File>();
 
@@ -19,7 +19,7 @@ public class PageContainer implements AutoCloseable {
         // Nothing to do
     }
 
-    public synchronized void clear() {
+    synchronized void clear() {
         if (!files.isEmpty()) {
             ListIterator<File> li = files.listIterator();
             while (li.hasNext()) {
@@ -40,11 +40,11 @@ public class PageContainer implements AutoCloseable {
         }
     }
 
-    public synchronized int size() {
+    synchronized int size() {
         return files.size();
     }
 
-    public synchronized boolean add(BufferedImage img) {
+    synchronized boolean add(BufferedImage img) {
         try {
             File file = File.createTempFile("jauswertung", ".preview");
             file.deleteOnExit();
@@ -60,7 +60,7 @@ public class PageContainer implements AutoCloseable {
         return false;
     }
 
-    public synchronized BufferedImage get(int index) {
+    synchronized BufferedImage get(int index) {
         try {
             File file = files.get(index);
             return ImageIO.read(file);

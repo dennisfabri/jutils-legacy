@@ -26,7 +26,7 @@ import javax.swing.text.JTextComponent;
  * 
  * @author Thomas Bierhance
  */
-public class ListAdaptor<T> extends AbstractAutoCompleteAdaptor implements ListSelectionListener {
+class ListAdaptor<T> extends AbstractAutoCompleteAdaptor implements ListSelectionListener {
 
     /** the list containing the items */
     JList<T>                list;

@@ -16,7 +16,7 @@ public class RecentlyUsedFiles {
         this(null, null);
     }
 
-    public RecentlyUsedFiles(Preferences pref, String key) {
+    private RecentlyUsedFiles(Preferences pref, String key) {
         if (key == null || key.trim().isEmpty()) {
             this.key = "Recent";
         } else {
@@ -110,10 +110,6 @@ public class RecentlyUsedFiles {
 
     public void addListener(ChangeListener cl) {
         listeners.addLast(cl);
-    }
-
-    public void removeListener(ChangeListener cl) {
-        listeners.remove(cl);
     }
 
     public static interface ChangeListener {

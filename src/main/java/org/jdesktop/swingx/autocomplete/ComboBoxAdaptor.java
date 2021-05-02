@@ -34,7 +34,7 @@ import org.jdesktop.swingx.util.ComboBoxUtil;
  * @author Thomas Bierhance
  * @author Karl Schaefer
  */
-public class ComboBoxAdaptor<T> extends AbstractAutoCompleteAdaptor implements ActionListener {
+class ComboBoxAdaptor<T> extends AbstractAutoCompleteAdaptor implements ActionListener {
 
     /** the combobox being adapted */
     private JComboBox<T> comboBox;

@@ -1,5 +1,6 @@
 package de.df.jutils.util;
 
+@Deprecated
 public class Tupel<A, B> {
 
     private final A first;

@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class HashedCounter {
 
-    private Hashtable<String, Integer> data = new Hashtable<String, Integer>();
+    private Hashtable<String, Integer> data = new Hashtable<>();
 
     public HashedCounter() {
     }

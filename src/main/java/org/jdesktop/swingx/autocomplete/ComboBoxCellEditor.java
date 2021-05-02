@@ -50,7 +50,7 @@ import org.jdesktop.swingx.util.ComboBoxUtil;
  * </pre>
  * </p>
  */
-public class ComboBoxCellEditor<T> extends DefaultCellEditor {
+class ComboBoxCellEditor<T> extends DefaultCellEditor {
 
     private static final long serialVersionUID = 608890251464390067L;
 

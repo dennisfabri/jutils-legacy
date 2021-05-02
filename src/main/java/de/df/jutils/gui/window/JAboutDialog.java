@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,10 +53,6 @@ public class JAboutDialog extends JDialog {
     private static final long serialVersionUID = 3256441408645576248L;
 
     private final JFrame      parent;
-
-    public JAboutDialog(JFrame parent, String title, Image image, JComponent[] components) {
-        this(parent, title, (image != null ? new ImageIcon(image) : null), components);
-    }
 
     public JAboutDialog(JFrame parent, String title, Icon image, JComponent[] components) {
         super(parent, true);
@@ -200,7 +195,7 @@ public class JAboutDialog extends JDialog {
         return result;
     }
 
-    public static JTable getSystemInformation() {
+    private static JTable getSystemInformation() {
         return getSystemInformation(new String[] { "Systeminformation", "Property", "Value" });
     }
 
@@ -214,7 +209,7 @@ public class JAboutDialog extends JDialog {
         return result;
     }
 
-    public static JTable getUIInformation() {
+    private static JTable getUIInformation() {
         return getUIInformation(new String[] { "Property", "Value" });
     }
 

@@ -3,8 +3,6 @@
  */
 package de.df.jutils.data;
 
-import java.util.Collection;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.ListIterator;
 

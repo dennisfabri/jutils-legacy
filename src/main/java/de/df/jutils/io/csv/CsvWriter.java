@@ -28,10 +28,6 @@ public class CsvWriter {
         converters.addLast(cdc);
     }
 
-    public void removeConverter(CsvDataWriter cdc) {
-        converters.remove(cdc);
-    }
-
     public boolean write(TableModel tm, OutputStream os) {
         if (tm == null) {
             throw new NullPointerException("TableModel must not be null!");

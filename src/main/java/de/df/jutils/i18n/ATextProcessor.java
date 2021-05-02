@@ -13,7 +13,7 @@ import de.df.jutils.exception.ParserException;
 /**
  * @author Dennis Mueller
  */
-public abstract class ATextProcessor {
+abstract class ATextProcessor {
 
     private static MessageFormat formatter = new MessageFormat("");
     private static Object[]      none      = new Object[0];
@@ -24,7 +24,7 @@ public abstract class ATextProcessor {
         this(null);
     }
 
-    public ATextProcessor(final ResourceBundle rb) {
+     ATextProcessor(final ResourceBundle rb) {
         setResourceBundle(rb);
     }
 
@@ -36,7 +36,7 @@ public abstract class ATextProcessor {
         return bundle;
     }
 
-    public final String getString(final String key) {
+     final String getString(final String key) {
         if (bundle == null) {
             return null;
         }
@@ -78,8 +78,6 @@ public abstract class ATextProcessor {
     public final String process(final String id) throws ParserException {
         return process(id, none);
     }
-
-    public abstract String process(final String id, final Hashtable<String, Object> dynamics) throws ParserException;
 
     public abstract String process(final String id, final Object[] dynamics) throws ParserException;
 }

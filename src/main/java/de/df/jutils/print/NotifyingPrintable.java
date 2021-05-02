@@ -9,12 +9,12 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.LinkedList;
 
-public class NotifyingPrintable implements Printable {
+class NotifyingPrintable implements Printable {
 
     private Printable                 printable;
     private LinkedList<PrintListener> listeners = new LinkedList<PrintListener>();
 
-    public NotifyingPrintable(Printable p, PrintListener pl) {
+    NotifyingPrintable(Printable p, PrintListener pl) {
         printable = p;
         addListener(pl);
     }
@@ -33,7 +33,7 @@ public class NotifyingPrintable implements Printable {
         return result;
     }
 
-    public void addListener(PrintListener pl) {
+    private void addListener(PrintListener pl) {
         if (pl != null) {
             listeners.addLast(pl);
         }
@@ -51,7 +51,7 @@ public class NotifyingPrintable implements Printable {
         }
     }
 
-    public static interface PrintListener {
+    static interface PrintListener {
         void printingPage(int index);
 
         void finishedPage(int index, int result);

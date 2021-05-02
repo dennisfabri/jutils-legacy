@@ -26,7 +26,7 @@ public class ResourceBundleUIProvider implements UIElementsProvider {
         this(getBundle(name));
     }
 
-    public ResourceBundleUIProvider(ResourceBundle rb) {
+    private ResourceBundleUIProvider(ResourceBundle rb) {
         resource = rb;
     }
 

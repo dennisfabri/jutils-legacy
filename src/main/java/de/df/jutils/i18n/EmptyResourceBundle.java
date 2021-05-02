@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 public class EmptyResourceBundle extends ResourceBundle {
 
-    private Hashtable<String, String> keys = new Hashtable<String, String>();
+    private Hashtable<String, String> keys = new Hashtable<>();
 
     @Override
     public Enumeration<String> getKeys() {

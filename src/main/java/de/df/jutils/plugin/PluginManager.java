@@ -19,9 +19,9 @@ import de.df.jutils.plugin.io.Dependency;
 import de.df.jutils.plugin.io.FileLock;
 import de.df.jutils.plugin.io.PluginData;
 import de.df.jutils.plugin.io.PluginXMLReader;
+import de.df.jutils.plugin.topsort.Node;
+import de.df.jutils.plugin.topsort.TopSort;
 import de.df.jutils.reflection.ReflectionUtils;
-import de.df.jutils.topsort.Node;
-import de.df.jutils.topsort.TopSort;
 import de.df.jutils.util.TimeMeasurement;
 
 /**

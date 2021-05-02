@@ -85,7 +85,7 @@ public abstract class ObjectToStringConverter {
      *            the item to convert
      * @return possible <tt>String</tt> representation for the given item.
      */
-    public String[] getPossibleStringsForItem(Object item) {
+    String[] getPossibleStringsForItem(Object item) {
         String preferred = getPreferredStringForItem(item);
         return preferred == null ? new String[0] : new String[] { preferred };
     }

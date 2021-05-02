@@ -14,14 +14,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package org.jdesktop.swingx.util;
+package org.jdesktop.swingx.autocomplete;
 
 /**
  * Utility class for checking contracts.
  * 
  * @author Jeanette Winzenburg
  */
-public class Contract {
+class Contract {
 
     private Contract() {
 

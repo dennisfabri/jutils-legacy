@@ -41,7 +41,7 @@ import javax.swing.ComboBoxEditor;
  * @author Noel Grandin noelgrandin@gmail.com
  * @author Thomas Bierhance
  */
-public class AutoCompleteComboBoxEditor implements ComboBoxEditor {
+class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /** the original combo box editor */
     final ComboBoxEditor          wrapped;

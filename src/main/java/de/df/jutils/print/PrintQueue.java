@@ -25,7 +25,7 @@ public class PrintQueue {
     private JobPrinter                    printer;
     private LinkedList<IPrintCallback>    ipcs = new LinkedList<IPrintCallback>();
 
-    void runPrinter(JobPrinter parent) {
+    private void runPrinter(JobPrinter parent) {
         while (true) {
             PrintQueueElement pqe = null;
             synchronized (PrintQueue.class) {
@@ -135,7 +135,7 @@ public class PrintQueue {
         // Nothing to do
     }
 
-    public void print(PrinterJob job) {
+    void print(PrinterJob job) {
         synchronized (this) {
             jobs.addLast(new PrintQueueElement(job));
             if (printer == null) {
@@ -147,7 +147,7 @@ public class PrintQueue {
         }
     }
 
-    void notifyNoJobs() {
+    private void notifyNoJobs() {
         synchronized (ipcs) {
             for (IPrintCallback ipc : ipcs) {
                 try {
@@ -159,7 +159,7 @@ public class PrintQueue {
         }
     }
 
-    void notifyJobStart(String job) {
+    private void notifyJobStart(String job) {
         int size = 0;
         synchronized (this) {
             size = jobs.size();
@@ -175,7 +175,7 @@ public class PrintQueue {
         }
     }
 
-    void notifyJobAdded(String job) {
+    private void notifyJobAdded(String job) {
         int size = 0;
         synchronized (this) {
             size = jobs.size();
@@ -191,7 +191,7 @@ public class PrintQueue {
         }
     }
 
-    void notifyJobEnd(String job) {
+    private void notifyJobEnd(String job) {
         int size = 0;
         synchronized (this) {
             size = jobs.size();
@@ -207,7 +207,7 @@ public class PrintQueue {
         }
     }
 
-    void notifyJobError(String job, String title, String message, String note) {
+    private void notifyJobError(String job, String title, String message, String note) {
         int size = 0;
         synchronized (this) {
             size = jobs.size();
@@ -223,15 +223,15 @@ public class PrintQueue {
         }
     }
 
-    class PrintQueueElement {
+    private class PrintQueueElement {
 
         private final PrinterJob job;
 
-        public PrintQueueElement(PrinterJob job) {
+        private PrintQueueElement(PrinterJob job) {
             this.job = job;
         }
 
-        public void print() {
+        private void print() {
             try {
                 PageSetup.print(job);
             } catch (PrinterIOException e) {

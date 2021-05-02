@@ -35,10 +35,6 @@ public final class DialogUtils {
         // Never used
     }
 
-    public static String showTextDialog(final JFrame parent, final String title, final String angabe) {
-        return showTextDialog(parent, title, angabe, null, 10);
-    }
-
     public static String showTextDialog(final JFrame parent, final String title, final String angabe, final String text) {
         return showTextDialog(parent, title, angabe, text, 10);
     }
@@ -53,10 +49,6 @@ public final class DialogUtils {
             return null;
         }
         return jtd.getText();
-    }
-
-    public static boolean ask(final Window parent, final String title, final String question, final String note) {
-        return ask(parent, question, note);
     }
 
     public static boolean ask(final Window parent, final String question, final String note) {
@@ -85,10 +77,6 @@ public final class DialogUtils {
 
     public static void warn(final Window parent, final String title, final String information, final String note) {
         warn(parent, information, note);
-    }
-
-    public static void error(final Window parent, final String information, final String note) {
-        error(parent, null, information, note);
     }
 
     public static void error(final Window parent, final String title, final String information, final String note) {
@@ -125,10 +113,6 @@ public final class DialogUtils {
 
         dlg.setResizable(true);
         dlg.setVisible(true);
-    }
-
-    public static boolean askClose(Window parent) {
-        return askAndWarn(parent, JUtilsI18n.get("CloseWindowQuestion"), JUtilsI18n.get("CloseWindowQuestion.Note"));
     }
 
     public static int askForNumber(JFrame parent, String question, String note, int min, int max) {

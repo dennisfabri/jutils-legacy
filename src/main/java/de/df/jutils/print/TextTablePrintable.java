@@ -55,7 +55,7 @@ public class TextTablePrintable implements Printable {
         return printable.print(g, pf, page);
     }
 
-    void init() {
+    private void init() {
         Font font = PrintManager.getFont();
         if (font != null) {
             table.getTableHeader().setFont(font);

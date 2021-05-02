@@ -36,7 +36,7 @@ public class TimeMeasurement {
     /**
      * Starts the measuring of a new subtask. Increases the level of tasks.
      */
-    public void start() {
+    private void start() {
         update();
         level++;
         update();

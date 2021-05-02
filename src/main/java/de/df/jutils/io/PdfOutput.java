@@ -11,7 +11,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,7 +30,6 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.util.Feedback;
-import de.df.jutils.util.NullFeedback;
 
 /**
  * @author Dennis Mueller
@@ -40,44 +38,8 @@ import de.df.jutils.util.NullFeedback;
 public class PdfOutput {
 
     private static final String WINDOWS_FONTPATH = "C:/windows/fonts";
-
-    private Printable           source;
-    private OutputStream        out;
-    private boolean             close            = false;
-    private boolean             portrait;
-    private Insets              margin           = new Insets(30, 30, 30, 30);
-
-    public PdfOutput(OutputStream os, Printable p, boolean portrait) {
-        if ((p == null) || (os == null)) {
-            throw new NullPointerException();
-        }
-        source = p;
-        out = os;
-        this.portrait = portrait;
-    }
-
-    public PdfOutput(String filename, Printable p, boolean portrait) throws FileNotFoundException {
-        if ((p == null) || (filename == null)) {
-            throw new NullPointerException();
-        }
-        source = p;
-        out = new FileOutputStream(new File(filename));
-        close = true;
-        this.portrait = portrait;
-    }
-
-    public boolean write() {
-        boolean result = write(out, source, portrait, margin, new NullFeedback());
-        if (close) {
-            try {
-                out.close();
-            } catch (IOException ioe) {
-                // Nothing to do
-            }
-        }
-        return result;
-    }
-
+    private PdfOutput() {}
+    
     private static DefaultFontMapper fontMapper = null;
 
     private static FontMapper getFontMapper() {
