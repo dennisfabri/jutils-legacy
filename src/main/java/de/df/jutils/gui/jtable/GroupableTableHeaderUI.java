@@ -32,7 +32,7 @@ import org.pushingpixels.substance.internal.ui.SubstanceTableHeaderUI;
 
 import de.df.jutils.reflection.ReflectionUtils;
 
-public class GroupableTableHeaderUI extends BasicTableHeaderUI {
+class GroupableTableHeaderUI extends BasicTableHeaderUI {
 
     final class TableMouseInputListener extends MouseInputHandler {
         @Override

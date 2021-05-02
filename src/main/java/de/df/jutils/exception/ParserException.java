@@ -21,10 +21,6 @@ public class ParserException extends Exception {
         super(text);
     }
 
-    public ParserException(final Throwable cause) {
-        super(cause);
-    }
-
     public ParserException(final String text, final Throwable cause) {
         super(text, cause);
     }

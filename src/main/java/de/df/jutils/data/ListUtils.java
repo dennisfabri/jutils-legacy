@@ -61,12 +61,4 @@ public final class ListUtils {
 
         return listen;
     }
-
-    public static <S, T> LinkedList<T> toList(Hashtable<S, T> h) {
-        LinkedList<T> result = new LinkedList<T>();
-        Collection<T> c = h.values();
-        result.addAll(c);
-        return result;
-    }
-
 }

@@ -19,15 +19,15 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
     protected LinkedList<T>   data;
 
     public ModifiableListModel() {
-        data = new LinkedList<T>();
+        data = new LinkedList<>();
     }
 
     public ModifiableListModel(Collection<T> list) {
-        data = new LinkedList<T>(list);
+        data = new LinkedList<>(list);
     }
 
     public ModifiableListModel(T[] d) {
-        data = new LinkedList<T>(Arrays.asList(d));
+        data = new LinkedList<>(Arrays.asList(d));
     }
 
     public int size() {
@@ -54,16 +54,12 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
     }
 
     public LinkedList<T> getAllElements() {
-        return new LinkedList<T>(data);
+        return new LinkedList<>(data);
     }
 
     @Override
     public T getElementAt(int index) {
         return data.get(index);
-    }
-
-    public <X extends Object> X[] toArray(X[] o) {
-        return data.toArray(o);
     }
 
     public void move(int from, int to) {
@@ -105,7 +101,7 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
     }
 
     public void remove(T object) {
-        if (data.size() == 0) {
+        if (data.isEmpty()) {
             return;
         }
         int pos = data.indexOf(object);
@@ -116,7 +112,7 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
     }
 
     public void removeAll() {
-        if (data.size() == 0) {
+        if (data.isEmpty()) {
             return;
         }
         int size = data.size();
@@ -133,7 +129,7 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
     }
 
     public T remove(int index) {
-        if (data.size() == 0) {
+        if (data.isEmpty()) {
             return null;
         }
         T t = data.remove(index);

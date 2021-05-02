@@ -34,7 +34,7 @@ public class JDoubleField extends JTextField {
 
     private FocusListener      selectionfocuslistener = null;
 
-    public JDoubleField(double value, double max, boolean required, boolean force) {
+    private JDoubleField(double value, double max, boolean required, boolean force) {
         super();
         this.required = required;
         nf = getDoubleFormatter(max);

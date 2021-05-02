@@ -17,7 +17,7 @@ public final class JListUtils {
         // Hide
     }
 
-    public static Color getOddDefault(Component list) {
+    static Color getOddDefault(Component list) {
         Color odd = UIManager.getColor("textHighlight");
         Color base = UIManager.getColor("List.background");
         if (base == null) {
@@ -33,7 +33,7 @@ public final class JListUtils {
         return odd;
     }
 
-    public static Color getEvenDefault(Component list) {
+    static Color getEvenDefault(Component list) {
         return UIManager.getColor("List.background");
     }
 

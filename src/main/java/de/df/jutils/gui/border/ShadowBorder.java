@@ -30,7 +30,7 @@ public final class ShadowBorder extends AbstractBorder {
         this(3);
     }
 
-    public ShadowBorder(final int borderSize) {
+    private ShadowBorder(final int borderSize) {
         super();
         if (OSUtils.isWindows8OrHigher()) {
             this.size = 1;

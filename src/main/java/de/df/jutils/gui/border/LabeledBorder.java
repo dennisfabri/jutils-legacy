@@ -18,7 +18,7 @@ import javax.swing.border.AbstractBorder;
 import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.util.DesignInit;
 
-public final class LabeledBorder extends AbstractBorder {
+final class LabeledBorder extends AbstractBorder {
 
     /**
      * Comment for <code>serialVersionUID</code>
@@ -30,25 +30,13 @@ public final class LabeledBorder extends AbstractBorder {
     private boolean           rightBordered    = true;
     private int               minheight        = 0;
 
-    public LabeledBorder(final String labelName) {
+    LabeledBorder(final String labelName) {
         setName(labelName);
     }
 
     public LabeledBorder(final String labelName, final boolean rightOff) {
         this(labelName);
         setRightBordered(rightOff);
-    }
-
-    public LabeledBorder(final String labelName, final int hGap, final int vGap, final boolean rightOff) {
-        this(labelName, rightOff);
-        setHgap(hGap);
-        setVgap(vGap);
-    }
-
-    public LabeledBorder(final String label, final int hGap, final int vGap) {
-        this(label);
-        setHgap(hGap);
-        setVgap(vGap);
     }
 
     @Override

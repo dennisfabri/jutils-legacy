@@ -7,7 +7,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.ImageObserver;
 
 class ImageComponent extends Component {
 
@@ -37,23 +36,6 @@ class ImageComponent extends Component {
         // super.paint(g);
         if (image != null) {
             g.drawImage(image, 0, 0, getBackground(), null);
-        }
-    }
-
-    static class Observer implements ImageObserver {
-
-        private boolean finished = false;
-
-        @Override
-        public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-            if ((infoflags & ALLBITS) > 0) {
-                finished = true;
-            }
-            return !finished;
-        }
-
-        public boolean isFinished() {
-            return finished;
         }
     }
 }

@@ -3,12 +3,13 @@
  */
 package de.df.jutils.resourcebundle;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
-
-import de.df.jutils.data.ListEnumeration;
 
 /**
  * @author Dennis Mueller
@@ -17,55 +18,45 @@ public final class MultipleResourceBundle extends ResourceBundle {
 
     private LinkedList<ResourceBundle> resourceBundles = new LinkedList<ResourceBundle>();
 
-    private boolean                    verbose         = true;
+    private boolean verbose = true;
 
     public MultipleResourceBundle() {
         // Nothing to do
     }
 
-    public MultipleResourceBundle(final ResourceBundle rb) {
-        add(rb);
-    }
-
-    public MultipleResourceBundle(final ResourceBundle rb1, final ResourceBundle rb2) {
-        this(rb1);
-        add(rb2);
-    }
-
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.ResourceBundle#getKeys()
      */
     @Override
     public Enumeration<String> getKeys() {
-        if (resourceBundles.size() > 0) {
-            LinkedList<String> result = new LinkedList<String>();
-            ListIterator<ResourceBundle> li = resourceBundles.listIterator();
-            while (li.hasNext()) {
-                ResourceBundle rb = li.next();
-                Enumeration<String> e = rb.getKeys();
-                while (e.hasMoreElements()) {
-                    String key = e.nextElement();
-                    if (!result.contains(key)) {
-                        result.addLast(key);
-                    }
+        if (resourceBundles.isEmpty()) {
+            return null;
+        }
+
+        List<String> result = new ArrayList<>();
+        ListIterator<ResourceBundle> li = resourceBundles.listIterator();
+        while (li.hasNext()) {
+            ResourceBundle rb = li.next();
+            Enumeration<String> e = rb.getKeys();
+            while (e.hasMoreElements()) {
+                String key = e.nextElement();
+                if (!result.contains(key)) {
+                    result.add(key);
                 }
             }
-            return new ListEnumeration<String>(result.listIterator());
         }
-        return null;
+        return Collections.enumeration(result);
     }
 
     public void add(final ResourceBundle rb) {
         resourceBundles.addLast(rb);
     }
 
-    public boolean remove(final ResourceBundle rb) {
-        return resourceBundles.remove(rb);
-    }
-
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
      */
     @Override

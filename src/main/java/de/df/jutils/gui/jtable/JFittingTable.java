@@ -16,34 +16,9 @@ public class JFittingTable extends JTable {
         pack();
     }
 
-    public JFittingTable(TableModel dm) {
-        super(dm);
-        pack();
-    }
-
-    public JFittingTable(TableModel dm, TableColumnModel cm) {
-        super(dm, cm);
-        pack();
-    }
-
-    public JFittingTable(int numRows, int numColumns) {
-        super(numRows, numColumns);
-        pack();
-    }
-
-    public JFittingTable(Object[][] rowData, Object[] columnNames) {
-        super(rowData, columnNames);
-        pack();
-    }
-
-    public JFittingTable(TableModel dm, TableColumnModel cm, ListSelectionModel sm) {
-        super(dm, cm, sm);
-        pack();
-    }
-
     private boolean dopack;
 
-    public void pack() {
+    private void pack() {
         dopack = true;
         if (isShowing()) {
             JTableUtils.setPreferredCellSizes(this);

@@ -117,7 +117,7 @@ public final class JTableUtils {
         setPreferredRowHeight(table, false);
     }
 
-    public static void setPreferredRowHeight(JTable table, boolean includeHeader) {
+    private static void setPreferredRowHeight(JTable table, boolean includeHeader) {
         TableModel model = table.getModel();
         TableColumnModel colModel = table.getColumnModel();
 
@@ -253,12 +253,6 @@ public final class JTableUtils {
         return rg.getRenderer();
     }
 
-    public static void fixColumnsToPreferredWidth(JTable table) {
-        for (int x = 0; x < table.getColumnCount(); x++) {
-            fixColumnToPreferredWidth(table, x);
-        }
-    }
-
     /**
      * Takes a column in an existing table and makes it fixed-width. Specifically,
      * it sets the column's minimum and maximum widths to its preferred width, and
@@ -269,7 +263,7 @@ public final class JTableUtils {
      * @param table JTable The table to modify @param colIndex int Which column to
      *              fix @return int The width of the column as it was fixed
      */
-    public static int fixColumnToPreferredWidth(JTable table, int colIndex) {
+    private static int fixColumnToPreferredWidth(JTable table, int colIndex) {
         TableColumnModel tcm = table.getColumnModel();
         TableColumn col = tcm.getColumn(colIndex);
         int width = col.getPreferredWidth();
@@ -309,7 +303,7 @@ public final class JTableUtils {
         setAlternatingTableCellRenderer(table, getOddDefault(), getEvenDefault());
     }
 
-    public static void setAlternatingTableCellRenderer(JTable table, Color odd, Color even) {
+    static void setAlternatingTableCellRenderer(JTable table, Color odd, Color even) {
         for (Class<?> c : CLASSES) {
             TableCellRenderer tcr = table.getDefaultRenderer(c);
             if (tcr instanceof AlternatingTableCellRenderer) {
@@ -331,20 +325,12 @@ public final class JTableUtils {
         }
     }
 
-    public static TableCellRenderer createAlignmentRenderer(int[] aligns, int defaultAlign) {
-        return new AlignmentCellRenderer(aligns, defaultAlign);
+    private static <T> TableCellRenderer createAlignmentRenderer(int[] aligns, int defaultAlign) {
+        return new AlignmentCellRenderer<T>(aligns, defaultAlign);
     }
 
     public static void setAlignmentRenderer(JTable table, int[] aligns, int defaultAlign) {
         setTableCellRenderer(table, createAlignmentRenderer(aligns, defaultAlign));
-    }
-
-    public static void removeColumn(JTable tm, int index) {
-        TableColumn column = tm.getColumnModel().getColumn(index);
-        tm.setAutoCreateColumnsFromModel(false);
-        tm.getColumnModel().removeColumn(column);
-        ((SimpleTableModel) tm.getModel()).removeColumn(index);
-        tm.setAutoCreateColumnsFromModel(true);
     }
 
     public static void hideColumnAndRemoveData(JTable tm, int index) {

@@ -6,12 +6,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+@Deprecated
 public final class HashtableUtils {
 
     private HashtableUtils() {
         // Hide constructor
     }
 
+    @Deprecated
     public static <T, S> List<T> getKeys(Hashtable<T, S> data) {
         LinkedList<T> keys = new LinkedList<>();
         for (T t : getKeyIterable(data)) {
@@ -20,8 +22,9 @@ public final class HashtableUtils {
         return keys;
     }
     
-    public static <T, S> Iterable<T> getKeyIterable(Hashtable<T, S> data) {
-        return new EnumerationIterable<T>(data.keys());
+    @Deprecated
+    public static <T, S> Iterable<T> getKeyIterable(Hashtable<T, S> data) {        
+        return new EnumerationIterable<>(data.keys());
     }
     
     private static class EnumerationIterable<T> implements Iterable<T> {

@@ -2,12 +2,14 @@ package de.df.jutils.data;
 
 import java.io.Serializable;
 
+@Deprecated
 public class Triplet<A, B, C> implements Serializable, Comparable<Triplet<A, B, C>> {
 
     public final A Item1;
     public final B Item2;
     public final C Item3;
 
+    @Deprecated
     public Triplet(A a, B b, C c) {
         Item1 = a;
         Item2 = b;

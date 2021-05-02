@@ -30,10 +30,6 @@ public final class ExtendedLineBorder extends AbstractBorder {
         this(c, space, space, space, space);
     }
 
-    public ExtendedLineBorder(int space) {
-        this(space, space, space, space);
-    }
-
     public ExtendedLineBorder(Color c, int t, int l, int b, int r) {
         this(t, l, b, r);
         color = c;

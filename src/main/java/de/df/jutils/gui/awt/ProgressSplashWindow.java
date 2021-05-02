@@ -24,33 +24,27 @@ public final class ProgressSplashWindow extends Dialog {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long    serialVersionUID = 3834593201360154935L;
+    private static final long serialVersionUID = 3834593201360154935L;
 
-    public static final String[] DOTS             = new String[] { " .", " ..", " ..." };
+    public static final String[] DOTS = new String[] { " .", " ..", " ..." };
 
-    private Component            imageLabel       = null;
-    protected Label              textLabel        = new Label("");
-    private ProgressBar          progress         = new ProgressBar(0, 10);
-    private int                  status           = -1;
-    protected int                factor           = 0;
-    private int                  maximum          = 0;
-    protected String             statusText       = "";
-    private int                  number           = 0;
-    private boolean              autoclose        = true;
+    private Component imageLabel = null;
+    private Label textLabel = new Label("");
+    private ProgressBar progress = new ProgressBar(0, 10);
+    private int status = -1;
+    private int factor = 0;
+    private int maximum = 0;
+    private String statusText = "";
+    private int number = 0;
+    private boolean autoclose = true;
 
     /**
-     * @param icon
-     *            mainimage
-     * @param foreground
-     *            foregroundcolor
-     * @param background
-     *            backgroundcolor
-     * @param steps
-     *            count of statusmessages
-     * @param autoclose
-     *            close if steps has been reached
-     * @throws java.awt.HeadlessException
-     *             see JDialog
+     * @param icon       mainimage
+     * @param foreground foregroundcolor
+     * @param background backgroundcolor
+     * @param steps      count of statusmessages
+     * @param autoclose  close if steps has been reached
+     * @throws java.awt.HeadlessException see JDialog
      */
     public ProgressSplashWindow(final Image bufferedImage, final int steps, boolean autoclose) {
         super(new Frame());
@@ -75,9 +69,9 @@ public final class ProgressSplashWindow extends Dialog {
         add(progress);
         pack();
 
-        int labelheight = (int) Math.ceil(getFont()
-                .getStringBounds("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 0, 2, new FontRenderContext(new AffineTransform(), false, false))
-                .getHeight());
+        int labelheight = (int) Math
+                .ceil(getFont().getStringBounds("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 0, 2,
+                        new FontRenderContext(new AffineTransform(), false, false)).getHeight());
 
         imageLabel.setLocation(5, 5);
         imageLabel.setSize(bufferedImage.getWidth(null), bufferedImage.getHeight(null));
@@ -107,8 +101,7 @@ public final class ProgressSplashWindow extends Dialog {
     }
 
     /**
-     * @param status
-     *            statusinformation
+     * @param status statusinformation
      */
     public void setStatus(final String newStatus) {
         setVisible(true);

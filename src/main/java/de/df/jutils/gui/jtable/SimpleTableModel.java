@@ -48,41 +48,10 @@ public class SimpleTableModel extends DefaultTableModel {
     }
 
     /**
-     * 
-     */
-    public SimpleTableModel() {
-        super();
-    }
-
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public SimpleTableModel(int arg0, int arg1) {
-        super(arg0, arg1);
-    }
-
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public SimpleTableModel(Object[] arg0, int arg1) {
-        super(arg0, arg1);
-    }
-
-    /**
      * @param arg0
      * @param arg1
      */
     public SimpleTableModel(Object[][] arg0, Object[] arg1) {
-        super(arg0, arg1);
-    }
-
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public SimpleTableModel(Vector<?> arg0, int arg1) {
         super(arg0, arg1);
     }
 }

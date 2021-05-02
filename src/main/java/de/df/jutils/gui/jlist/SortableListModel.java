@@ -11,10 +11,6 @@ public class SortableListModel<T extends Comparable<? super T>> extends Modifiab
         super();
     }
 
-    public SortableListModel(Collection<T> list) {
-        super(list);
-    }
-
     public void sort() {
         Collections.sort(data);
         fireContentsChanged(this, 0, data.size() - 1);
