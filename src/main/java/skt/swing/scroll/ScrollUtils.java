@@ -1,10 +1,20 @@
 package skt.swing.scroll;
 
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.BitSet;
 
-import javax.swing.*;
+import javax.swing.BoundedRangeModel;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 
 /**
  * @author mueller

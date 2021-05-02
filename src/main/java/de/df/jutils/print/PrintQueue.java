@@ -1,6 +1,9 @@
 package de.df.jutils.print;
 
-import java.awt.print.*;
+import java.awt.print.PrinterAbortException;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterIOException;
+import java.awt.print.PrinterJob;
 import java.util.LinkedList;
 
 import de.df.jutils.i18n.util.JUtilsI18n;

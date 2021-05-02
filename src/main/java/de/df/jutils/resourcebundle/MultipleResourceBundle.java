@@ -3,7 +3,10 @@
  */
 package de.df.jutils.resourcebundle;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.ResourceBundle;
 
 import de.df.jutils.data.ListEnumeration;
 

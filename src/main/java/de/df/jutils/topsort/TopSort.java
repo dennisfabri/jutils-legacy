@@ -3,7 +3,9 @@
  */
 package de.df.jutils.topsort;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * @author Dennis Mueller

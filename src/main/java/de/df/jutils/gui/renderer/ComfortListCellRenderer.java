@@ -5,7 +5,9 @@ package de.df.jutils.gui.renderer;
 
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 public class ComfortListCellRenderer<T> extends DefaultListCellRenderer {
 

@@ -7,12 +7,13 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
-import javax.swing.table.*;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 import de.df.jutils.gui.border.InsetsBorder;
 import de.df.jutils.gui.renderer.PrintHeaderRenderer;
 import de.df.jutils.gui.util.EDTUtils;
-import de.df.jutils.util.AReturnRunner;
 
 /*
  * Created on Oct 19, 2004

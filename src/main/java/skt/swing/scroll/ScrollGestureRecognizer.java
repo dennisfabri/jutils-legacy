@@ -1,9 +1,18 @@
 package skt.swing.scroll;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.AWTException;
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.JRootPane;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 
 /**
  * Modified version. The original can be found at:

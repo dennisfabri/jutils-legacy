@@ -1,6 +1,8 @@
 package de.df.jutils.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 
 public class ArrayUtils {
     public static boolean isInArray(byte element, byte[] array) {

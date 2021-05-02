@@ -15,7 +15,9 @@
 
 package org.apache.jorphan.gui;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;

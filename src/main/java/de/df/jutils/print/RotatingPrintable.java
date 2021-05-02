@@ -5,7 +5,9 @@ package de.df.jutils.print;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.print.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
 /**
  * @author Dennis Mueller

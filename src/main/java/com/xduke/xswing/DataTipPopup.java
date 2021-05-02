@@ -23,9 +23,16 @@
  */
 package com.xduke.xswing;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Window;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
+import javax.swing.SwingUtilities;
 
 class DataTipPopup {
     private Popup            popup;

@@ -4,7 +4,10 @@
 package com.jroller.jvtable;
 
 import javax.swing.Action;
-import javax.swing.undo.*;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 
 /**
  * @author Neil W. Weber neilweber@yahoo.com

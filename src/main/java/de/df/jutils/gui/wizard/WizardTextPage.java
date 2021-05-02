@@ -6,7 +6,10 @@ package de.df.jutils.gui.wizard;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import de.df.jutils.gui.border.BorderUtils;
 

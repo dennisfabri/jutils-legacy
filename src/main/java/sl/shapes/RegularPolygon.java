@@ -1,6 +1,6 @@
 package sl.shapes;
 
-import java.awt.*;
+import java.awt.Polygon;
 
 public class RegularPolygon extends Polygon {
     public RegularPolygon(int x, int y, int r, int vertexCount) {

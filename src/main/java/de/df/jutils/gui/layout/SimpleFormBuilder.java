@@ -8,7 +8,10 @@ import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.border.Border;
 
 import com.jgoodies.forms.factories.CC;

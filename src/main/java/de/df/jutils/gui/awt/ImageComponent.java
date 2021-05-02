@@ -3,10 +3,13 @@
  */
 package de.df.jutils.gui.awt;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.ImageObserver;
 
-public class ImageComponent extends Component {
+class ImageComponent extends Component {
 
     private static final long serialVersionUID = -189175844670997641L;
 

@@ -3,11 +3,21 @@
  */
 package de.df.jutils.gui.jtable;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Date;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.renderer.AlignmentCellRenderer;

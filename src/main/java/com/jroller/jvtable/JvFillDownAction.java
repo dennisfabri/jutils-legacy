@@ -6,7 +6,9 @@ package com.jroller.jvtable;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 /**
  * @author Neil W. Weber neilweber@yahoo.com

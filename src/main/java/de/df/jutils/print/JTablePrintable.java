@@ -3,10 +3,17 @@
  */
 package de.df.jutils.print;
 
-import java.awt.*;
-import java.awt.print.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ToolTipManager;
 import javax.swing.table.TableColumn;
 
 import de.df.jutils.gui.jtable.JPrintTable;

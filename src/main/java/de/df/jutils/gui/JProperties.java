@@ -7,7 +7,10 @@ import java.awt.BorderLayout;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 

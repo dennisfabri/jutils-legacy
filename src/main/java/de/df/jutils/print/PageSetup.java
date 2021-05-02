@@ -10,7 +10,11 @@ package de.df.jutils.print;
  */
 
 import java.awt.Graphics;
-import java.awt.print.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.Hashtable;
 
 import javax.print.PrintService;

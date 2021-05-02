@@ -16,9 +16,14 @@
  */
 package org.jdesktop.swingx.autocomplete;
 
-import static org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.*;
+import static org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.createAutoCompleteDocument;
+import static org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate;
+import static org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.undecorate;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.Action;

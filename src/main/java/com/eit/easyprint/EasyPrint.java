@@ -19,12 +19,18 @@
 package com.eit.easyprint;
 
 import java.awt.Font;
-import java.awt.print.*;
-import java.io.*;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URL;
 
 import javax.swing.SwingUtilities;
-import javax.swing.text.*;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
+import javax.swing.text.StyledEditorKit;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.rtf.RTFEditorKit;
 

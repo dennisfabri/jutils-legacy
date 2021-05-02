@@ -12,7 +12,10 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.UIManager;
-import javax.swing.table.*;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  * * GroupableTableHeader * *

@@ -3,7 +3,12 @@
  */
 package de.df.jutils.gui.border;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

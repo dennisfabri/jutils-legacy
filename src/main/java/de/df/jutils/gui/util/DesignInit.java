@@ -5,7 +5,10 @@ package de.df.jutils.gui.util;
 
 import java.awt.Toolkit;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;

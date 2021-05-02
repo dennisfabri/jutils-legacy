@@ -7,7 +7,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import de.df.jutils.i18n.SafeTextProcessor;
-import de.df.jutils.resourcebundle.*;
+import de.df.jutils.resourcebundle.IdentityResourceBundle;
+import de.df.jutils.resourcebundle.MultipleResourceBundle;
+import de.df.jutils.resourcebundle.SafeResourceBundle;
+import de.df.jutils.resourcebundle.TableResourceBundle;
 
 /**
  * @author Dennis Mueller

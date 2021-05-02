@@ -3,7 +3,9 @@
  */
 package de.df.jutils.gui.window;
 
-import java.awt.*;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.GraphicsConfiguration;
 
 import javax.swing.JDialog;
 

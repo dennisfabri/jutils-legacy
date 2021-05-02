@@ -6,12 +6,13 @@ package de.df.jutils.i18n;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.*;
+import java.util.Hashtable;
+import java.util.MissingResourceException;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.df.jutils.exception.ParserException;
-import de.df.jutils.i18n.TextProcessor;
 import de.df.jutils.resourcebundle.TableResourceBundle;
 
 /**

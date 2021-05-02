@@ -3,7 +3,9 @@
  */
 package de.df.jutils.util;
 
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 
 // :extssh:maverix@cvs.sourceforge.net:/cvsroot/jaus
 

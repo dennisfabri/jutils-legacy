@@ -5,7 +5,10 @@ package com.eit.easyprint;
 
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.print.*;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
 public class HtmlPrintable implements Printable {
 

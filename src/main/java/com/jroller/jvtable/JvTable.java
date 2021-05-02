@@ -7,7 +7,9 @@ import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JTable;
-import javax.swing.table.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 /**
  * @author Neil W. Weber neilweber@yahoo.com

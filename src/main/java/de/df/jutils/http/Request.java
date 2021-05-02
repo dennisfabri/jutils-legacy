@@ -2,7 +2,11 @@ package de.df.jutils.http;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 public class Request {
 

@@ -1,6 +1,8 @@
 package de.df.jutils.i18n;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.ResourceBundle;
 
 public class EmptyResourceBundle extends ResourceBundle {
 

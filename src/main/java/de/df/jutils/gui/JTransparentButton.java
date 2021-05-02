@@ -5,7 +5,9 @@ package de.df.jutils.gui;
 
 import java.awt.Insets;
 
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
 
 /**
  * @author Mueller

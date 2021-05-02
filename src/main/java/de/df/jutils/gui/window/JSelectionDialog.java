@@ -4,13 +4,19 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
 import de.df.jutils.gui.layout.FormLayoutUtils;
-import de.df.jutils.gui.util.*;
+import de.df.jutils.gui.util.AIconBundle;
+import de.df.jutils.gui.util.UIStateUtils;
+import de.df.jutils.gui.util.WindowUtils;
 import de.df.jutils.i18n.util.JUtilsI18n;
 
 public class JSelectionDialog extends JDialog {

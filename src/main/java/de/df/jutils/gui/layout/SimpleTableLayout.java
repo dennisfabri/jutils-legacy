@@ -5,10 +5,15 @@ package de.df.jutils.gui.layout;
  * Copyright 2002 Sun Microsystems, Inc. All rights reserved. SUN
  * PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class SimpleTableLayout implements LayoutManager, Serializable {
 

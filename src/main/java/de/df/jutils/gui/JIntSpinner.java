@@ -8,7 +8,9 @@ package de.df.jutils.gui;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.*;
+import javax.swing.AbstractSpinnerModel;
+import javax.swing.JFormattedTextField;
+import javax.swing.JSpinner;
 
 /**
  * @author dennis

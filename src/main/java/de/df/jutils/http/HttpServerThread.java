@@ -2,7 +2,12 @@ package de.df.jutils.http;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.IllegalBlockingModeException;
 
 /*

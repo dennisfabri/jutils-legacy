@@ -1,7 +1,12 @@
 package de.df.jutils.gui.util;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dialog;
+import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Based on code from "Santhosh Kumar T" posten on jroller. Modified by Dennis Fabri.

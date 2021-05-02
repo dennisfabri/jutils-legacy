@@ -1,6 +1,8 @@
 package de.df.jutils.plugin.io;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.xml.sax.helpers.DefaultHandler;
 

@@ -2,7 +2,10 @@ package org.jdesktop.swingx.util;
 
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.ComboBoxEditor;
+import javax.swing.JComboBox;
+import javax.swing.JLayer;
+import javax.swing.JTextField;
 
 public class ComboBoxUtil {
 

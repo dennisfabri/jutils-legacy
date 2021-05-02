@@ -3,10 +3,20 @@
  */
 package de.df.jutils.gui.autocomplete;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.ComboBoxModel;
+import javax.swing.InputVerifier;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLayer;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

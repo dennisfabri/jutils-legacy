@@ -2,7 +2,9 @@ package org.jdesktop.swinghelper.debug;
 
 import java.lang.ref.WeakReference;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.RepaintManager;
+import javax.swing.SwingUtilities;
 
 /**
  * <p>

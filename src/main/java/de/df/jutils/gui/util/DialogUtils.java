@@ -12,7 +12,10 @@ package de.df.jutils.gui.util;
 import java.awt.Dimension;
 import java.awt.Window;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 import org.oxbow.swingbits.dialog.task.TaskDialog;
 import org.oxbow.swingbits.dialog.task.TaskDialog.StandardCommand;

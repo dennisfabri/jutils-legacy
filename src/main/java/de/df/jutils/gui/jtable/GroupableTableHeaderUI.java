@@ -8,19 +8,27 @@
  */
 package de.df.jutils.gui.jtable;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
-import javax.swing.*;
+import javax.swing.CellRendererPane;
+import javax.swing.JComponent;
+import javax.swing.UIManager;
 import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.*;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.TableHeaderUI;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
-import javax.swing.table.*;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.renderer.SubstanceDefaultTableHeaderCellRenderer;
-import org.pushingpixels.substance.internal.ui.*;
+import org.pushingpixels.substance.internal.ui.SubstanceTableHeaderUI;
 
 import de.df.jutils.reflection.ReflectionUtils;
 

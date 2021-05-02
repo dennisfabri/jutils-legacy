@@ -1,6 +1,8 @@
 package de.df.jutils.reflection;
 
-import java.net.*;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.net.URLStreamHandlerFactory;
 
 public final class ExtendedURLClassLoader extends URLClassLoader {
 

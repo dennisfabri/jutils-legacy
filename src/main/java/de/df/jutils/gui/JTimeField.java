@@ -4,7 +4,10 @@
 
 package de.df.jutils.gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.SystemColor;
 import java.util.LinkedList;
 import java.util.ListIterator;
 

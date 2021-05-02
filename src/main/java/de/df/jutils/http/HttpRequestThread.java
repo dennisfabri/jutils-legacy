@@ -4,7 +4,10 @@
 
 package de.df.jutils.http;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URLConnection;
 import java.text.DateFormat;

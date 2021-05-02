@@ -2,7 +2,13 @@ package de.df.jutils.gui.border;
 
 import static de.df.jutils.gui.util.GraphicsUtils.paintGradient;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JLabel;

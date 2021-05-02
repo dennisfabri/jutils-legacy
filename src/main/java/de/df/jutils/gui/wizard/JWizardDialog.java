@@ -5,9 +5,17 @@ package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 
 import de.df.jutils.gui.JInfiniteProgressDialog;
 import de.df.jutils.gui.util.EDTUtils;

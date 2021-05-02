@@ -3,10 +3,14 @@
  */
 package de.df.jutils.gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Based on the article "Create stylish glass pane on long GUI-blocking

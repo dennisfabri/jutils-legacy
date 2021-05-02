@@ -3,7 +3,10 @@
  */
 package de.df.jutils.data;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public final class ListUtils {
 

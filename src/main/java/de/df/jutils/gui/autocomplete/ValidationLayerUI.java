@@ -1,9 +1,17 @@
 package de.df.jutils.gui.autocomplete;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.util.Optional;
 
-import javax.swing.*;
+import javax.swing.InputVerifier;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.LayerUI;
 import javax.swing.text.JTextComponent;
 

@@ -6,7 +6,10 @@ package de.df.jutils.gui.renderer;
 
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
 
 /*
  * Created on 24.04.2005

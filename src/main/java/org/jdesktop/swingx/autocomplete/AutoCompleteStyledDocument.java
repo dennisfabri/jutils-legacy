@@ -19,7 +19,12 @@ package org.jdesktop.swingx.autocomplete;
 import java.awt.Color;
 import java.awt.Font;
 
-import javax.swing.text.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.Style;
+import javax.swing.text.StyledDocument;
 
 /**
  * @author Karl George Schaefer

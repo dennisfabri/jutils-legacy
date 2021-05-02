@@ -6,7 +6,9 @@ package de.df.jutils.gui.layout;
 import java.awt.Component;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;

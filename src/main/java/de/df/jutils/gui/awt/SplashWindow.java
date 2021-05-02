@@ -6,8 +6,14 @@ package de.df.jutils.gui.awt;
  * CH-6405, Switzerland. All rights reserved.
  * This software is in the public domain.
  */
-
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -39,7 +45,7 @@ import javax.imageio.ImageIO;
  * @author Werner Randelshofer
  * @version 2.1 2005-04-03 Revised.
  */
-public final class SplashWindow extends Window {
+final class SplashWindow extends Window {
     /**
      * 
      */

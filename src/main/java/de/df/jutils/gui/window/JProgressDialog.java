@@ -5,7 +5,10 @@ package de.df.jutils.gui.window;
 
 import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JProgressBar;
+import javax.swing.WindowConstants;
 
 import de.df.jutils.gui.util.WindowUtils;
 

@@ -4,7 +4,9 @@
 
 package com.codeguru.tame.jtable;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Enumeration;
 
 import javax.swing.JTable;

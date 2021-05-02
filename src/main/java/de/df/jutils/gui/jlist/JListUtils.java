@@ -3,7 +3,10 @@ package de.df.jutils.gui.jlist;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
 
 import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.renderer.AlternatingListCellRenderer;

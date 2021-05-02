@@ -1,6 +1,6 @@
 package sl.shapes;
 
-import java.awt.*;
+import java.awt.Polygon;
 
 public class StarPolygon extends Polygon {
     public StarPolygon(int x, int y, int r, int innerR, int vertexCount) {

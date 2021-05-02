@@ -1,6 +1,8 @@
 package de.df.jutils.resourcebundle;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.ResourceBundle;
 
 public final class TableResourceBundle extends ResourceBundle {
 

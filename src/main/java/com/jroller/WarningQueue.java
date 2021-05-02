@@ -1,6 +1,10 @@
 package com.jroller;
 
-import java.lang.management.*;
+import java.lang.management.LockInfo;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MonitorInfo;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 
 /**
  * @link http://jroller.com/page/tackline?entry=detecting_invokeandwait_abuse

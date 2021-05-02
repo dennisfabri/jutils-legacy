@@ -3,9 +3,13 @@
  */
 package de.df.jutils.gui.awt;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-public class ProgressBar extends Component {
+class ProgressBar extends Component {
 
     private static final long  serialVersionUID = 4960265360749246356L;
 

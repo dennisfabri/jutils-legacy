@@ -27,7 +27,9 @@ import java.awt.Component;
 import java.awt.Rectangle;
 
 import javax.swing.JTree;
-import javax.swing.tree.*;
+import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 class TreeDataTipCell implements DataTipCell {
     private final JTree tree;
