@@ -63,7 +63,7 @@ public class PluginData extends DefaultHandler {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("Name: \"");
         sb.append(name);
         sb.append("\" Description: \"");

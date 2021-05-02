@@ -71,7 +71,7 @@ public final class PrintManager {
 	private static String fontlog = null;
 
 	public static Font getDefaultFont() {
-		StringBuffer log = new StringBuffer();
+	    StringBuilder log = new StringBuilder();
 
 		Font defaultfont1 = null;
 		Font defaultfont2 = null;

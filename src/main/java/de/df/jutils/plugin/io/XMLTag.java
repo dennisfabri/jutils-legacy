@@ -64,7 +64,7 @@ class XMLTag {
             int zahl = 0;
             LinkedList<Object> ll = ((LinkedList<Object>) o);
             ListIterator<Object> li = ll.listIterator();
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("LinkedList[");
             sb.append(ll.size());
             sb.append("]:");
@@ -83,7 +83,7 @@ class XMLTag {
         }
         if (o instanceof Object[]) {
             Object[] oa = (Object[]) o;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("Array[");
             sb.append(oa.length);
             sb.append("]:");

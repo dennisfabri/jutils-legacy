@@ -51,7 +51,7 @@ public class Tripel<A, B, C> {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (first == null) {
             sb.append("null");
         } else {

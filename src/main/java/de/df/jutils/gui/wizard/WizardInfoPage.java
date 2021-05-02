@@ -26,7 +26,7 @@ public class WizardInfoPage extends AWizardPage {
         if (text == null) {
             throw new NullPointerException("String[] text must not be null!");
         }
-        StringBuffer topdown = new StringBuffer("4dlu:grow,fill:default");
+        StringBuilder topdown = new StringBuilder("4dlu:grow,fill:default");
         for (int x = 0; x < text.length; x++) {
             topdown.append(",4dlu,fill:default");
         }

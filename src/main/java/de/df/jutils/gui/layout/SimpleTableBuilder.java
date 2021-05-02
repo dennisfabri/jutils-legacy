@@ -46,7 +46,7 @@ public class SimpleTableBuilder {
     public SimpleTableBuilder(JPanel panel, boolean[] grow, boolean group) {
         columns = grow.length;
         currentColumn = columns + 1;
-        StringBuffer sb = new StringBuffer("4dlu");
+        StringBuilder sb = new StringBuilder("4dlu");
         for (boolean aGrow1 : grow) {
             if (aGrow1) {
                 sb.append(",fill:default:grow,4dlu");

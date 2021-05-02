@@ -43,7 +43,7 @@ public class FixedDecimal extends Number implements Comparable<FixedDecimal> {
         long punkteGanz = punkteHundert / mult;
         punkteHundert = punkteHundert % mult;
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         // Set first digits
         sb.append(punkteGanz);

@@ -63,7 +63,7 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         this(w, title, note, options, tooltips, null, selected);
     }
 
-    public WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips, boolean[] enabled, boolean[] selected) {
+    private WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips, boolean[] enabled, boolean[] selected) {
         super(title, note);
         wizard = w;
         if (options == null) {
@@ -75,7 +75,7 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         if ((selected != null) && (selected.length != options.length)) {
             throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
-        StringBuffer topdown = new StringBuffer("0px:grow");
+        StringBuilder topdown = new StringBuilder("0px:grow");
         for (int x = 0; x < options.length; x++) {
             topdown.append(",4dlu,fill:default");
         }
@@ -104,29 +104,8 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    public final int firstSelectedIndex() {
-        for (int x = 0; x < buttons.length; x++) {
-            if (buttons[x].isSelected()) {
-                return x;
-            }
-        }
-        return -1;
-    }
-
     public final void setEnabled(int index, boolean enabled) {
         buttons[index].setEnabled(enabled);
-        // if ((!enabled) && (buttons[index].isSelected())) {
-        // for (JCheckBox button : buttons) {
-        // if (button.isEnabled()) {
-        // button.setSelected(true);
-        // return;
-        // }
-        // }
-        // }
-    }
-
-    public final void setSelection(int index, boolean value) {
-        setSelectedIndexI(index, value);
     }
 
     private void setSelectedIndexI(int index, boolean value) {
@@ -141,10 +120,6 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         listeners.addLast(cl);
     }
 
-    public void removeSelectionListener(ChangeListener cl) {
-        listeners.remove(cl);
-    }
-
     private class SelectionChangeEvent extends ChangeEvent {
 
         private static final long serialVersionUID = 5861178658890265455L;
@@ -154,7 +129,7 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    void notifySelectionChange() {
+    private void notifySelectionChange() {
         ChangeEvent ce = new SelectionChangeEvent();
         for (ChangeListener cl : listeners) {
             cl.stateChanged(ce);
@@ -169,10 +144,6 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         return buttons.length;
     }
 
-    public final void setOptionName(int index, String name) {
-        buttons[index].setText(name);
-    }
-
     @Override
     public JComponent getPage() {
         return panel;
@@ -185,7 +156,7 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    protected void notifyUpdate() {
+    private void notifyUpdate() {
         wizard.notifyUpdate();
     }
 }

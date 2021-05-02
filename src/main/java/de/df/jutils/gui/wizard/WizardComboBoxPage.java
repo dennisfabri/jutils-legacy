@@ -88,7 +88,7 @@ public class WizardComboBoxPage<T extends Object> extends AWizardPage implements
         super(title, note);
         checkArguments(names, enabled, values, selection);
         wizard = w;
-        StringBuffer topdown = new StringBuffer("0px:grow");
+        StringBuilder topdown = new StringBuilder("0px:grow");
         for (int x = 0; x < names.length; x++) {
             topdown.append(",4dlu,fill:default");
         }

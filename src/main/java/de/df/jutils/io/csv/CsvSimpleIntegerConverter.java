@@ -29,7 +29,7 @@ public class CsvSimpleIntegerConverter implements CsvDataWriter {
                 }
             }
             long value = ((Number) o).longValue();
-            StringBuffer s = new StringBuffer();
+            StringBuilder s = new StringBuilder();
             s.append(value);
             while (s.length() < digits) {
                 s.insert(0, '0');

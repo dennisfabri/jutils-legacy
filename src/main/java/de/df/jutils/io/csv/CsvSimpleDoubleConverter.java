@@ -28,7 +28,7 @@ public class CsvSimpleDoubleConverter implements CsvDataWriter {
         long punkteGanz = punkteHundert / mult;
         punkteHundert = punkteHundert % mult;
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         // Set first digits
         sb.append(punkteGanz);

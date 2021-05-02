@@ -34,8 +34,8 @@ public final class FormLayoutUtils {
         return createDoubleFormLayout(columns, 4);
     }
 
-    public static String createDoubleFormLayout(int columns, int dlu) {
-        StringBuffer result = new StringBuffer();
+    private static String createDoubleFormLayout(int columns, int dlu) {
+        StringBuilder result = new StringBuilder();
         result.append(dlu);
         result.append("dlu");
         for (int x = 0; x < columns; x++) {
@@ -54,7 +54,7 @@ public final class FormLayoutUtils {
     }
 
     public static String createGrowingLayoutString(int rowsOrColumns, int dlu, int outer) {
-        StringBuffer result = new StringBuffer("" + outer + "dlu");
+        StringBuilder result = new StringBuilder("" + outer + "dlu");
         if (rowsOrColumns > 0) {
             for (int x = 0; x < rowsOrColumns - 1; x++) {
                 result.append(",fill:default:grow,").append(dlu).append("dlu");
@@ -69,7 +69,7 @@ public final class FormLayoutUtils {
     }
 
     public static String createLayoutString(int rowsOrColumns, int dlu, String leftOuter, String rightOuter) {
-        StringBuffer result = new StringBuffer(leftOuter);
+        StringBuilder result = new StringBuilder(leftOuter);
         if (rowsOrColumns > 0) {
             for (int x = 0; x < rowsOrColumns - 1; x++) {
                 result.append(",fill:default,").append(dlu).append("dlu");
@@ -83,24 +83,12 @@ public final class FormLayoutUtils {
         return createLayoutString(rowsOrColumns, dlu, dlu);
     }
 
-    public static String createFixedTable(int rowsOrColumns, int dlu) {
-        StringBuffer result = new StringBuffer("1px");
-        for (int x = 0; x < rowsOrColumns; x++) {
-            result.append(",").append(dlu).append("dlu,1px");
-        }
-        return result.toString();
-    }
-
-    public static String createSpacingLayoutString(int rowsOrColumns) {
-        return createSpacingLayoutString(rowsOrColumns, 4);
-    }
-
     public static String createSpacingLayoutString(int rowsOrColumns, int dlu) {
         return createSpacingLayoutString(rowsOrColumns, dlu, dlu);
     }
 
-    public static String createSpacingLayoutString(int rowsOrColumns, int dlu, int outer) {
-        StringBuffer result = new StringBuffer("" + outer + "dlu:grow");
+    private static String createSpacingLayoutString(int rowsOrColumns, int dlu, int outer) {
+        StringBuilder result = new StringBuilder("" + outer + "dlu:grow");
         if (rowsOrColumns > 0) {
             for (int x = 0; x < rowsOrColumns - 1; x++) {
                 result.append(",fill:default,").append(dlu).append("dlu:grow");
@@ -119,18 +107,6 @@ public final class FormLayoutUtils {
             layout.setRowGroups(new int[0][0]);
         } else {
             layout.setRowGroups(createGroups(offset, count));
-        }
-    }
-
-    public static void setColumnGroups(FormLayout layout, int count) {
-        setColumnGroups(layout, 0, count);
-    }
-
-    public static void setColumnGroups(FormLayout layout, int offset, int count) {
-        if (count <= 1) {
-            layout.setColumnGroups(new int[0][0]);
-        } else {
-            layout.setColumnGroups(createGroups(offset, count));
         }
     }
 

@@ -22,7 +22,7 @@ import de.df.jutils.gui.JIntSpinner;
  */
 public class WizardIntegerPage extends AWizardPage implements UpdateListener {
 
-    final class JWizardPanel extends JPanel {
+    private final class JWizardPanel extends JPanel {
 
         private static final long serialVersionUID = 881455444130820538L;
 
@@ -43,7 +43,7 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    JIntSpinner[]         buttons = null;
+    private JIntSpinner[]         buttons = null;
     private JPanel        panel   = new JWizardPanel();
     private final JWizard wizard;
 
@@ -77,7 +77,7 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
         super(title, note);
         checkArguments(names, enabled, values, min, max);
         wizard = w;
-        StringBuffer topdown = new StringBuffer("0px:grow");
+        StringBuilder topdown = new StringBuilder("0px:grow");
         for (int x = 0; x < names.length; x++) {
             topdown.append(",4dlu,fill:default");
         }
@@ -112,10 +112,6 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    public final void setEnabled(int index, boolean enabled) {
-        buttons[index].setEnabled(enabled);
-    }
-
     public int getItemCount() {
         return buttons.length;
     }
@@ -136,7 +132,7 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    protected void notifyUpdate() {
+    private void notifyUpdate() {
         wizard.notifyUpdate();
     }
 }

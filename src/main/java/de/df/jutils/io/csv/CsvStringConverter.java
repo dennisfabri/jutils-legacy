@@ -12,7 +12,7 @@ class CsvStringConverter implements CsvDataWriter {
     @Override
     public String convert(Object o, String format) {
         if (o instanceof String[]) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("\"");
             String[] s = (String[]) o;
             boolean first = true;
@@ -26,7 +26,7 @@ class CsvStringConverter implements CsvDataWriter {
             sb.append("\"");
             return sb.toString();
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("\"");
         sb.append(o.toString().replace("\"", "\\\""));
         sb.append("\"");

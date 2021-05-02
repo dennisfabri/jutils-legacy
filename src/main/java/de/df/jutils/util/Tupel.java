@@ -25,7 +25,7 @@ public class Tupel<A, B> {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (first == null) {
             sb.append("null");
         } else {

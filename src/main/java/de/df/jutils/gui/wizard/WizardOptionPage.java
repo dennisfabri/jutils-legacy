@@ -27,7 +27,7 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public class WizardOptionPage extends AWizardPage implements UpdateListener {
 
-    final class JWizardPanel extends JPanel {
+    private final class JWizardPanel extends JPanel {
 
         private static final long serialVersionUID = 6260468761554139626L;
 
@@ -51,7 +51,7 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
     }
 
     private ButtonGroup   group   = new ButtonGroup();
-    JRadioButton[]        buttons = null;
+    private JRadioButton[]        buttons = null;
     private JPanel        panel   = new JWizardPanel();
     private final JWizard wizard;
 
@@ -80,7 +80,7 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
                 explanation = null;
             }
         }
-        StringBuffer topdown = new StringBuffer();
+        StringBuilder topdown = new StringBuilder();
         if (explanation != null) {
             topdown.append("4dlu,fill:default,4dlu,");
         } else {
@@ -180,10 +180,6 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
         return buttons.length;
     }
 
-    public final void setOptionName(int index, String name) {
-        buttons[index].setText(name);
-    }
-
     @Override
     public JComponent getPage() {
         return panel;
@@ -206,7 +202,7 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    protected void notifyUpdate() {
+    private void notifyUpdate() {
         wizard.notifyUpdate();
     }
 

@@ -81,7 +81,7 @@ public final class StringTools {
             count++;
         }
         size /= start;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(size);
         sb.append(UNITS[count]);
         return sb.toString();
@@ -99,7 +99,7 @@ public final class StringTools {
     }
 
     public static String bytesToHex(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (byte mybyte : bytes) {
             int i = mybyte;
             if (i < 0) {
@@ -217,7 +217,7 @@ public final class StringTools {
     public static final char[] ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
     public static String asText(int i) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (i < ABC.length) {
             return "" + ABC[i];
         }
@@ -278,7 +278,7 @@ public final class StringTools {
     }
 
     public static String getRowName(String sheet, int row, int column) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         if (sheet != null) {
             result.append(sheet);
             result.append(' ');
@@ -296,7 +296,7 @@ public final class StringTools {
             return null;
         }
         char[] chars = s.toCharArray();
-        StringBuffer neu = new StringBuffer();
+        StringBuilder neu = new StringBuilder();
         for (char aChar : chars) {
             if (aChar != c) {
                 neu.append(aChar);
@@ -397,7 +397,7 @@ public final class StringTools {
         if (names == null) {
             return "";
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (names.length > 0) {
             sb.append(names[0]);
             for (int x = 1; x < names.length; x++) {
@@ -447,7 +447,7 @@ public final class StringTools {
         long min = zeit / 6000;
         int sec = (int) ((zeit % 6000) / 100);
         int ten = (int) (zeit % 100);
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append(min);
         s.append(':');
         if (sec < 10) {
@@ -496,7 +496,7 @@ public final class StringTools {
             if (chars[x] == '"') {
                 // Step over quote
                 x++;
-                StringBuffer entry = new StringBuffer();
+                StringBuilder entry = new StringBuilder();
                 while ((x < chars.length) && (chars[x] != '"')) {
                     entry.append(chars[x]);
                     x++;
