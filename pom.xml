@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.dennisfabri</groupId>
+	<groupId>de.dennisfabri.jutils</groupId>
 	<artifactId>jutils-legacy</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>jutils-legacy</name>
+	<description>Unordered class collection</description>
 	<url>https://www.dennisfabri.de</url>
 
 	<properties>
@@ -21,8 +23,49 @@
 		<junit.version>5.7.1</junit.version>
 	</properties>
 
+	<modules>
+		<module>print</module>
+		<module>swing</module>
+		<module>common</module>
+		<module>io</module>
+		<module>plugin</module>
+		<module>wizard</module>
+		<module>i18n</module>
+	</modules>
+
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>print</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>i18n</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>swing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>io</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.dennisfabri.jutils</groupId>
+				<artifactId>plugin</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>
@@ -35,54 +78,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.lisasp.legacy</groupId>
-			<artifactId>uistate</artifactId>
-			<version>0.6.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.lisasp.swing</groupId>
-			<artifactId>filechooser-core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jgoodies</groupId>
-			<artifactId>jgoodies-forms</artifactId>
-			<version>1.9.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.librepdf</groupId>
-			<artifactId>openpdf</artifactId>
-			<version>1.3.25</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.lisasp.legacy</groupId>
-			<artifactId>l2fprod-common-tasks</artifactId>
-			<version>7.4.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.oxbow</groupId>
-			<artifactId>swingbits</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.pushing-pixels</groupId>
-			<artifactId>radiance-substance</artifactId>
-			<version>3.5.1</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<scope>test</scope>
@@ -90,11 +85,50 @@
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.7.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
 				<configuration>
 					<release>${java.version}</release>
 					<compilerArgs>
@@ -103,10 +137,14 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
