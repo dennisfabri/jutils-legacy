@@ -7,14 +7,23 @@
 		<artifactId>jutils-legacy</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>common</artifactId>
-	<name>JUtils Common</name>
+	<artifactId>jutils-io</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
+			<groupId>com.github.librepdf</groupId>
+			<artifactId>openpdf</artifactId>
+			<version>1.3.25</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.dennisfabri.jutils</groupId>
+			<artifactId>jutils-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.dennisfabri.jutils</groupId>
+			<artifactId>jutils-swing</artifactId>
+		</dependency>
+		
 	</dependencies>
 </project>

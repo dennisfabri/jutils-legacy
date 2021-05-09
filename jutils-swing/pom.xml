@@ -7,7 +7,7 @@
 		<artifactId>jutils-legacy</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>swing</artifactId>
+	<artifactId>jutils-swing</artifactId>
 	<name>JUtils Swing</name>
 
 	<dependencies>
@@ -39,11 +39,11 @@
 
 		<dependency>
 			<groupId>de.dennisfabri.jutils</groupId>
-			<artifactId>common</artifactId>
+			<artifactId>jutils-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.dennisfabri.jutils</groupId>
-			<artifactId>i18n</artifactId>
+			<artifactId>jutils-i18n</artifactId>
 		</dependency>
 
 		<dependency>

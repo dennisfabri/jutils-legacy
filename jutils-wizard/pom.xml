@@ -5,5 +5,16 @@
     <artifactId>jutils-legacy</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>i18n</artifactId>
+  <artifactId>jutils-wizard</artifactId>
+  
+	<dependencies>
+		<dependency>
+			<groupId>de.dennisfabri.jutils</groupId>
+			<artifactId>jutils-swing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.dennisfabri.jutils</groupId>
+			<artifactId>jutils-io</artifactId>
+		</dependency>
+	</dependencies>  
 </project>

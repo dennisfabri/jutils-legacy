@@ -7,18 +7,22 @@
 		<artifactId>jutils-legacy</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>print</artifactId>
+	<artifactId>jutils-print</artifactId>
 	<name>JUtils Print</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.dennisfabri.jutils</groupId>
-			<artifactId>swing</artifactId>
+			<artifactId>jutils-swing</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.dennisfabri.jutils</groupId>
-			<artifactId>io</artifactId>
+			<artifactId>jutils-io</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-all</artifactId>
+		</dependency>
 	</dependencies>
 </project>
