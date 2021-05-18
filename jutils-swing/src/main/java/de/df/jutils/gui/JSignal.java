@@ -26,10 +26,12 @@ import sl.shapes.RoundPolygon;
 
 public class JSignal extends JComponent {
 
-    private String        text      = "";
-    private Color         basecolor = null;
+    private static final long serialVersionUID = -3054469719654737514L;
 
-    private static JLabel label     = new JLabel("", SwingConstants.CENTER);
+    private String text = "";
+    private Color basecolor = null;
+
+    private static JLabel label = new JLabel("", SwingConstants.CENTER);
 
     public String getText() {
         return text;
@@ -61,11 +63,10 @@ public class JSignal extends JComponent {
         g2.clearRect(0, 0, getWidth(), getHeight());
 
         // Create shapes for the painted area
-        Shape contour = new RoundPolygon(new Polygon(new int[] { x, x + width - 1, x + width - 1, x }, new int[] { y, y, y + height - 1, y + height - 1 }, 4),
-                Math.min(width, height) / 2);
-        Shape icontour = new RoundPolygon(
-                new Polygon(new int[] { x + 1, x + width - 2, x + width - 2, x + 1 }, new int[] { y + 1, y + 1, y + height - 2, y + height - 2 }, 4),
-                Math.min(width, height) / 2);
+        Shape contour = new RoundPolygon(new Polygon(new int[] { x, x + width - 1, x + width - 1, x },
+                new int[] { y, y, y + height - 1, y + height - 1 }, 4), Math.min(width, height) / 2);
+        Shape icontour = new RoundPolygon(new Polygon(new int[] { x + 1, x + width - 2, x + width - 2, x + 1 },
+                new int[] { y + 1, y + 1, y + height - 2, y + height - 2 }, 4), Math.min(width, height) / 2);
 
         // Calculate drawing colors
         Color foreground = Color.BLACK;
@@ -104,7 +105,8 @@ public class JSignal extends JComponent {
         paintText(g2, x, y, width, height, text, foreground, isEnabled());
     }
 
-    private static void paintText(Graphics2D g2, int x, int y, int width, int height, String text, Color foreground, boolean enabled) {
+    private static void paintText(Graphics2D g2, int x, int y, int width, int height, String text, Color foreground,
+            boolean enabled) {
         // Draw the text (if any)
         if (text != null) {
             if (DesignInit.ANTIALISED_TEXT) {
@@ -135,18 +137,18 @@ public class JSignal extends JComponent {
     public Color getBasecolor() {
         return basecolor;
     }
-    
+
     private static class SimpleColorScheme extends BaseLightColorScheme {
 
         private final Color base;
         private final Color foreground;
 
-        private Color       light1;
-        private Color       light2;
-        private Color       light3;
+        private Color light1;
+        private Color light2;
+        private Color light3;
 
-        private Color       dark1;
-        private Color       dark2;
+        private Color dark1;
+        private Color dark2;
 
         public SimpleColorScheme(Color base, Color foreground) {
             super("");

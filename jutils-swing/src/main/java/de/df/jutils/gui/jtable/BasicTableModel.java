@@ -4,7 +4,7 @@
 package de.df.jutils.gui.jtable;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 01.10.2004
  */
 public class BasicTableModel extends SimpleTableModel {

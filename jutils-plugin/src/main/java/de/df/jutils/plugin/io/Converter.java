@@ -7,7 +7,8 @@ package de.df.jutils.plugin.io;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import de.df.jutils.exception.FormatErrorException;
+import de.df.jutils.plugin.data.PluginData;
+import de.df.jutils.plugin.exception.FormatErrorException;
 
 /**
  * @author dennis

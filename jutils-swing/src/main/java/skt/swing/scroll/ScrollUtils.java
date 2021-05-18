@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 /**
- * @author mueller
+ * @author Dennis Fabri
  * @since 01.08.2005
  */
 final class ScrollUtils {

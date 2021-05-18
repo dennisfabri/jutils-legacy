@@ -23,7 +23,7 @@ import javax.swing.ListCellRenderer;
 abstract class ADropSmoother<T> extends AbstractComponentDecorator {
     /**
      * Animation repaint interval. Make this larger to slow down the
-     * animation. Changed by Dennis Mueller: Rate doubled
+     * animation. Changed by Dennis Fabri: Rate doubled
      */
     private static final int INTERVAL = 1000 / 24 / 2;
     private Timer            timer    = new Timer(true);

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import de.df.jutils.exception.ParserException;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 abstract class ATextProcessor {
 

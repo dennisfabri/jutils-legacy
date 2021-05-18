@@ -55,7 +55,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
 
     // The currently outstanding event dispatches. The implementation of
     // modal dialogs is a common cause for multiple outstanding dispatches.
-    final LinkedList<DispatchInfo> dispatches = new LinkedList<DispatchInfo>();
+    final LinkedList<DispatchInfo> dispatches = new LinkedList<>();
 
     private static class DispatchInfo {
         // The last-dumped hung stack trace for this dispatch.
@@ -206,6 +206,8 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         try {
             preDispatchEvent();
             super.dispatchEvent(event);
+        } catch (RuntimeException ex) {
+            // Nothing to do
         } finally {
             postDispatchEvent();
             if (!haveShownSomeComponent && event instanceof WindowEvent && event.getID() == WindowEvent.WINDOW_OPENED) {

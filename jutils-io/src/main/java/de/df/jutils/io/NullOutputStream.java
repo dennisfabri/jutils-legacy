@@ -9,7 +9,7 @@ import java.io.OutputStream;
 /**
  * This class simply consumes every output without writing it anywhere.
  * 
- * @author mueller
+ * @author Dennis Fabri
  */
 public class NullOutputStream extends OutputStream {
 

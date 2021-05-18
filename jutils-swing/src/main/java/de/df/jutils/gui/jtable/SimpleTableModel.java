@@ -8,7 +8,7 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 05.04.2004
  */
 public class SimpleTableModel extends DefaultTableModel {

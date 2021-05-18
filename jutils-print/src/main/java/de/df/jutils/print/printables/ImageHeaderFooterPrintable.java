@@ -21,7 +21,7 @@ import de.df.jutils.gui.JIcon;
 import de.df.jutils.gui.util.EDTUtils;
 
 /**
- * @author Mueller
+ * @author Dennis Fabri
  */
 public class ImageHeaderFooterPrintable implements Printable {
 

@@ -4,7 +4,7 @@
 package de.df.jutils.graphics;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 final class Calculator {
 

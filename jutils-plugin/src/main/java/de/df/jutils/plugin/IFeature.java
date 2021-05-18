@@ -4,7 +4,7 @@
 package de.df.jutils.plugin;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 23.05.2004
  */
 public interface IFeature extends IDataUpdateListener {

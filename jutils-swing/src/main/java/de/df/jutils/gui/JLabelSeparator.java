@@ -15,7 +15,7 @@ import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public class JLabelSeparator extends JPanel {
 

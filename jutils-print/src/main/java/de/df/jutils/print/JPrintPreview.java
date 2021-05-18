@@ -73,40 +73,38 @@ class JPrintPreview extends JInfiniteProgressFrame {
      */
     private static final long serialVersionUID = 3258129163256084278L;
 
-    private static final int  IMAGE_TYPE       = BufferedImage.TYPE_BYTE_GRAY;
+    private static final int IMAGE_TYPE = BufferedImage.TYPE_BYTE_GRAY;
 
-    private Window            parent;
-    PageContainer             pages1;
-    PageContainer             pages2;
+    private Window parent;
+    PageContainer pages1;
+    boolean render;
+    boolean pause;
+    boolean stopped;
 
-    boolean                   render;
-    boolean                   pause;
-    boolean                   stopped;
+    private ImageIcon imageIcon;
+    private JLabel image;
+    JPanel imagePanel;
+    JScrollPane imagePanelScroller;
 
-    private ImageIcon         imageIcon;
-    private JLabel            image;
-    JPanel                    imagePanel;
-    JScrollPane               imagePanelScroller;
-
-    private JButton           print;
-    private JButton           setup;
-    private JButton           save;
-    JButton                   next;
-    JButton                   previous;
-    JComboBox<String>         pageNumber;
+    private JButton print;
+    private JButton setup;
+    private JButton save;
+    JButton next;
+    JButton previous;
+    JComboBox<String> pageNumber;
     // JComboBox size;
-    JIntSpinner               size;
+    JIntSpinner size;
 
-    int                       percent;
-    String                    name;
-    PrintableCreator          printable;
-    JLabel                    maxpage;
+    int percent;
+    String name;
+    PrintableCreator printable;
+    JLabel maxpage;
 
-    JLabel                    status;
-    int                       statuspos        = 0;
-    Icon[]                    statusicons      = null;
+    JLabel status;
+    int statuspos = 0;
+    Icon[] statusicons = null;
 
-    PrintCallback             printcallback;
+    PrintCallback printcallback;
 
     public JPrintPreview(Window parent, PrintableCreator p, String jobname, AIconBundle icons, Image titleicon) {
         this(parent, p, jobname, icons, (List<Image>) null);
@@ -125,7 +123,6 @@ class JPrintPreview extends JInfiniteProgressFrame {
         name = jobname;
         printable = p;
         pages1 = new PageContainer();
-        pages2 = new PageContainer();
 
         render = true;
         pause = false;
@@ -317,7 +314,6 @@ class JPrintPreview extends JInfiniteProgressFrame {
         super.setVisible(b);
         if (!b) {
             pages1.clear();
-            pages2.clear();
         }
     }
 
@@ -359,7 +355,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
                             bar.setValue(bar.getMinimum());
                         }
                     } else {
-                        bar.setValue(Math.min(bar.getMaximum(), bar.getValue() + bar.getUnitIncrement() * mwe.getUnitsToScroll()));
+                        bar.setValue(Math.min(bar.getMaximum(),
+                                bar.getValue() + bar.getUnitIncrement() * mwe.getUnitsToScroll()));
                     }
                 } else {
                     if (bar.getMinimum() == bar.getValue()) {
@@ -367,7 +364,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
                             bar.setValue(bar.getMaximum());
                         }
                     } else {
-                        bar.setValue(Math.min(bar.getMinimum(), bar.getValue() + bar.getUnitIncrement() * mwe.getUnitsToScroll()));
+                        bar.setValue(Math.min(bar.getMinimum(),
+                                bar.getValue() + bar.getUnitIncrement() * mwe.getUnitsToScroll()));
                     }
                 }
             }
@@ -429,69 +427,34 @@ class JPrintPreview extends JInfiniteProgressFrame {
             while (render) {
                 setStatus(true);
                 try {
-                    BufferedImage img1 = new BufferedImage((int) pF.getWidth(), (int) pF.getHeight(), IMAGE_TYPE);
-                    Graphics2D g1 = (Graphics2D) img1.getGraphics();
-                    // g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    // RenderingHints.VALUE_ANTIALIAS_ON);
-                    g1.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                    g1.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-                    g1.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    g1.setColor(Color.WHITE);
-                    g1.fillRect(0, 0, (int) pF.getWidth(), (int) pF.getHeight());
-                    g1.setColor(Color.BLACK);
-                    int result = printer.print(g1, pF, pageIndex);
+                    // Print with double factor to be able to resize
+                    // to a certain factor
+                    BufferedImage img2 = new BufferedImage((int) pF.getWidth() * 2, (int) pF.getHeight() * 2,
+                            IMAGE_TYPE);
+                    Graphics2D g2 = (Graphics2D) img2.getGraphics();
+                    g2.scale(2, 2);
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, (int) pF.getWidth(), (int) pF.getHeight());
+                    g2.setColor(Color.BLACK);
+                    int result = printer.print(g2, pF, pageIndex);
                     if (result != Printable.PAGE_EXISTS) {
                         render = false;
                     } else {
-                        // Print with double factor to be able to resize
-                        // to a certain factor
-                        BufferedImage img2 = new BufferedImage((int) pF.getWidth() * 2, (int) pF.getHeight() * 2, IMAGE_TYPE);
-                        Graphics2D g2 = (Graphics2D) img2.getGraphics();
-                        g2.scale(2, 2);
-                        // g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        // RenderingHints.VALUE_ANTIALIAS_ON);
-                        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-                        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-                        g2.setColor(Color.WHITE);
-                        g2.fillRect(0, 0, (int) pF.getWidth(), (int) pF.getHeight());
-                        g2.setColor(Color.BLACK);
-                        int printResult = printer.print(g2, pF, pageIndex);
-                        // int printResult = EDTUtils.print(printer, g2, pF,
-                        // pageIndex);
-                        if (printResult != Printable.PAGE_EXISTS) {
-                            img2 = new BufferedImage((int) pF.getWidth() * 2, (int) pF.getHeight() * 2, IMAGE_TYPE);
-                            g2 = (Graphics2D) img2.getGraphics();
-                            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-                            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                            g2.setColor(Color.WHITE);
-                            g2.fillRect(0, 0, (int) pF.getWidth(), (int) pF.getHeight());
-                            g2.setColor(Color.BLACK);
-                            g2.scale(2, 2);
-                            g2.drawImage(img1, 0, 0, null);
-                        }
-
-                        pages2.add(img2);
-                        pages1.add(img1);
+                        pages1.add(img2);
                         pageIndex++;
                         updateButtons();
                     }
-                } catch (OutOfMemoryError oome) {
-                    oome.printStackTrace();
-                    render = false;
-                } catch (PrinterException oome) {
+                } catch (OutOfMemoryError | PrinterException oome) {
                     oome.printStackTrace();
                     render = false;
                 }
                 while (pause && render) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        // Nothing to do
-                    }
+                    EDTUtils.waitOnEDT();
                 }
             }
             stopped = true;
@@ -549,53 +512,25 @@ class JPrintPreview extends JInfiniteProgressFrame {
                 status.setToolTipText(JUtilsI18n.get("de.dm.print.AllPagesReady"));
                 status.setIcon(null);
             }
-            maxpage.setText(JUtilsI18n.get("de.dm.print.ofpages", pages2.size()));
+            maxpage.setText(JUtilsI18n.get("de.dm.print.ofpages", pages1.size()));
         }
     }
 
     protected void updateImage() {
         try {
             int index = Math.max(0, pageNumber.getSelectedIndex());
-            Image i = null;
-            if ((percent > 100) && pages2.size() > index) {
-                BufferedImage bi = pages2.get(index);
-                if (bi != null) {
-                    if (percent == 200) {
-                        // Use 200 percent prerendered image
-                        i = bi;
-                    } else {
-                        // Use 200 percent prerendered image and scale to
-                        // deserved size
-                        double w = bi.getWidth();
-                        double h = bi.getHeight();
-                        w = w * percent / 200.0;
-                        h = h * percent / 200.0;
-                        i = ImageScaler.getScaledInstance(bi, (int) Math.round(w), (int) Math.round(h), true);
-                    }
-                }
-            }
-            if (i == null) {
-                BufferedImage bi = pages1.get(index);
-                if (bi == null && pages2.size() > index) {
-                    bi = pages2.get(index);
-                    if (bi != null) {
-                        bi = ImageScaler.getScaledInstance(bi, bi.getWidth() / 2, bi.getHeight() / 2, true);
-                    }
-                }
-                if (bi != null) {
-                    if (percent == 100) {
-                        i = bi;
-                    } else {
-                        double w = bi.getWidth();
-                        double h = bi.getHeight();
-                        w = w * percent / 100.0;
-                        h = h * percent / 100.0;
-                        i = ImageScaler.getScaledInstance(bi, (int) Math.round(w), (int) Math.round(h), true);
-                    }
+            BufferedImage bi = pages1.get(index);
+            if (bi != null) {
+                if (percent != 100) {
+                    double w = bi.getWidth();
+                    double h = bi.getHeight();
+                    w = w * percent / 100.0;
+                    h = h * percent / 100.0;
+                    bi = ImageScaler.getScaledInstance(bi, (int) Math.round(w), (int) Math.round(h), true);
                 }
             }
             image.setIcon(null);
-            imageIcon.setImage(i);
+            imageIcon.setImage(bi);
             image.setIcon(imageIcon);
         } catch (RuntimeException re) {
             re.printStackTrace();
@@ -617,7 +552,6 @@ class JPrintPreview extends JInfiniteProgressFrame {
             }
             pageNumber.removeAllItems();
             pages1.clear();
-            pages2.clear();
             new PrintableToImages(printable.create()).start();
         } else {
             pauseRendering(false);
@@ -630,7 +564,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
         if (filename != null) {
             boolean result = true;
             if (new File(filename).exists()) {
-                result = DialogUtils.ask(JPrintPreview.this, JUtilsI18n.get("de.dm.print.OverwriteFileQuestion", filename),
+                result = DialogUtils.ask(JPrintPreview.this,
+                        JUtilsI18n.get("de.dm.print.OverwriteFileQuestion", filename),
                         JUtilsI18n.get("de.dm.print.OverwriteFileQuestion.Note", filename));
             }
             if (result) {

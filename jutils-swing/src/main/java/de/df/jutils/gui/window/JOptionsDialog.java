@@ -50,17 +50,12 @@ public class JOptionsDialog extends JDialog {
         content = null;
         changed = false;
         isOk = true;
-        listeners = new LinkedList<OptionsListener>();
+        listeners = new LinkedList<>();
 
         initUI();
         initListeners();
         addActions();
         setChanged(false);
-    }
-
-    @Override
-    public void setVisible(boolean b) {
-        super.setVisible(b);
     }
 
     private void initUI() {

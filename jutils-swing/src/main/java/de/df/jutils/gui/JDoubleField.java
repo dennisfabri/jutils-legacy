@@ -12,31 +12,19 @@ import java.text.ParseException;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
-public class JDoubleField extends JTextField {
+public class JDoubleField extends JWarningTextField {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long  serialVersionUID       = 3906081243996173875L;
+    private static final long serialVersionUID = 3906081243996173875L;
 
-    private static final Color YELLOW                 = new Color(255, 255, 200);
-    private static final Color RED                    = new Color(255, 200, 200);
+    public static final double EMPTY_FIELD = -1;
+    public static final double NO_MAXVALUE = 0;
 
-    public static final double EMPTY_FIELD            = -1;
-    public static final double NO_MAXVALUE            = 0;
+    private NumberFormatter nf = null;
 
-    private Color              enabled                = null;
-
-    private boolean            required               = false;
-    private NumberFormatter    nf                     = null;
-
-    private String[]           specials               = null;
-
-    private FocusListener      selectionfocuslistener = null;
+    private String[] specials = null;
 
     private JDoubleField(double value, double max, boolean required, boolean force) {
-        super();
-        this.required = required;
+        super(required, force);
         nf = getDoubleFormatter(max);
         if (value > EMPTY_FIELD) {
             try {
@@ -57,16 +45,13 @@ public class JDoubleField extends JTextField {
                 }
             });
         }
-
-        // Storing colors
-        enabled = getBackground();
     }
 
     public JDoubleField(double value, double max) {
         this(value, max, false, false);
     }
 
-    public JDoubleField(double max, boolean required) {
+    private JDoubleField(double max, boolean required) {
         this(EMPTY_FIELD, max, required, false);
     }
 
@@ -78,7 +63,7 @@ public class JDoubleField extends JTextField {
         this(EMPTY_FIELD, NO_MAXVALUE, required, force);
     }
 
-    public JDoubleField(boolean required) {
+    private JDoubleField(boolean required) {
         this(NO_MAXVALUE, required);
     }
 
@@ -95,11 +80,43 @@ public class JDoubleField extends JTextField {
         NumberFormatter nf = new NumberFormatter(n);
         nf.setAllowsInvalid(false);
         nf.setValueClass(Double.class);
+        nf.setCommitsOnValidEdit(true);
         if (max > NO_MAXVALUE) {
             nf.setMaximum(new MaxComparable(max));
         }
         nf.setMinimum(new ZeroComparable());
         return nf;
+    }
+
+    public void setDouble(double i) {
+        if (getDouble() == i) {
+            return;
+        }
+        
+        if (i > EMPTY_FIELD) {
+            try {
+                setText(nf.valueToString(i));
+            } catch (ParseException e) {
+                setText("");
+            }
+        } else {
+            setText("");
+        }
+    }
+
+    @Override
+    public void setText(String t) {
+        if (!super.getText().equals(t)) {
+            super.setText(t);
+        }
+    }
+    
+    public double getDouble() {
+        try {
+            return ((Number) nf.stringToValue(getText())).doubleValue();
+        } catch (RuntimeException | ParseException e) {
+            return 0;
+        }
     }
 
     public boolean isSpecialString() {
@@ -120,65 +137,37 @@ public class JDoubleField extends JTextField {
         repaint();
     }
 
-    /**
-     * Based on an implementation of Karsten Kropp.
-     */
-    public void setAutoSelectAll(boolean active) {
-        if (active) {
-            if (selectionfocuslistener == null) {
-                selectionfocuslistener = new FocusAdapter() {
-                    @Override
-                    public void focusGained(FocusEvent arg0) {
-                        selectAll();
-                    }
-                };
-                addFocusListener(selectionfocuslistener);
-            }
-        } else {
-            if (selectionfocuslistener != null) {
-                removeFocusListener(selectionfocuslistener);
-                selectionfocuslistener = null;
-            }
-        }
-    }
-
     public void disableSpecialStrings() {
         specials = null;
         repaint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (isEnabled()) {
-            Color next = enabled;
-            if (!(isValidDouble() || isSpecialString())) {
-                if (getText().length() == 0) {
-                    next = YELLOW;
-                } else {
-                    next = RED;
-                }
-            }
-            if (!next.equals(getBackground())) {
-                setBackground(next);
-            }
-        }
-        super.paintComponent(g);
+    public boolean isValidDouble() {
+        return isOk();
     }
 
-    public boolean isValidDouble() {
-        if (required || (getText().length() > 0)) {
+    @Override
+    public boolean isOk() {
+        if (isSpecialString()) {
+            return true;
+        }
+
+        if (!super.isOk()) {
+            return false;
+        }
+
+        if (getText().length() > 0) {
             try {
                 String text = getText();
                 Object o = nf.stringToValue(text);
                 boolean result = false;
-                text = "0" + text;
                 while ((text.length() > 1) && (text.startsWith("0"))) {
                     text = text.substring(1, text.length());
                 }
                 if (!Character.isDigit(text.charAt(0))) {
                     text = "0" + text;
                 }
-                text += "0";
+                text += 0;
                 while ((!result) && (text.endsWith("0"))) {
                     text = text.substring(0, text.length() - 1);
                     result = nf.valueToString(o).equalsIgnoreCase(text);
@@ -194,28 +183,32 @@ public class JDoubleField extends JTextField {
                 return false;
             }
         }
+
         return true;
     }
 
-    public void setDouble(double i) {
-        if (i > EMPTY_FIELD) {
-            try {
-                setText(nf.valueToString(i));
-            } catch (ParseException e) {
-                setText("");
-            }
-        } else {
-            setText("");
-        }
+    public void setValidator(Validator validator) {
+        super.setValidator(validator == null ? null : new ValidatorWrapper(validator));
     }
 
-    public double getDouble() {
-        try {
-            return ((Number) nf.stringToValue(getText())).doubleValue();
-        } catch (RuntimeException e) {
-            return 0;
-        } catch (ParseException e) {
-            return 0;
+    private final class ValidatorWrapper implements JWarningTextField.Validator {
+        private final Validator validator;
+
+        public ValidatorWrapper(Validator v) {
+            validator = v;
+        }
+
+        @Override
+        public boolean validate(String text) {
+            try {
+                if (text.isEmpty()) {
+                    return true;
+                }
+                double value = (Double) nf.stringToValue(text);
+                return validator.validate(value);
+            } catch (RuntimeException | ParseException e) {
+                return false;
+            }
         }
     }
 
@@ -228,7 +221,7 @@ public class JDoubleField extends JTextField {
 
         @Override
         public boolean equals(Object obj) {
-            return ((obj instanceof ZeroComparable));
+            return obj instanceof ZeroComparable;
         }
 
         @Override
@@ -285,5 +278,9 @@ public class JDoubleField extends JTextField {
             }
             return Integer.MIN_VALUE;
         }
+    }
+
+    public static interface Validator {
+        boolean validate(double value);
     }
 }

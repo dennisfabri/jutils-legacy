@@ -2,7 +2,7 @@
  * FormatError.java Created on 31. March 2002, 21:16
  */
 
-package de.df.jutils.exception;
+package de.df.jutils.plugin.exception;
 
 /**
  * @author dennis

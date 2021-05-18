@@ -19,7 +19,7 @@ import javax.swing.RepaintManager;
 import de.df.jutils.gui.util.EDTUtils;
 
 /**
- * @author Mueller
+ * @author Dennis Fabri
  */
 public class ExtendedHeaderFooterPrintable implements Printable {
 

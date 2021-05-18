@@ -7,10 +7,8 @@ package de.df.jutils.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.SystemColor;
 
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -18,7 +16,7 @@ import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class JTimeField extends javax.swing.JPanel {
 
@@ -44,7 +42,7 @@ public final class JTimeField extends javax.swing.JPanel {
     /** Creates new form JTimeField */
     public JTimeField(final JIntegerField jnf) {
         source = jnf;
-        setBorder(new LineBorder(SystemColor.controlShadow, 1));
+        // setBorder(new LineBorder(SystemColor.controlShadow, 1));
         meinInit();
     }
 

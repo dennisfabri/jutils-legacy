@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 
 public class JRotatingLabel extends JLabel {
 
+    private static final long serialVersionUID = -3914711965259444263L;
+
     public JRotatingLabel(Icon icon) {
         this("", icon, SwingConstants.LEFT);
     }

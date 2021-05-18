@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.util.GraphicsUtils;
 
 public class JGradientLabel extends JPanel {
@@ -66,13 +67,10 @@ public class JGradientLabel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        // Store color
-        // Color backup = g.getColor();
-
         // prepare colors
         Color start = left;
         if (start == null) {
-            start = Color.WHITE;
+            start = ColorUtils.calculateColor(UIManager.getColor("Panel.background"), Color.BLACK, 0.1);
         }
         Color end = right;
         if (right == null) {
@@ -80,18 +78,6 @@ public class JGradientLabel extends JPanel {
         }
 
         GraphicsUtils.paintGradient((Graphics2D) g, 0, 0, getWidth(), getHeight() - 1, start, end);
-
-        // fill background
-        // float divisor = getWidth();
-        // for (int x = 0; x < getWidth(); x++) {
-        // float divident = x;
-        // float percent = divident / divisor;
-        // g.setColor(ColorUtils.calculateColor(start, end, percent));
-        // g.drawLine(x, 0, x, getHeight() - 1);
-        // }
-        //
-        // // restore color
-        // g.setColor(backup);
     }
 
     public Color getLeftColor() {

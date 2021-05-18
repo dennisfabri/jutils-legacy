@@ -3,28 +3,24 @@
  */
 package de.df.jutils.gui.autocomplete;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.InputVerifier;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLayer;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.text.JTextComponent;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.jdesktop.swingx.util.ComboBoxUtil;
+
+import de.df.jutils.gui.border.IconBorder;
+import de.df.jutils.swing.icons.Icons;
 
 /**
  * @author Dennis Fabri
@@ -36,17 +32,17 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
     final class UpdateListener implements DocumentListener {
         @Override
         public void insertUpdate(DocumentEvent e) {
-            updateBackgroundColor();
+            updateStatus();
         }
 
         @Override
         public void removeUpdate(DocumentEvent e) {
-            updateBackgroundColor();
+            updateStatus();
         }
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-            updateBackgroundColor();
+            updateStatus();
         }
     }
 
@@ -55,15 +51,7 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
      */
     private static final long serialVersionUID = 3257005466784445492L;
 
-    private static final Color YELLOW = new Color(255, 255, 200);
-    private static final Color RED = new Color(255, 200, 200);
-
-    private Color enabled = null;
-    private Color disabled = null;
-
     private boolean required = false;
-
-    private boolean isWindowsLaF = false;
 
     public JCompletingComboBox() {
         this(false);
@@ -99,46 +87,15 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
         initialize();
     }
 
-    private void checkWindowsLaF() {
-        isWindowsLaF = SystemUtils.IS_OS_WINDOWS
-                && UIManager.getLookAndFeel().getClass().getName().equals(UIManager.getSystemLookAndFeelClassName());
-    }
-
     private void initialize() {
-        checkWindowsLaF();
         JComboBoxAutoCompletion.enable(this);
-        if (isWindowsLaF) {
-            setInputVerifier(new LengthInputVerifier());
-            setEditor(new BasicComboBoxEditor() {
-                private JLayer<JTextComponent> editorComponent;
-
-                @Override
-                public Component getEditorComponent() {
-                    editorComponent = Optional.ofNullable(editorComponent).orElseGet(() -> {
-                        JLayer<JTextComponent> layer = new JLayer<>((JTextComponent) super.getEditorComponent(),
-                                new ValidationLayerUI<>());
-                        layer.setOpaque(false);
-                        layer.getView().setOpaque(false);
-                        layer.getView().setBorder(new EmptyBorder(0, 4, 0, 4));
-                        return layer;
-                    });
-                    return editorComponent;
-                }
-            });
-        } else {
-            // Storing colors
-            enabled = ComboBoxUtil.getEditorComponent(this).getBackground();
-            setEnabled(false);
-            disabled = ComboBoxUtil.getEditorComponent(this).getBackground();
-            setEnabled(true);
-
-            // Adding listener
-            UpdateListener ul = new UpdateListener();
-            JTextField jtf = ComboBoxUtil.getEditorComponent(this);
-            if (jtf != null) {
-                jtf.getDocument().addDocumentListener(ul);
-            }
+        UpdateListener ul = new UpdateListener();
+        JTextField jtf = ComboBoxUtil.getEditorComponent(this);
+        if (jtf != null) {
+            jtf.getDocument().addDocumentListener(ul);
         }
+
+        updateStatus();
     }
 
     public String getText() {
@@ -149,60 +106,71 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
         return o.toString();
     }
 
-    void updateBackgroundColor() {
-        if (isWindowsLaF) {
-            return;
+    private static final Icons icons = new Icons();
+
+    private Border originalBorder;
+    private Border warnBorder;
+    private Border errorBorder;
+
+    private void initializeBorders() {
+        if (originalBorder == null) {
+            originalBorder = getBorder();
+            warnBorder = new IconBorder(icons.getWarningIcon(), originalBorder);
+            errorBorder = new IconBorder(icons.getErrorIcon(), originalBorder);
         }
-        Color next = null;
-        if (isEnabled()) {
-            next = enabled;
-        } else {
-            next = disabled;
+    }
+
+    private Border getValidationBorder() {
+        initializeBorders();
+        if (isEnabled() && !isValidValue()) {
+            String text = getText();
+            Component c = ComboBoxUtil.getEditorComponent(this);
+            if (c instanceof JTextComponent) {
+                text = ((JTextComponent) c).getText();
+            }
+            if (text.length() == 0) {
+                return warnBorder;
+            } else {
+                return errorBorder;
+            }
         }
+        return originalBorder;
+    }
+
+    private Status status = null;
+
+    private void updateStatus() {
+        Status newStatus = Status.Valid;
         if (!isValidValue()) {
             Component c = ComboBoxUtil.getEditorComponent(this);
             if (c instanceof JTextField) {
                 if (((JTextField) c).getText().length() == 0) {
-                    next = YELLOW;
+                    newStatus = Status.Empty;
                 } else {
-                    next = RED;
+                    newStatus = Status.Invalid;
                 }
             } else {
                 if (getText().length() == 0) {
-                    next = YELLOW;
+                    newStatus = Status.Empty;
                 } else {
-                    next = RED;
+                    newStatus = Status.Invalid;
                 }
             }
         }
-        if (next != null) {
-            if (getEditor() != null) {
-                for (Component c : getComponents()) {
-                    if (!next.equals(c.getBackground())) {
-                        c.setBackground(next);
-                        if (c instanceof JComponent) {
-                            ((JComponent) c).setOpaque(true);
-                        }
-                    }
-                }
-                Component c = ComboBoxUtil.getEditorComponent(this);
-                if (!next.equals(c.getBackground())) {
-                    c.setBackground(next);
-                }
-            }
+
+        if (newStatus != status) {
+            status = newStatus;
+            setValidationBorder();
         }
+
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        updateBackgroundColor();
-        super.paintComponent(g);
+    private void setValidationBorder() {
+        this.setBorder(getValidationBorder());
     }
 
-    @Override
-    public void repaint() {
-        updateBackgroundColor();
-        super.repaint();
+    private enum Status {
+        Valid, Empty, Invalid;
     }
 
     public boolean isValidValue() {

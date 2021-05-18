@@ -6,7 +6,7 @@ package de.df.jutils.i18n;
 import java.util.ResourceBundle;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class SafeTextProcessor extends ATextProcessor {
 

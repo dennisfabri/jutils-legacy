@@ -5,7 +5,7 @@
 package de.df.jutils.gui.util;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @version 1.0
  */
 

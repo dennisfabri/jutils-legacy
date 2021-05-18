@@ -11,10 +11,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-import de.df.jutils.exception.FormatErrorException;
+import de.df.jutils.plugin.data.PluginData;
+import de.df.jutils.plugin.exception.FormatErrorException;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 09.05.2004
  */
 public final class PluginXMLReader {

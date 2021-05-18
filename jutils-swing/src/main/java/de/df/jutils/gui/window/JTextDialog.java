@@ -24,7 +24,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.df.jutils.gui.util.WindowUtils;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class JTextDialog extends JDialog {
 

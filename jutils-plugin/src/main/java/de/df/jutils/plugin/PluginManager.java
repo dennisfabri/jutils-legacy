@@ -8,44 +8,53 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import de.df.jutils.exception.FormatErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.df.jutils.gui.awt.ProgressSplashWindow;
 import de.df.jutils.gui.util.DialogUtils;
 import de.df.jutils.gui.util.EDTUtils;
 import de.df.jutils.gui.util.ThreadUtils;
 import de.df.jutils.gui.window.JProgressDialog;
 import de.df.jutils.i18n.util.JUtilsI18n;
-import de.df.jutils.plugin.io.Dependency;
+import de.df.jutils.plugin.data.PluginContainer;
+import de.df.jutils.plugin.data.PluginData;
+import de.df.jutils.plugin.exception.FormatErrorException;
 import de.df.jutils.plugin.io.FileLock;
-import de.df.jutils.plugin.io.PluginData;
 import de.df.jutils.plugin.io.PluginXMLReader;
-import de.df.jutils.plugin.topsort.Node;
-import de.df.jutils.plugin.topsort.TopSort;
 import de.df.jutils.reflection.ReflectionUtils;
 import de.df.jutils.util.TimeMeasurement;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 28.03.2004
  */
 public class PluginManager implements IPluginManager {
 
-    private JPFrame                                 gui     = null;
+    private static Logger log = LoggerFactory.getLogger(PluginManager.class);
 
-    private String                                  info    = "";
-    private String                                  name    = "";
-    private boolean                                 changed = false;
-    private Hashtable<String, PluginData>           security;
-    private Hashtable<String, IFeature>             features;
-    private LinkedList<IFeature>                    sortedPlugins;
+    private JPFrame gui = null;
+
+    private String info = "";
+    private String name = "";
+    private boolean changed = false;
+    private Hashtable<String, PluginData> security;
+    private Hashtable<String, IFeature> features;
+    private LinkedList<IFeature> sortedPlugins;
     private final LinkedList<IRemoteActionListener> remotes;
 
-    private FileLock                                lock;
+    private FileLock lock;
 
-    private boolean                                 verbose = false;
+    private boolean verbose = false;
 
-    public PluginManager(String title, List<Image> icons, TimeMeasurement tm, ProgressSplashWindow splash, boolean singleDisplayMode, boolean doLock,
-            String pluginDirectory) {
+    private void setSplashStatus(ProgressSplashWindow splash, String text) {
+        if (splash != null) {
+            splash.setStatus(text);
+        }
+    }
+
+    public PluginManager(String title, List<Image> icons, TimeMeasurement tm, ProgressSplashWindow splash,
+            boolean singleDisplayMode, boolean doLock, String pluginDirectory) {
         name = title;
 
         tm.start("Initializing");
@@ -53,7 +62,9 @@ public class PluginManager implements IPluginManager {
         if (doLock) {
             lock = new FileLock(name);
             if (!lock.lock()) {
-                splash.setVisible(false);
+                if (splash != null) {
+                    splash.setVisible(false);
+                }
                 DialogUtils.warn(null, JUtilsI18n.get("de.dm.plugin.AnotherInstanceAlreadyRunning", name),
                         JUtilsI18n.get("de.dm.plugin.AnotherInstanceAlreadyRunning.Note", name));
                 EDTUtils.niceExit();
@@ -61,34 +72,35 @@ public class PluginManager implements IPluginManager {
         }
 
         tm.finish("Designs");
-        security = new Hashtable<String, PluginData>();
-        features = new Hashtable<String, IFeature>();
-        sortedPlugins = new LinkedList<IFeature>();
-        remotes = new LinkedList<IRemoteActionListener>();
+        security = new Hashtable<>();
+        features = new Hashtable<>();
+        sortedPlugins = new LinkedList<>();
+        remotes = new LinkedList<>();
         tm.finish("Datastructures");
         tm.quit("Initialization finished");
 
         tm.start("Searching for Plugins");
-        splash.setStatus(JUtilsI18n.get("de.dm.plugin.SearchingPlugins"));
-        LinkedList<Node<PluginData>> nodes = searchPlugIns(this, pluginDirectory == null ? "plugins" : pluginDirectory, features, tm);
+
+        setSplashStatus(splash, JUtilsI18n.get("de.dm.plugin.SearchingPlugins"));
+        List<PluginData> nodes = searchPlugIns(pluginDirectory == null ? "plugins" : pluginDirectory, tm);
         tm.quit(nodes.size() + " plugins found");
 
         tm.start("Loading Plugins");
-        splash.setStatus(JUtilsI18n.get("de.dm.plugin.LoadingPlugins"));
+        setSplashStatus(splash, JUtilsI18n.get("de.dm.plugin.LoadingPlugins"));
         loadPlugins(nodes, tm);
         tm.quit("Plugins loaded");
 
         tm.start("Loading GUI");
-        splash.setStatus(JUtilsI18n.get("de.dm.plugin.InitGUI"));
+        setSplashStatus(splash, JUtilsI18n.get("de.dm.plugin.InitGUI"));
         EDTUtils.executeOnEDT(new UIFrameCreator(title, icons, singleDisplayMode));
         tm.quit("GUI loaded");
     }
 
     private class UIFrameCreator implements Runnable {
 
-        private final String      title;
+        private final String title;
         private final List<Image> icons;
-        private final boolean     mode;
+        private final boolean mode;
 
         public UIFrameCreator(String title, List<Image> icons, boolean mode) {
             this.title = title;
@@ -110,9 +122,9 @@ public class PluginManager implements IPluginManager {
         gui = new JPFrame(title, icons, PluginManager.this, getPlugIns(), mode);
     }
 
-    private static LinkedList<Node<PluginData>> searchPlugIns(PluginManager controller, String path, Hashtable<String, IFeature> table, TimeMeasurement tm) {
-        Hashtable<String, Node<PluginData>> nodes = new Hashtable<String, Node<PluginData>>();
-        LinkedList<PluginData> data = new LinkedList<PluginData>();
+    private static List<PluginData> searchPlugIns(String path, TimeMeasurement tm) {
+        PluginContainer pc = new PluginContainer();
+        
         File dir = new File(System.getProperty("user.dir") + File.separator + path);
         if (dir.exists() && dir.isDirectory()) {
             File[] files = dir.listFiles();
@@ -120,71 +132,20 @@ public class PluginManager implements IPluginManager {
                 if (file.isFile()) {
                     PluginData plugin = loadPluginData(path, file.getName());
                     if (plugin != null) {
-                        data.addLast(plugin);
-                        Node<PluginData> node = new Node<PluginData>(plugin);
-                        nodes.put(plugin.getId(), node);
+                        pc.add(plugin);
                     }
                 }
             }
         }
         tm.finish("Loaded Plugindata");
 
-        boolean removed;
-        do {
-            removed = false;
-
-            ListIterator<PluginData> li = data.listIterator();
-            while (li.hasNext()) {
-                boolean remove = false;
-
-                PluginData pd = li.next();
-                Dependency[] dep = pd.getDependencies();
-                for (Dependency aDep : dep) {
-                    if (nodes.get(aDep.getPluginname()) == null) {
-                        if (aDep.isOptional()) {
-                            tm.finish("- Removing unsatisfied optional dependency " + aDep + " from plugin " + pd.getId());
-                            pd.removeDependency(aDep.getPluginname());
-                        } else {
-                            tm.finish("- Dependency not found: " + aDep);
-                            remove = true;
-                            break;
-                        }
-                    }
-                }
-                if (remove) {
-                    tm.finish("- Removing: " + pd.getName());
-                    li.remove();
-                    nodes.remove(pd.getName());
-                    removed = true;
-                }
-            }
-        } while (removed);
-        tm.finish("Cleaned Plugindata");
-
-        LinkedList<Node<PluginData>> nodeList = new LinkedList<Node<PluginData>>();
-        ListIterator<PluginData> li = data.listIterator();
-        while (li.hasNext()) {
-            PluginData pd = li.next();
-            Node<PluginData> node = nodes.get(pd.getId());
-            nodeList.add(node);
-            Dependency[] dep = pd.getDependencies();
-            for (Dependency aDep : dep) {
-                Node<PluginData> n = nodes.get(aDep.getPluginname());
-                node.addEdge(n);
-            }
-        }
-
-        nodeList = TopSort.sort(nodeList);
-        tm.finish("Topsort");
-
-        return nodeList;
+        return pc.topsort(tm);
     }
 
-    private void loadPlugins(LinkedList<Node<PluginData>> nodeList, TimeMeasurement tm) {
-        ListIterator<Node<PluginData>> iter = nodeList.listIterator();
+    private void loadPlugins(List<PluginData> nodeList, TimeMeasurement tm) {
+        ListIterator<PluginData> iter = nodeList.listIterator();
         while (iter.hasNext()) {
-            Node<PluginData> node = iter.next();
-            PluginData pd = node.getData();
+            PluginData pd = iter.next();
             boolean ok = loadPlugIn(pd);
             if (ok) {
                 if (addPlugin(pd)) {
@@ -228,8 +189,7 @@ public class PluginManager implements IPluginManager {
         try {
             String filename = path + File.separator + name;
             System.out.println("Checking: " + filename);
-            PluginData plugin = PluginXMLReader.readPluginXML(filename);
-            return plugin;
+            return PluginXMLReader.readPluginXML(filename);
         } catch (FormatErrorException e) {
             e.printStackTrace();
         } catch (RuntimeException e) {
@@ -326,7 +286,8 @@ public class PluginManager implements IPluginManager {
     }
 
     @Override
-    public void sendDataUpdateEvent(String id, long eventID, Object data, Object additionalInformation, IFeature source) {
+    public void sendDataUpdateEvent(String id, long eventID, Object data, Object additionalInformation,
+            IFeature source) {
         sendDataUpdateEvent(new UpdateEvent(id, eventID, data, additionalInformation, source));
     }
 
@@ -338,12 +299,11 @@ public class PluginManager implements IPluginManager {
     private final LinkedList<UpdateEvent> events = new LinkedList<UpdateEvent>();
 
     /**
-     * This method is more compilicated as it seems, but we have to make sure,
-     * that all events are processed and we do not get into a recursion. These
-     * are mainly swing-thread issues that we have to deal with.
+     * This method is more compilicated as it seems, but we have to make sure, that
+     * all events are processed and we do not get into a recursion. These are mainly
+     * swing-thread issues that we have to deal with.
      * 
-     * @param due
-     *            Update event
+     * @param due Update event
      */
     private void sendDataUpdateEventInternal(UpdateEvent due) {
         if (due == null) {
@@ -396,8 +356,8 @@ public class PluginManager implements IPluginManager {
 
     static class DataUpdateRunnable implements Runnable {
 
-        private UpdateEvent due    = null;
-        private IFeature    plugin = null;
+        private UpdateEvent due = null;
+        private IFeature plugin = null;
 
         public void set(IFeature plugin, UpdateEvent due) {
             this.due = due;
@@ -431,6 +391,7 @@ public class PluginManager implements IPluginManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see de.dm.auswertung.gui.beta.plugin.Controller#getParent()
      */
     @Override
@@ -463,7 +424,8 @@ public class PluginManager implements IPluginManager {
 
     @Override
     public void quit() {
-        if (accept(JUtilsI18n.get("de.dm.plugin.QuitProgramTitle", name), JUtilsI18n.get("de.dm.plugin.QuitProgram", name),
+        if (accept(JUtilsI18n.get("de.dm.plugin.QuitProgramTitle", name),
+                JUtilsI18n.get("de.dm.plugin.QuitProgram", name),
                 JUtilsI18n.get("de.dm.plugin.QuitProgram.Note", name))) {
             PrintStream os = null;
             if (new File("devel.properties").exists()) {
@@ -513,7 +475,8 @@ public class PluginManager implements IPluginManager {
 
     @Override
     public boolean acceptWarning() {
-        return accept(JUtilsI18n.get("de.dm.plugin.WarningTitle"), JUtilsI18n.get("de.dm.plugin.Warning"), JUtilsI18n.get("de.dm.plugin.Warning.Note"));
+        return accept(JUtilsI18n.get("de.dm.plugin.WarningTitle"), JUtilsI18n.get("de.dm.plugin.Warning"),
+                JUtilsI18n.get("de.dm.plugin.Warning.Note"));
     }
 
     private boolean accept(String titel, String text, String note) {

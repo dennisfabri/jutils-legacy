@@ -4,7 +4,7 @@
 package de.df.jutils.plugin;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 28.03.2004
  */
 public interface IPlugin extends IFeature {

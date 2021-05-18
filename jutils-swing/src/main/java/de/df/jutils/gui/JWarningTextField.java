@@ -1,42 +1,37 @@
 package de.df.jutils.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import de.df.jutils.gui.border.IconBorder;
+import de.df.jutils.swing.icons.Icons;
 
 public class JWarningTextField extends JTextField {
 
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long  serialVersionUID       = 3906081243996173875L;
+    private static final long serialVersionUID = 3906081243996173875L;
 
-    public static final int    EMPTY_FIELD            = -1;
-    public static final int    NO_MAXVALUE            = 0;
+    public static final int EMPTY_FIELD = -1;
+    public static final int NO_MAXVALUE = 0;
 
-    private static final Color YELLOW                 = new Color(255, 255, 200);
-    private static final Color RED                    = new Color(255, 200, 200);
+    private boolean required = false;
+    private boolean force = false;
 
-    private Color              enabled                = null;
-
-    private boolean            required               = false;
-    private boolean            force                  = false;
-
-    private FocusListener      selectionfocuslistener = null;
+    private FocusListener selectionfocuslistener = null;
 
     public JWarningTextField(boolean required, boolean force) {
         super();
         this.required = required;
         this.force = force;
-        // Storing colors
-        enabled = getBackground();
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent arg0) {
@@ -87,26 +82,6 @@ public class JWarningTextField extends JTextField {
         return required;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (isEnabled()) {
-            Color next = enabled;
-            if (!isOk()) {
-                if (getText().length() == 0) {
-                    next = YELLOW;
-                } else {
-                    next = RED;
-                }
-            }
-            if (!next.equals(getBackground())) {
-                setBackground(next);
-            }
-        } else {
-            setBackground(enabled);
-        }
-        super.paintComponent(g);
-    }
-
     private String[] specials = null;
 
     public boolean isSpecialString() {
@@ -125,7 +100,6 @@ public class JWarningTextField extends JTextField {
     public void setSpecialStrings(String... specials) {
         this.specials = specials;
         updateOk();
-        repaint();
     }
 
     /**
@@ -153,7 +127,6 @@ public class JWarningTextField extends JTextField {
     public void disableSpecialStrings() {
         specials = null;
         updateOk();
-        repaint();
     }
 
     private String[] forbidden = null;
@@ -174,13 +147,11 @@ public class JWarningTextField extends JTextField {
     public void setForbiddenStrings(String... forbidden) {
         this.forbidden = forbidden;
         updateOk();
-        repaint();
     }
 
     public void disableForbiddenStrings() {
         forbidden = null;
         updateOk();
-        repaint();
     }
 
     public boolean isValidString() {
@@ -199,7 +170,6 @@ public class JWarningTextField extends JTextField {
     public void setValidator(Validator v) {
         validator = v;
         updateOk();
-        repaint();
     }
 
     void checkFocus() {
@@ -211,13 +181,44 @@ public class JWarningTextField extends JTextField {
         }
     }
 
-    private void updateOk() {
-        isok = (isValidString() || isSpecialString()) && (!isForbiddenString());
+    private static final Icons icons = new Icons(); 
+    
+    private Border originalBorder;
+    private Border warnBorder;
+    private Border errorBorder;
+
+    private void initializeBorders() {
+        if (originalBorder == null) {
+            originalBorder = getBorder();
+            warnBorder = new IconBorder(icons.getWarningIcon(), originalBorder);
+            errorBorder = new IconBorder(icons.getErrorIcon(), originalBorder);
+        }
+    }
+    
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        updateOk();
     }
 
-    private boolean isok = true;
+    private Border getValidationBorder() {
+        initializeBorders();
+        if (isEnabled() && !isOk()) {
+            if (getText().length() == 0) {
+                return warnBorder;
+            } else {
+                return errorBorder;
+            }
+        }
+        return originalBorder;
+    }
+
+    private void updateOk() {
+
+        setBorder(getValidationBorder());
+    }
 
     public boolean isOk() {
-        return isok;
+        return (isValidString() || isSpecialString()) && (!isForbiddenString());
     }
 }

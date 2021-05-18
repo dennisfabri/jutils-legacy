@@ -1,4 +1,4 @@
-package de.df.jutils.plugin.io;
+package de.df.jutils.plugin.data;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.df.jutils.plugin.IFeature;
+import de.df.jutils.plugin.io.Dependency;
 
 public class PluginData extends DefaultHandler {
 

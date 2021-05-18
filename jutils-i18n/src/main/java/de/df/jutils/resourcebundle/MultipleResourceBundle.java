@@ -12,7 +12,7 @@ import java.util.ListIterator;
 import java.util.ResourceBundle;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class MultipleResourceBundle extends ResourceBundle {
 

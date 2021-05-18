@@ -42,7 +42,7 @@ final class LabeledBorder extends AbstractBorder {
     @Override
     public void paintBorder(final Component c, final Graphics g, final int x1, final int y1, final int w, final int h) {
         int h1 = Math.max(2 + 2 * vgap + getFontHeight(g), minheight);
-        Color start = UIManager.getColor("InternalFrame.activeTitleBackground");
+        Color start = ColorUtils.calculateColor(UIManager.getColor("Panel.background"), Color.BLACK, 0.1);
         Color end = UIManager.getColor("InternalFrame.activeTitleGradient");
         Color foreground = UIManager.getColor("InternalFrame.activeTitleForeground");
         if (start == null) {

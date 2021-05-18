@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 21.11.2004
  */
 public class Node<T> {

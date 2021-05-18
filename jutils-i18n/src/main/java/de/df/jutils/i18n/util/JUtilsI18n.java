@@ -13,7 +13,7 @@ import de.df.jutils.resourcebundle.MultipleResourceBundle;
 import de.df.jutils.resourcebundle.SafeResourceBundle;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class JUtilsI18n {
 

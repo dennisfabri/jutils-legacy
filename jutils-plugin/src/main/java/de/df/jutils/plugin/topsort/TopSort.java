@@ -5,10 +5,11 @@ package de.df.jutils.plugin.topsort;
 
 import java.util.Enumeration;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 21.11.2004
  */
 public final class TopSort {
@@ -17,15 +18,15 @@ public final class TopSort {
         // Not used
     }
 
-    public static <T> LinkedList<Node<T>> sort(LinkedList<Node<T>> nodes) {
+    public static <T> List<Node<T>> sort(List<Node<T>> nodes) {
         if (nodes == null) {
             throw new NullPointerException("Argument must not be null");
         }
-        LinkedList<Node<T>> result = new LinkedList<Node<T>>();
-        if (nodes.size() == 0) {
+        LinkedList<Node<T>> result = new LinkedList<>();
+        if (nodes.isEmpty()) {
             return result;
         }
-        LinkedList<Node<T>> queue = new LinkedList<Node<T>>();
+        LinkedList<Node<T>> queue = new LinkedList<>();
         ListIterator<Node<T>> li = nodes.listIterator();
         while (li.hasNext()) {
             Node<T> node = li.next();
@@ -33,7 +34,7 @@ public final class TopSort {
                 queue.addLast(node);
             }
         }
-        while (queue.size() > 0) {
+        while (!queue.isEmpty()) {
             Node<T> node = queue.removeFirst();
             result.addFirst(node);
             Enumeration<Node<T>> e = node.getNodes();

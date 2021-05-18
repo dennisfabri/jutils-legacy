@@ -46,7 +46,6 @@ public class JInfiniteProgressFrame extends JFrame {
         if (enabled == isEnabled()) {
             return;
         }
-        // super.setEnabled(enabled);
         if (enabled) {
             stopProgress();
         } else {

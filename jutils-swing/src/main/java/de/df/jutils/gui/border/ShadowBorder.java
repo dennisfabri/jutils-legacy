@@ -16,7 +16,7 @@ import de.df.jutils.gui.util.GraphicsUtils;
 import de.df.jutils.util.OSUtils;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class ShadowBorder extends AbstractBorder {
 
@@ -24,23 +24,15 @@ public final class ShadowBorder extends AbstractBorder {
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 4050768182447256377L;
-    private final int         size;
+    private final int size;
 
     public ShadowBorder() {
-        this(3);
-    }
-
-    private ShadowBorder(final int borderSize) {
-        super();
-        if (OSUtils.isWindows8OrHigher()) {
-            this.size = 1;
-        } else {
-            this.size = borderSize;
-        }
+        this.size = 1;
     }
 
     @Override
-    public void paintBorder(final Component c, final Graphics g, final int x1, final int y1, final int width, final int height) {
+    public void paintBorder(final Component c, final Graphics g, final int x1, final int y1, final int width,
+            final int height) {
         if (size == 0) {
             return;
         }
@@ -62,7 +54,8 @@ public final class ShadowBorder extends AbstractBorder {
         drawQuarterCircle(g, start, end, x2, y2, size);
     }
 
-    private void drawQuarterCircle(final Graphics g, final Color start, final Color end, final int x, final int y, final int radius) {
+    private void drawQuarterCircle(final Graphics g, final Color start, final Color end, final int x, final int y,
+            final int radius) {
         for (int x1 = 0; x1 < radius; x1++) {
             int sqrx = x1 * x1;
             int posx = x1 + x;
@@ -76,7 +69,8 @@ public final class ShadowBorder extends AbstractBorder {
         }
     }
 
-    private void drawEdge(final Graphics g, final int x1, final int y1, final int x2, final int y2, final int level, final Color c) {
+    private void drawEdge(final Graphics g, final int x1, final int y1, final int x2, final int y2, final int level,
+            final Color c) {
         g.setColor(c);
         g.drawLine(x1, y2, x2 - level, y2);
         g.drawLine(x2, y2 - level, x2, y1);

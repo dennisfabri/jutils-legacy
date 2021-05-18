@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
 import de.df.jutils.gui.util.WindowUtils;
 
 /**
- * @author Mueller
+ * @author Dennis Fabri
  */
 public class JProgressDialog extends JDialog {
 

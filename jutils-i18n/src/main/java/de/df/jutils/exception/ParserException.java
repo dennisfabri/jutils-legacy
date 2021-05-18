@@ -4,7 +4,7 @@
 package de.df.jutils.exception;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public class ParserException extends Exception {
 

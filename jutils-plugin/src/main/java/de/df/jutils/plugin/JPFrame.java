@@ -36,7 +36,7 @@ import de.df.jutils.gui.layout.RowLayout;
 import de.df.jutils.gui.util.WindowUtils;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @since 28.03.2004
  */
 public class JPFrame extends JGlassFrame {
@@ -46,14 +46,14 @@ public class JPFrame extends JGlassFrame {
      */
     private static final long serialVersionUID = 3258125869083210547L;
 
-    protected PluginManager   controller       = null;
+    protected PluginManager controller = null;
 
-    private JMenuBar          menues           = new JMenuBar();
-    private JToolBar          quickbuttons     = new JToolBar();
-    private JPanelContainer   panelcontainer   = null;
+    private JMenuBar menues = new JMenuBar();
+    private JToolBar quickbuttons = new JToolBar();
+    private JPanelContainer panelcontainer = null;
 
-    private StatusBar         statusbar        = new StatusBar();
-    private JLabel            statustext       = new JLabel();
+    private StatusBar statusbar = new StatusBar();
+    private JLabel statustext = new JLabel();
 
     JPFrame(String title, List<Image> icons, PluginManager c, IPlugin[] plugins, boolean singleMode) {
         super(title);
@@ -67,7 +67,7 @@ public class JPFrame extends JGlassFrame {
             }
         });
 
-        Hashtable<String, Boolean> actions = new Hashtable<String, Boolean>();
+        Hashtable<String, Boolean> actions = new Hashtable<>();
         int counter = 0;
 
         // set the controller
@@ -77,7 +77,8 @@ public class JPFrame extends JGlassFrame {
         quickbuttons.setFloatable(false);
         quickbuttons.setLayout(new RowLayout(0, 5));
         quickbuttons.setRollover(true);
-        quickbuttons.setBorder(new CompoundBorder(new ExtendedLineBorder(0, 0, 1, 0), new EmptyBorder(new Insets(0, 5, 0, 5))));
+        quickbuttons.setBorder(
+                new CompoundBorder(new ExtendedLineBorder(0, 0, 1, 0), new EmptyBorder(new Insets(0, 5, 0, 5))));
 
         statusbar.addZone("info", statustext, "*");
         statusbar.setVisible(false);
@@ -85,9 +86,9 @@ public class JPFrame extends JGlassFrame {
         boolean quickButtonsNeeded = false;
         boolean menuesNeeded = false;
 
-        LinkedList<PanelInfo> panelinfos = new LinkedList<PanelInfo>();
-        LinkedList<MenuInfo> menuinfos = new LinkedList<MenuInfo>();
-        LinkedList<ButtonInfo> buttoninfos = new LinkedList<ButtonInfo>();
+        LinkedList<PanelInfo> panelinfos = new LinkedList<>();
+        LinkedList<MenuInfo> menuinfos = new LinkedList<>();
+        LinkedList<ButtonInfo> buttoninfos = new LinkedList<>();
 
         for (IPlugin plugin : plugins) {
             // Panels
@@ -130,7 +131,8 @@ public class JPFrame extends JGlassFrame {
                     String key = "" + act.getKey() + "x" + act.getModifiers();
                     if (actions.get(key) == null) {
                         actions.put(key, true);
-                        WindowUtils.addAction(this, act.getAction(), act.getKey(), act.getModifiers(), "action" + counter);
+                        WindowUtils.addAction(this, act.getAction(), act.getKey(), act.getModifiers(),
+                                "action" + counter);
                         counter++;
                     } else {
                         System.err.println("Key used twice: " + act.getKey() + " / " + act.getModifiers());
@@ -165,7 +167,6 @@ public class JPFrame extends JGlassFrame {
     @Override
     public void setVisible(boolean b) {
         if (b) {
-            // invalidate();
             panelcontainer.resetSplitPane();
         }
         super.setVisible(b);
@@ -230,12 +231,11 @@ public class JPFrame extends JGlassFrame {
 
     @SuppressWarnings("null")
     private void addMenus(LinkedList<MenuInfo> menuinfos2) {
-        LinkedList<MenuInfo> menuinfos = new LinkedList<MenuInfo>(menuinfos2);
+        LinkedList<MenuInfo> menuinfos = new LinkedList<>(menuinfos2);
         Collections.sort(menuinfos);
 
-        Hashtable<String, LinkedList<MenuInfo>> table;
-        table = new Hashtable<String, LinkedList<MenuInfo>>();
-        LinkedList<String> names = new LinkedList<String>();
+        Hashtable<String, LinkedList<MenuInfo>> table = new Hashtable<>();
+        LinkedList<String> names = new LinkedList<>();
 
         ListIterator<MenuInfo> li = menuinfos.listIterator();
         while (li.hasNext()) {
@@ -243,15 +243,15 @@ public class JPFrame extends JGlassFrame {
             LinkedList<MenuInfo> ll = table.get(mi.getName());
             if (ll == null) {
                 names.addLast(mi.getName());
-                ll = new LinkedList<MenuInfo>();
+                ll = new LinkedList<>();
                 table.put(mi.getName(), ll);
             }
             ll.addLast(mi);
         }
 
-        menuinfos = new LinkedList<MenuInfo>();
+        menuinfos = new LinkedList<>();
         ListIterator<String> n = names.listIterator();
-        Comparator<MenuInfo> sorter = new Comparator<MenuInfo>() {
+        Comparator<MenuInfo> sorter = new Comparator<>() {
             @Override
             public int compare(MenuInfo m1, MenuInfo m2) {
                 return m1.getItemPriotity() - m2.getItemPriotity();

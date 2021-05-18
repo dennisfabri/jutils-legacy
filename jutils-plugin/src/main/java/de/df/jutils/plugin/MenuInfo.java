@@ -6,7 +6,7 @@ package de.df.jutils.plugin;
 import javax.swing.JMenuItem;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 21.11.2004
  */
 public class MenuInfo implements Comparable<MenuInfo> {

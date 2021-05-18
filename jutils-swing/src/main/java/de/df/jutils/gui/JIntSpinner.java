@@ -109,6 +109,8 @@ public final class JIntSpinner extends javax.swing.JSpinner {
 
     private static class IntSpinnerModel extends AbstractSpinnerModel {
 
+        private static final long serialVersionUID = -2013114715199003509L;
+        
         private int min       = 0;
         private int max       = 0;
         private int current   = 0;

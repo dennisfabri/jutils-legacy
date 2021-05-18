@@ -4,7 +4,7 @@
 package de.df.jutils.plugin;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 21.11.2004
  */
 public class ActionInfo {

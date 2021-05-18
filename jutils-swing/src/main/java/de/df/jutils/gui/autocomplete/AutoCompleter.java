@@ -27,7 +27,7 @@ import javax.swing.text.JTextComponent;
  * @email santhosh@in.fiorano.com
  * @link http://jroller.com/page/santhosh/20050620#file_path_autocompletion
  */
-public abstract class AutoCompleter {
+abstract class AutoCompleter {
 
     private Action              acceptAction     = new AcceptAction(AUTOCOMPLETER);
     private DocumentListener    documentListener = new PopupDocumentListener();

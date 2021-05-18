@@ -22,7 +22,7 @@ import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 11.07.2004
  */
 public class WizardOptionPage extends AWizardPage implements UpdateListener {

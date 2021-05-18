@@ -15,7 +15,7 @@ import de.df.jutils.gui.jlist.ModifiableListModel;
  * -animation.html which is based on code from
  * http://jroller.com/page/swinguistuff?entry=animated_jlist
  * 
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @data 2006
  * @param <T>
  */

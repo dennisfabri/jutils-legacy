@@ -1,61 +1,27 @@
 package de.df.jutils.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
-public class JIntegerField extends JTextField {
+public class JIntegerField extends JWarningTextField {
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    private static final long  serialVersionUID       = 3906081243996173875L;
+    private static final long serialVersionUID = 3906081243996173875L;
 
-    public static final int    EMPTY_FIELD            = -1;
-    public static final int    NO_MAXVALUE            = 0;
-
-    private static final Color YELLOW                 = new Color(255, 255, 200);
-    private static final Color RED                    = new Color(255, 200, 200);
-
-    private Color              enabled                = null;
-
-    private NumberFormatter    nf                     = null;
-    private boolean            required               = false;
-
-    private FocusListener      selectionfocuslistener = null;
+    public static final int EMPTY_FIELD = -1;
+    public static final int NO_MAXVALUE = 0;
+    private NumberFormatter nf = null;
 
     public JIntegerField(int value, int min, int max, boolean required, boolean force) {
-        super();
+        super(required, force);
         nf = getIntegerFormatter(min, max);
-        this.required = required;
         setInt(value);
         if (max > NO_MAXVALUE) {
             setColumns(("" + max).length());
         } else {
             setColumns(10);
         }
-        if (force) {
-            addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusLost(FocusEvent arg0) {
-                    if (!isValidInt()) {
-                        Toolkit.getDefaultToolkit().beep();
-                        requestFocus();
-                    }
-                }
-            });
-        }
-
-        // Storing colors
-        enabled = getBackground();
     }
 
     public JIntegerField(int value, int max, boolean required, boolean force) {
@@ -114,7 +80,7 @@ public class JIntegerField extends JTextField {
         }
         if (i > EMPTY_FIELD) {
             try {
-                setText(nf.valueToString(Integer.valueOf(i)));
+                setText(nf.valueToString(i));
             } catch (ParseException e) {
                 setText("");
             }
@@ -130,35 +96,10 @@ public class JIntegerField extends JTextField {
         }
     }
 
-    /**
-     * Based on an implementation of Karsten Kropp.
-     */
-    public void setAutoSelectAll(boolean active) {
-        if (active) {
-            if (selectionfocuslistener == null) {
-                selectionfocuslistener = new FocusAdapter() {
-                    @Override
-                    public void focusGained(FocusEvent arg0) {
-                        selectAll();
-                    }
-                };
-                addFocusListener(selectionfocuslistener);
-            }
-        } else {
-            if (selectionfocuslistener != null) {
-                removeFocusListener(selectionfocuslistener);
-                selectionfocuslistener = null;
-            }
-        }
-    }
-
     public int getInt() {
         try {
-            String text = getText();
-            return (Integer) nf.stringToValue(text);
-        } catch (RuntimeException e) {
-            return 0;
-        } catch (ParseException e) {
+            return (Integer) nf.stringToValue(getText());
+        } catch (RuntimeException | ParseException e) {
             return 0;
         }
     }
@@ -167,73 +108,57 @@ public class JIntegerField extends JTextField {
         return getInt();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (isEnabled()) {
-            Color next = enabled;
-            if (!isValidInt()) {
-                if (getText().length() == 0) {
-                    next = YELLOW;
-                } else {
-                    next = RED;
-                }
-            }
-            if (!next.equals(getBackground())) {
-                setBackground(next);
-            }
-        }
-        super.paintComponent(g);
+    public boolean isValidInt() {
+        return isOk();
     }
 
-    public boolean isValidInt() {
-        boolean result = true;
-        if (required || (getText().length() > 0)) {
+    @Override
+    public boolean isOk() {
+        if (!super.isOk()) {
+            return false;
+        }
+
+        if (getText().length() > 0) {
             try {
                 String text = getText();
                 Object o = nf.stringToValue(text);
-                text = "0" + text;
                 while ((text.length() > 1) && (text.startsWith("0"))) {
                     text = text.substring(1, text.length());
                 }
-                result = nf.valueToString(o).equalsIgnoreCase(text);
+                if (!nf.valueToString(o).equalsIgnoreCase(text)) {
+                    return false;
+                }
             } catch (ParseException e) {
                 return false;
             }
         }
 
-        if (!result) {
-            return false;
-        }
-        if (validator != null) {
-            if (getText().length() > 0) {
-                try {
-                    return validator.validate((Integer) nf.stringToValue(getText()));
-                } catch (ParseException pe) {
-                    return false;
-                }
-            }
-            return validator.validate(0);
-        }
-
         return true;
     }
 
-    private Validator validator = null;
-
-    public abstract static class Validator {
-        public abstract boolean validate(int value);
+    public void setValidator(Validator validator) {
+        super.setValidator(validator == null ? null : new ValidatorWrapper(validator));
     }
 
-    public void setValidator(Validator v) {
-        validator = v;
-    }
+    private final class ValidatorWrapper implements JWarningTextField.Validator {
+        private final Validator validator;
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        if (isEnabled() && (!enabled)) {
-            setBackground(this.enabled);
+        public ValidatorWrapper(Validator v) {
+            validator = v;
         }
-        super.setEnabled(enabled);
+
+        @Override
+        public boolean validate(String text) {
+            try {
+                if (text.isEmpty()) {
+                    return true;
+                }
+                int value = (Integer) nf.stringToValue(text);
+                return validator.validate(value);
+            } catch (RuntimeException | ParseException e) {
+                return false;
+            }
+        }
     }
 
     static final class ZeroComparable implements Comparable<Object> {
@@ -282,5 +207,9 @@ public class JIntegerField extends JTextField {
             }
             return Integer.MIN_VALUE;
         }
+    }
+
+    public static interface Validator {
+        boolean validate(int value);
     }
 }

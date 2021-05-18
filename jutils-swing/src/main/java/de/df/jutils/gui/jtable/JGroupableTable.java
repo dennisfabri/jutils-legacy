@@ -8,7 +8,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 17.10.2004
  */
 public class JGroupableTable extends JTable {

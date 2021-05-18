@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.df.jutils.gui.JIntSpinner;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 11.07.2004
  */
 public class WizardIntegerPage extends AWizardPage implements UpdateListener {

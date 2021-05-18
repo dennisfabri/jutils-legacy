@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class SafeResourceBundle extends ResourceBundle {
 

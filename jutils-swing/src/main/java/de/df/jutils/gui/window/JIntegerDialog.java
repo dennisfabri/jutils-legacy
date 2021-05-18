@@ -23,7 +23,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.df.jutils.gui.JIntegerField;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  */
 public final class JIntegerDialog extends JDialog {
 

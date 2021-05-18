@@ -20,7 +20,7 @@ import de.df.jutils.gui.util.EDTUtils;
  */
 
 /**
- * @author mueller
+ * @author Dennis Fabri
  */
 public class JPrintTable extends JTable {
 

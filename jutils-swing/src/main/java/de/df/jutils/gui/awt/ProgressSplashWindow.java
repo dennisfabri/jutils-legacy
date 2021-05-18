@@ -16,7 +16,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 22.05.2004
  */
 public final class ProgressSplashWindow extends Dialog {

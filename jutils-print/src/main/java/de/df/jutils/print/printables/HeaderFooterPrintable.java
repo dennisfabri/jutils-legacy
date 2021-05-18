@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 /**
- * @author Mueller
+ * @author Dennis Fabri
  */
 public class HeaderFooterPrintable implements Printable {
 

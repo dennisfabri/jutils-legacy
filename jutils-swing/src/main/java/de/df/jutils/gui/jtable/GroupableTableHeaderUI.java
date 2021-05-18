@@ -4,7 +4,7 @@
  * http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html and found
  * at http://www.esus.com/docs/GetQuestionPage.jsp?uid=1272 Since the sources
  * were not working with J2SE 1.4 I had to make a few changes 5th July 2004
- * Dennis Mueller
+ * Dennis Fabri
  */
 package de.df.jutils.gui.jtable;
 
@@ -26,9 +26,6 @@ import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.internal.ui.SubstanceTableHeaderUI;
 
 import de.df.jutils.reflection.ReflectionUtils;
 
@@ -66,13 +63,13 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         }
     }
 
-    int                          rolloverColumn = -1;
+    int rolloverColumn = -1;
 
-    private TableHeaderUI        ui;
+    private TableHeaderUI ui;
     @SuppressWarnings("hiding")
-    private GroupableTableHeader header         = null;
+    private GroupableTableHeader header = null;
     @SuppressWarnings("hiding")
-    private CellRendererPane     rendererPane   = null;
+    private CellRendererPane rendererPane = null;
 
     public GroupableTableHeaderUI(TableHeaderUI ui) {
         this.ui = ui;
@@ -90,11 +87,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
                 cce.printStackTrace();
             }
             if (ui == null) {
-                if (UIManager.getLookAndFeel() instanceof SubstanceLookAndFeel) {
-                    ui = (SubstanceTableHeaderUI) SubstanceTableHeaderUI.createUI(c);
-                } else {
-                    ui = new BasicTableHeaderUI();
-                }
+                ui = new BasicTableHeaderUI();
             }
         }
     }
@@ -135,7 +128,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         Dimension size = header.getSize();
         Rectangle cellRect = new Rectangle(0, 0, size.width, size.height);
         Hashtable<ColumnGroup, Rectangle> hashtable;
-        hashtable = new Hashtable<ColumnGroup, Rectangle>();
+        hashtable = new Hashtable<>();
         Enumeration<TableColumn> enumeration = header.getColumnModel().getColumns();
         while (enumeration.hasMoreElements()) {
             cellRect.height = size.height;

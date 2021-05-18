@@ -4,6 +4,8 @@
 package de.df.jutils.print;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -13,57 +15,35 @@ import javax.imageio.ImageIO;
 
 class PageContainer implements AutoCloseable {
 
-    private LinkedList<File> files = new LinkedList<>();
+    private LinkedList<byte[]> files = new LinkedList<>();
 
     public PageContainer() {
         // Nothing to do
     }
 
     synchronized void clear() {
-        if (!files.isEmpty()) {
-            ListIterator<File> li = files.listIterator();
-            while (li.hasNext()) {
-                File file = li.next();
-                if (file.exists()) {
-                    try {
-                        boolean d = file.delete();
-                        if (!d) {
-                            file.deleteOnExit();
-                        }
-                    } catch (SecurityException se) {
-                        // We are not allowed to delete
-                        // Maybe it can be done during exit
-                    }
-                }
-                li.remove();
-            }
-        }
+        files.clear();
     }
 
     synchronized int size() {
         return files.size();
     }
 
-    synchronized boolean add(BufferedImage img) {
-        try {
-            File file = File.createTempFile("jauswertung", ".preview");
-            file.deleteOnExit();
-            files.add(file);
-
-            ImageIO.write(img, "png", file);
-            return true;
+    synchronized void add(BufferedImage img) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            ImageIO.write(img, "png", bos);
+            files.add(bos.toByteArray());
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (RuntimeException re) {
             re.printStackTrace();
         }
-        return false;
     }
 
     synchronized BufferedImage get(int index) {
         try {
-            File file = files.get(index);
-            return ImageIO.read(file);
+            ByteArrayInputStream bis = new ByteArrayInputStream(files.get(index));
+            return ImageIO.read(bis);
         } catch (IOException ioe) {
             ioe.printStackTrace();
             // Nothing to do
@@ -76,6 +56,6 @@ class PageContainer implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        clear();        
+        clear();
     }
 }

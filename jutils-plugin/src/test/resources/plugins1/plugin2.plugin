@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-15" ?>
+<plugin name="Plugin2" description="" id="plugin2" classname="de.df.jutils.plugin.test.Plugin2">
+    <dependency id="plugin1"/>
+</plugin>

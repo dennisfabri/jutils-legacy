@@ -32,7 +32,7 @@ import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.util.Feedback;
 
 /**
- * @author Dennis Mueller
+ * @author Dennis Fabri
  * @date 16.01.2005
  */
 public class PdfOutput {

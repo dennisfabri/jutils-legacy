@@ -68,7 +68,7 @@ public class GradientTaskPaneGroupUI extends BasicTaskPaneGroupUI {
 
             titleForeground = UIManager.getColor("InternalFrame.activeTitleForeground");
 
-            titleBackgroundGradientStart = UIManager.getColor("InternalFrame.activeTitleBackground");
+            titleBackgroundGradientStart = ColorUtils.calculateColor(UIManager.getColor("Panel.background"), Color.BLACK, 0.1); // UIManager.getColor("InternalFrame.activeTitleBackground");
             titleBackgroundGradientEnd = UIManager.getColor("InternalFrame.activeTitleGradient");
 
             titleOver = UIManager.getColor("InternalFrame.inactiveTitleForeground");

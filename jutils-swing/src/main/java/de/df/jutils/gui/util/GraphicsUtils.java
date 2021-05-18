@@ -95,9 +95,9 @@ public final class GraphicsUtils {
 
         Graphics2D g = (Graphics2D) g2.create();
 
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-        Color background = UIManager.getColor("ToolBar.light");
+        Color background = start;
 
         g2.setColor(background);
         g2.fillRect(x, y, width, height);

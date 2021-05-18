@@ -3,21 +3,23 @@
  */
 package de.df.jutils.gui.util;
 
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
+import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 
 import de.df.jutils.util.OSUtils;
+import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
 
 public final class DesignInit {
 
-    private static boolean      initialized = false;
+    private static boolean initialized = false;
 
     public static final boolean ANTIALISED_TEXT;
 
@@ -62,12 +64,7 @@ public final class DesignInit {
                 }
             }
 
-            // System.setProperty("sun.java2d.opengl", "true");
-            // System.setProperty("sun.java2d.noddraw", "false");
-            // System.setProperty("sun.awt.noerasebackground", "true");
-            // System.setProperty("awt.nativeDoubleBuffering", "true");
             System.setProperty("swing.boldMetal", "false");
-            // System.setProperty("sun.java2d.ddoffscreen", "true");
 
             boolean systemicons = true;
             if ("false".equals(System.getProperty("de.dm.utils.SystemIcons"))) {
@@ -79,76 +76,101 @@ public final class DesignInit {
 
             Toolkit.getDefaultToolkit().setDynamicLayout(true);
 
-            boolean lafSet = false;
+            Commands commands = new Commands();
+
             if (enableSystemLookAndFeel) {
-                lafSet = initMacOSX(lafSet);
-                lafSet = initSystemLaF(lafSet);
+                commands.add(() -> initSystemLaF(), () -> OSUtils.isMacOSX());
             }
-            lafSet = setLaF(lafSet);
+            commands.add(() -> setFlatLaF());
+            commands.add(() -> setDefaultLaF());
+
+            commands.executeUntilFirstSuccess();
+
+            InfiniteProgressPanel.setColorFocus(UIManager.getColor("Button.focusedBorderColor"));
+            InfiniteProgressPanel.setColorNormal(UIManager.getColor("Label.disabledShadow"));
         }
     }
 
-    private static boolean setLaF(boolean lafSet) {
-        if (!lafSet) {
-            try {
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                SwingUtilities.invokeAndWait(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
-                        } catch (UnsupportedLookAndFeelException e) {
-                            System.out.println("Substance LaF failed to initialize");
-                            try {
-                                UIManager.setLookAndFeel(new MetalLookAndFeel());
-                            } catch (UnsupportedLookAndFeelException ex) {
-                                System.out.println("Metal LaF failed to initialize");
-                            }
-                        }
+    private static interface Condition {
+        public boolean isMet();
+    }
+
+    private static interface Command {
+        public boolean execute() throws Exception;
+    }
+
+    private static class ConditionalCommand implements Command {
+        private final Condition condition;
+        private final Command command;
+
+        public ConditionalCommand(Command command, Condition condition) {
+            this.command = command;
+            this.condition = condition;
+        }
+
+        @Override
+        public boolean execute() throws Exception {
+            if (condition.isMet()) {
+                return command.execute();
+            }
+            return false;
+        }
+    }
+
+    private static class Commands {
+        private final List<Command> commands = new ArrayList<>();
+
+        public Commands add(Command command) {
+            commands.add(command);
+            return this;
+        }
+
+        public void executeUntilFirstSuccess() {
+            for (Command command : commands) {
+                try {
+                    if (command.execute()) {
+                        return;
                     }
-                });
-                //
-                lafSet = true;
-            } catch (Exception e) {
-                // Nothing to do
-            }
-        }
-        return lafSet;
-    }
-
-    private static boolean initSystemLaF(boolean lafSet) {
-        if (!lafSet) {
-            try {
-                if (!UIManager.getSystemLookAndFeelClassName().toLowerCase().endsWith("metallookandfeel")) {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    lafSet = true;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception e) {
-                // Nothing to do
             }
         }
-        return lafSet;
+
+        public Commands add(Command command, Condition condition) {
+            commands.add(new ConditionalCommand(command, condition));
+            return this;
+        }
     }
 
-    private static boolean initMacOSX(boolean lafSet) {
-        if (System.getProperty("os.name").toLowerCase().indexOf("mac os x") >= 0) {
-            try {
-                // System.setProperty("apple.laf.useScreenMenuBar", "true");
-                // System.setProperty("com.apple.mrj.application.apple.menu.about.name",
-                // "JAuswertung");
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    private static boolean setDefaultLaF() throws UnsupportedLookAndFeelException {
+        System.out.println("Initializing MetalLookAndFeel");
+        UIManager.setLookAndFeel(new MetalLookAndFeel());
+        return true;
+    }
 
-                // System.setProperty("Quaqua.tabLayoutPolicy", "wrap");
-
-                // set the Quaqua Look and Feel in the UIManager -> Now VAqua is used
-                // UIManager.setLookAndFeel("org.violetlib.aqua.AquaLookAndFeel");
-
-                // set UI manager properties here that affect Quaqua
-                lafSet = true;
-            } catch (Exception e) {
-                // Nothing to do
-            }
+    private static boolean initSystemLaF() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, UnsupportedLookAndFeelException {
+        System.out.println("Initializing SystemLookAndFeel");
+        if (!UIManager.getSystemLookAndFeelClassName().toLowerCase().endsWith("metallookandfeel")) {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            return true;
         }
-        return lafSet;
+        return false;
+    }
+
+    private static boolean setFlatLaF() {
+        System.out.println("Initializing FlatLaF with FlatArcIJTheme");
+
+        FlatArcIJTheme.install();
+
+        UIManager.put("Component.focusWidth", 1);
+        UIManager.put("Component.innerFocusWidth", 0);
+        UIManager.put("ScrollBar.showButtons", true);
+        UIManager.put("TabbedPane.showTabSeparators", true);
+        UIManager.put("TabbedPane.selectedBackground", Color.white);
+        UIManager.put("TabbedPane.focusColor", Color.white);
+
+        return true;
     }
 }

@@ -19,10 +19,5 @@
 			<groupId>de.dennisfabri.jutils</groupId>
 			<artifactId>jutils-io</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-all</artifactId>
-		</dependency>
 	</dependencies>
 </project>

@@ -4,7 +4,7 @@
  * http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html and found
  * at http://www.esus.com/docs/GetQuestionPage.jsp?uid=1272
  * Since the sources were not working with J2SE 1.4 I had to make a few changes
- * 5th July 2004 Dennis Mueller
+ * 5th July 2004 Dennis Fabri
  */
 package de.df.jutils.gui.jtable;
 

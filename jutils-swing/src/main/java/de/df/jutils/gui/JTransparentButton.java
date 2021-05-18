@@ -10,7 +10,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 /**
- * @author Mueller
+ * @author Dennis Fabri
  */
 public class JTransparentButton extends JButton {
 
