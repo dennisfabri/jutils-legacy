@@ -162,7 +162,7 @@ public final class DesignInit {
     private static boolean setFlatLaF() {
         System.out.println("Initializing FlatLaF with FlatArcIJTheme");
 
-        FlatArcIJTheme.install();
+        FlatArcIJTheme.setup();
 
         UIManager.put("Component.focusWidth", 1);
         UIManager.put("Component.innerFocusWidth", 0);
@@ -170,6 +170,8 @@ public final class DesignInit {
         UIManager.put("TabbedPane.showTabSeparators", true);
         UIManager.put("TabbedPane.selectedBackground", Color.white);
         UIManager.put("TabbedPane.focusColor", Color.white);
+        UIManager.put("TitlePane.menuBarEmbedded", false);
+        
 
         return true;
     }
