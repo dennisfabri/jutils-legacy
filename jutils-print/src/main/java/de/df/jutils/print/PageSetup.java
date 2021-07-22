@@ -35,24 +35,35 @@ public final class PageSetup {
         prasTable = new HashMap<>();
     }
 
-    public static void setPRASTable(Map<String, PageFormat> pt) {
+    private static void setPRASTable(Map<String, PageFormat> pt) {
         if (pt == null) {
             pt = new HashMap<>();
         }
         prasTable = new HashMap<>(pt);
     }
 
-    public static Map<String, PageFormat> getPRASTable() {
-        return new HashMap<>(prasTable);
+    public static void setPageSettings(PageSetting[] pageSettings) {
+        HashMap<String, PageFormat> settings = new HashMap<>();
+        if (pageSettings != null) {
+            for (PageSetting ps : pageSettings) {
+                settings.put(ps.getName(), ps.toPageFormat());
+            }
+        }
+        setPRASTable(settings);
     }
 
-    public static PageFormat createPageFormat() {
+    public static PageSetting[] getPageSettings() {
+        return prasTable.entrySet().stream().map(e -> new PageSetting(e.getKey(), e.getValue()))
+                .toArray(PageSetting[]::new);
+    }
+
+    private static PageFormat createPageFormat() {
         return createPageFormat(PageFormat.PORTRAIT);
     }
 
     private static final float FACTOR = (float) (10.0 / 25.4);
 
-    public static PageFormat createPageFormat(int orientation) {
+    private static PageFormat createPageFormat(int orientation) {
         PageFormat pf = null;
         if (defaultPageFormat == null) {
             pf = new PageFormat();
@@ -244,5 +255,9 @@ public final class PageSetup {
         public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
             return NO_SUCH_PAGE;
         }
+    }
+
+    public static void setOrientation(String name, int orientation) {
+        getPageFormat(name).setOrientation(orientation);
     }
 }
