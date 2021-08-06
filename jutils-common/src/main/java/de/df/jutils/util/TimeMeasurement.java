@@ -4,6 +4,7 @@
 package de.df.jutils.util;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 
 /**
  * TimeMeasurement is a class for measuring time periods of a long running task
@@ -13,8 +14,8 @@ import java.io.PrintStream;
 public class TimeMeasurement {
 
     private PrintStream out = null;
-    private long[]      nano;
-    private int         level;
+    private long[] nano;
+    private int level;
 
     public TimeMeasurement(PrintStream out, int levels) {
         this.out = out;
@@ -46,12 +47,21 @@ public class TimeMeasurement {
      * Updates the current time
      */
     private void update() {
-        nano[level] = System.nanoTime();
+        if (level >= 0) {
+            ensureLevel();
+            nano[level] = System.nanoTime();
+        }
+    }
+
+    private void ensureLevel() {
+        if (level >= nano.length) {
+            nano = Arrays.copyOf(nano, level + 1);
+        }
     }
 
     /**
-     * Notifies that the current subtask has finished. Assumes that the next
-     * subtask of the same level starts immediatly.
+     * Notifies that the current subtask has finished. Assumes that the next subtask
+     * of the same level starts immediatly.
      * 
      * @param task
      */
@@ -63,9 +73,9 @@ public class TimeMeasurement {
     }
 
     /**
-     * Notifies that that the task of the next higher level has finished.
-     * Reduces the level of subtasks and assumes that the next subtast of the
-     * same level starts immediatly.
+     * Notifies that that the task of the next higher level has finished. Reduces
+     * the level of subtasks and assumes that the next subtast of the same level
+     * starts immediatly.
      * 
      * @param task
      */
