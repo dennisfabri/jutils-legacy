@@ -13,6 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
+import com.l2fprod.common.shared.swing.LookAndFeelTweaks;
 
 import de.df.jutils.util.OSUtils;
 import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
@@ -48,47 +49,61 @@ public final class DesignInit {
                 return;
             }
 
-            if (OSUtils.isWindows()) {
-                switch (uimode) {
-                case Default:
-                    break;
-                case OpenGL:
-                    System.setProperty("sun.java2d.opengl", "true");
-                    break;
-                case Software:
-                    System.setProperty("sun.java2d.opengl", "false");
-                    System.setProperty("sun.java2d.d3d", "false");
-                    break;
-                default:
-                    break;
-                }
-            }
-
-            System.setProperty("swing.boldMetal", "false");
-
-            boolean systemicons = true;
-            if ("false".equals(System.getProperty("de.dm.utils.SystemIcons"))) {
-                systemicons = false;
-            }
-            if (systemicons) {
-                UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
-            }
-
-            Toolkit.getDefaultToolkit().setDynamicLayout(true);
-
-            Commands commands = new Commands();
-
-            if (enableSystemLookAndFeel) {
-                commands.add(() -> initSystemLaF(), () -> OSUtils.isMacOSX());
-            }
-            commands.add(() -> setFlatLaF());
-            commands.add(() -> setDefaultLaF());
-
-            commands.executeUntilFirstSuccess();
-
-            InfiniteProgressPanel.setColorFocus(UIManager.getColor("Button.focusedBorderColor"));
-            InfiniteProgressPanel.setColorNormal(UIManager.getColor("Label.disabledShadow"));
+            applyRenderingSettings(uimode);
+            applyLaFTweaks();
+            initializeLaF(enableSystemLookAndFeel);
+            applyUIColors();
         }
+    }
+
+    private static void applyUIColors() {
+        InfiniteProgressPanel.setColorFocus(UIManager.getColor("Button.focusedBorderColor"));
+        InfiniteProgressPanel.setColorNormal(UIManager.getColor("Label.disabledShadow"));
+    }
+
+    private static void applyLaFTweaks() {
+        System.setProperty("swing.boldMetal", "false");
+
+        boolean systemicons = true;
+        if ("false".equals(System.getProperty("de.dm.utils.SystemIcons"))) {
+            systemicons = false;
+        }
+        if (systemicons) {
+            UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
+        }
+
+        Toolkit.getDefaultToolkit().setDynamicLayout(true);
+
+        LookAndFeelTweaks.tweak();
+    }
+
+    private static void applyRenderingSettings(UIPerformanceMode uimode) {
+        if (OSUtils.isWindows()) {
+            switch (uimode) {
+            case Default:
+                break;
+            case OpenGL:
+                System.setProperty("sun.java2d.opengl", "true");
+                break;
+            case Software:
+                System.setProperty("sun.java2d.opengl", "false");
+                System.setProperty("sun.java2d.d3d", "false");
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    private static void initializeLaF(boolean enableSystemLookAndFeel) {
+        Commands commands = new Commands();
+        if (enableSystemLookAndFeel) {
+            commands.add(() -> initSystemLaF(), () -> OSUtils.isMacOSX());
+        }
+        commands.add(() -> setFlatLaF());
+        commands.add(() -> setDefaultLaF());
+
+        commands.executeUntilFirstSuccess();
     }
 
     private static interface Condition {
@@ -171,7 +186,6 @@ public final class DesignInit {
         UIManager.put("TabbedPane.selectedBackground", Color.white);
         UIManager.put("TabbedPane.focusColor", Color.white);
         UIManager.put("TitlePane.menuBarEmbedded", false);
-        
 
         return true;
     }
