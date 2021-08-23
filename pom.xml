@@ -21,7 +21,6 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<slf4j.version>1.7.32</slf4j.version>
-		<flatlaf.version>1.5</flatlaf.version>
 
 		<junit.version>5.7.2</junit.version>
 	</properties>
@@ -80,17 +79,6 @@
 				<version>${junit.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.formdev</groupId>
-				<artifactId>flatlaf</artifactId>
-				<version>${flatlaf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.formdev</groupId>
-				<artifactId>flatlaf-intellij-themes</artifactId>
-				<version>${flatlaf.version}</version>
 			</dependency>
 
 			<dependency>

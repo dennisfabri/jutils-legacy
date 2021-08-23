@@ -49,14 +49,5 @@
 			<groupId>net.java.swingfx</groupId>
 			<artifactId>swingfx</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>com.formdev</groupId>
-			<artifactId>flatlaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.formdev</groupId>
-			<artifactId>flatlaf-intellij-themes</artifactId>
-		</dependency>
 	</dependencies>
 </project>

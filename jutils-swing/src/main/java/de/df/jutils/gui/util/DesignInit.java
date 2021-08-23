@@ -12,7 +12,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import com.l2fprod.common.shared.swing.LookAndFeelTweaks;
 
 import de.df.jutils.util.OSUtils;
@@ -98,9 +97,8 @@ public final class DesignInit {
     private static void initializeLaF(boolean enableSystemLookAndFeel) {
         Commands commands = new Commands();
         if (enableSystemLookAndFeel) {
-            commands.add(() -> initSystemLaF(), () -> OSUtils.isMacOSX());
+            commands.add(() -> initSystemLaF());
         }
-        commands.add(() -> setFlatLaF());
         commands.add(() -> setDefaultLaF());
 
         commands.executeUntilFirstSuccess();
@@ -172,21 +170,5 @@ public final class DesignInit {
             return true;
         }
         return false;
-    }
-
-    private static boolean setFlatLaF() {
-        System.out.println("Initializing FlatLaF with FlatArcIJTheme");
-
-        FlatArcIJTheme.setup();
-
-        UIManager.put("Component.focusWidth", 1);
-        UIManager.put("Component.innerFocusWidth", 0);
-        UIManager.put("ScrollBar.showButtons", true);
-        UIManager.put("TabbedPane.showTabSeparators", true);
-        UIManager.put("TabbedPane.selectedBackground", Color.white);
-        UIManager.put("TabbedPane.focusColor", Color.white);
-        UIManager.put("TitlePane.menuBarEmbedded", false);
-
-        return true;
     }
 }
