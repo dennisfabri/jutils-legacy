@@ -18,11 +18,13 @@ import java.util.Hashtable;
 
 import javax.swing.CellRendererPane;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.TableHeaderUI;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -110,7 +112,9 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
 
     @Override
     public void uninstallUI(JComponent c) {
-        ui.uninstallUI(c);
+        if (ui != null) {
+            ui.uninstallUI(c);
+        }
         super.uninstallUI(c);
     }
 

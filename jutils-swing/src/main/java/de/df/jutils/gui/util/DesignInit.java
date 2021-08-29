@@ -3,13 +3,19 @@
  */
 package de.df.jutils.gui.util;
 
-import java.awt.Color;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import com.l2fprod.common.shared.swing.LookAndFeelTweaks;
@@ -166,9 +172,58 @@ public final class DesignInit {
             IllegalAccessException, UnsupportedLookAndFeelException {
         System.out.println("Initializing SystemLookAndFeel");
         if (!UIManager.getSystemLookAndFeelClassName().toLowerCase().endsWith("metallookandfeel")) {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            String laf = UIManager.getSystemLookAndFeelClassName();
+            System.out.println(" with class " + laf);
+            UIManager.setLookAndFeel(laf);
+            SwingUtilities.invokeLater(() -> patchWindowsLaF());
             return true;
         }
         return false;
+    }
+
+    private static void patchWindowsLaF() {
+        try {
+            if (OSUtils.isWindows()) {
+                UIDefaults uiDefaults = UIManager.getDefaults();
+                uiDefaults.remove("ScrollPane.border");
+                uiDefaults.remove("Table.scrollPaneBorder");
+
+                Font font = getWindowsStandardFont();
+
+                for (Object key : uiDefaults.keySet()) {
+                    String keyString = key.toString();
+                    if (keyString.endsWith(".shadow")) {
+                        String borderKey = keyString.replace("shadow", "border");
+                        uiDefaults.remove(borderKey);
+                        uiDefaults.put(borderKey, new LineBorder(uiDefaults.getColor(keyString), 1));
+                    }
+                    if (keyString.endsWith(".font")) {
+                        Font f = uiDefaults.getFont(keyString);
+                        if (font == null) {
+                            font = f;
+                        }
+                        uiDefaults.remove(keyString);
+                        uiDefaults.put(keyString, font.deriveFont(Font.PLAIN, f.getSize2D()));
+                    }
+                }
+            }
+            for (Window w : Window.getWindows()) {
+                SwingUtilities.updateComponentTreeUI(w);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static Font getWindowsStandardFont() {
+        try {
+            return new Font("Segoe UI", Font.PLAIN, 12);
+        } catch (Exception ex) {
+        }
+        try {
+            return new Font("Tahoma", Font.PLAIN, 12);
+        } catch (Exception ex) {
+        }
+        return null;
     }
 }
