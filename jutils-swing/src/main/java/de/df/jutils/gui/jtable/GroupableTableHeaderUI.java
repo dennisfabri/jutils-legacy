@@ -18,13 +18,11 @@ import java.util.Hashtable;
 
 import javax.swing.CellRendererPane;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.TableHeaderUI;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;

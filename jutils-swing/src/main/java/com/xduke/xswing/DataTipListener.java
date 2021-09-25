@@ -38,6 +38,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 abstract class DataTipListener extends MouseInputAdapter implements ComponentListener {
+
+    private static final int TolerancePixelCount = 1;
+
     private DataTipPopup dataTipPopup;
 
     DataTipListener() {
@@ -138,29 +141,46 @@ abstract class DataTipListener extends MouseInputAdapter implements ComponentLis
     }
 
     private DataTipPopup createPopup(JComponent component, Point mousePosition, DataTipCell dataTipCell) {
-        Rectangle cellBounds = dataTipCell.getCellBounds();
-
-        Rectangle visRect = component.getVisibleRect();
-        Rectangle visibleCellRectangle = cellBounds.intersection(visRect);
-        if (!visibleCellRectangle.contains(mousePosition)) {
+        if (!isMouseWithin(component, mousePosition, dataTipCell)) {
+            return null;
+        }
+        if (!shouldShowToolTip(component, dataTipCell)) {
             return null;
         }
 
         Component rendererComponent = dataTipCell.getRendererComponent();
-        Dimension rendCompDim = rendererComponent.getMinimumSize();
-        Rectangle rendCompBounds = new Rectangle(cellBounds.getLocation(), rendCompDim);
-        if (cellBounds.contains(rendCompBounds) && visRect.contains(rendCompBounds)) {
-            return null;
-        }
+        Rectangle cellBounds = dataTipCell.getCellBounds();
 
         Dimension preferredSize = rendererComponent.getPreferredSize();
         Point tipPosition = cellBounds.getLocation();
         int width = Math.max(cellBounds.width, preferredSize.width);
         int height = Math.max(cellBounds.height, preferredSize.height);
         Dimension tipDimension = new Dimension(width, height);
-        DataTipPopup dtPopup = new DataTipPopup(component, dataTipCell, tipPosition, tipDimension);
+        return new DataTipPopup(component, dataTipCell, tipPosition, tipDimension);
+    }
 
-        return dtPopup;
+    private boolean isMouseWithin(JComponent component, Point mousePosition, DataTipCell dataTipCell) {
+        Rectangle cellBounds = dataTipCell.getCellBounds();
+
+        Rectangle visRect = component.getVisibleRect();
+        Rectangle visibleCellRectangle = cellBounds.intersection(visRect);
+        return visibleCellRectangle.contains(mousePosition);
+    }
+
+    private boolean shouldShowToolTip(JComponent component, DataTipCell dataTipCell) {
+        Component rendererComponent = dataTipCell.getRendererComponent();
+        Rectangle cellBounds = dataTipCell.getCellBounds();
+        Rectangle visRect = component.getVisibleRect();
+
+        Dimension rendCompDim = rendererComponent.getMinimumSize();
+        Rectangle rendCompBounds = new Rectangle(cellBounds.getLocation(), rendCompDim);
+        
+        // Do not render the popup because of one pixel
+        Rectangle reducedRendCompBounds = new Rectangle((int) rendCompBounds.getX() + TolerancePixelCount,
+                (int) rendCompBounds.getY() + TolerancePixelCount,
+                (int) rendCompBounds.getWidth() - 2 * TolerancePixelCount,
+                (int) rendCompBounds.getHeight() - 2 * TolerancePixelCount);
+        return !cellBounds.contains(reducedRendCompBounds) || !visRect.contains(reducedRendCompBounds);
     }
 
     private boolean isTipShown() {

@@ -4,7 +4,6 @@
 package de.df.jutils.gui.util;
 
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -190,7 +188,7 @@ public final class DesignInit {
 
                 Font font = getWindowsStandardFont();
 
-                for (Object key : uiDefaults.keySet()) {
+                for (Object key : uiDefaults.keySet().toArray()) {
                     String keyString = key.toString();
                     if (keyString.endsWith(".shadow")) {
                         String borderKey = keyString.replace("shadow", "border");

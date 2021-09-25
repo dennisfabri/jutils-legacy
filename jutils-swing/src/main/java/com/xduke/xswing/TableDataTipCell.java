@@ -31,8 +31,8 @@ import javax.swing.table.TableCellRenderer;
 
 class TableDataTipCell implements DataTipCell {
     private final JTable table;
-    private final int    rowIndex;
-    private final int    columnIndex;
+    private final int rowIndex;
+    private final int columnIndex;
 
     TableDataTipCell(JTable table, int rowIndex, int columnIndex) {
         this.table = table;
@@ -47,17 +47,15 @@ class TableDataTipCell implements DataTipCell {
 
     @Override
     public Rectangle getCellBounds() {
-        Rectangle cellRect = table.getCellRect(rowIndex, columnIndex, false);
-        return cellRect;
+        return table.getCellRect(rowIndex, columnIndex, false);
     }
 
     @Override
     public Component getRendererComponent() {
         try {
             TableCellRenderer cellRenderer = table.getCellRenderer(rowIndex, columnIndex);
-            Component component = table.prepareRenderer(cellRenderer, rowIndex, columnIndex);
-            return component;
-        } catch (NullPointerException npe) {
+            return table.prepareRenderer(cellRenderer, rowIndex, columnIndex);
+        } catch (RuntimeException npe) {
             return null;
         }
     }
@@ -76,15 +74,12 @@ class TableDataTipCell implements DataTipCell {
         if (columnIndex != cellPosition.columnIndex) {
             return false;
         }
-        if (rowIndex != cellPosition.rowIndex) {
-            return false;
-        }
-
-        return true;
+        return rowIndex == cellPosition.rowIndex;
     }
 
     @Override
     public int hashCode() {
+        
         int result;
         result = rowIndex;
         result = 29 * result + columnIndex;

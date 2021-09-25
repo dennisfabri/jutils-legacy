@@ -86,7 +86,6 @@ public class JSelectionDialog extends JDialog {
 
         pack();
         setResizable(false);
-        WindowUtils.center(this);
         UIStateUtils.uistatemanage(this, "JSelectionDialog." + title);
         pack();
     }

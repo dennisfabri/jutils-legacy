@@ -24,7 +24,7 @@ public final class FileUtils {
         return readTextFile(new File(name));
     }
 
-    public static String[] readTextFile(File name) {
+    private static String[] readTextFile(File name) {
         FileInputStream is = null;
         BufferedReader br = null;
         try {

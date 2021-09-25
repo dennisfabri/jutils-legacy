@@ -71,15 +71,11 @@ class DataTipPopup {
         boolean isHeavyWeight = tipWindow != null && tipWindow != componentWindow;
         dataTipComponent.setHeavyWeight(isHeavyWeight);
         if (isHeavyWeight) {
-            // ToolTipManager.sharedInstance().registerComponent(dataTipComponent);
             DataTipManager.get().setTipWindow(parent, tipWindow);
         }
     }
 
     public void update() {
-        // Component c = cell.getRendererComponent();
-        // dataTipComponent.setBackground(c.getBackground());
-        // dataTipComponent.setForeground(c.getForeground());
         dataTipComponent.updateUI();
     }
 
