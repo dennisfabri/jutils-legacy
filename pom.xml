@@ -22,7 +22,7 @@
 
 		<slf4j.version>1.7.32</slf4j.version>
 
-		<junit.version>5.8.1</junit.version>
+		<junit.version>5.8.2</junit.version>
 	</properties>
 
 	<modules>
@@ -95,7 +95,7 @@
 			<dependency>
 				<groupId>org.pushing-pixels</groupId>
 				<artifactId>radiance-substance</artifactId>
-				<version>4.0.0</version>
+				<version>4.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.oxbow</groupId>
