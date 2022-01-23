@@ -21,6 +21,7 @@ import javax.swing.ListCellRenderer;
  * item to be dropped.
  */
 abstract class ADropSmoother<T> extends AbstractComponentDecorator {
+    private static final String PLACEHOLDER = "";
     /**
      * Animation repaint interval. Make this larger to slow down the
      * animation. Changed by Dennis Fabri: Rate doubled
@@ -92,19 +93,15 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
     private int                     draggedIndex1  = -1;
     private int                     draggedIndex2  = -1;
     JList<T>                        list;
-    private Map<Integer, Rectangle> bounds         = new TreeMap<Integer, Rectangle>();
+    private Map<Integer, Rectangle> bounds         = new TreeMap<>();
     private GhostedDragImage        dragImage;
     private Point                   origin;
 
-    public ADropSmoother(final JList<T> list) {
+    protected ADropSmoother(final JList<T> list) {
         super(list);
         this.list = list;
         counter = new Counter();
         timer.schedule(counter, INTERVAL, INTERVAL);
-    }
-
-    protected Object getPlaceholder() {
-        return "";
     }
 
     protected abstract void move(int fromIndex, int toIndex, int amount);
@@ -153,8 +150,6 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
             }
         }
 
-        // draggedIndex1 = getIndex(where, true);
-        // draggedIndex2 = .length;
         insertionIndex = draggedIndex1;
         dragImage = new GhostedDragImage(draggedIndex1, draggedIndex2, origin);
     }
@@ -173,7 +168,7 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
         draggedIndex2 = -1;
         insertionIndex = -1;
         if (toIndex != -1 && (toIndex < fromIndex1 || toIndex > fromIndex2)) {
-            Map<Integer, Rectangle> newBounds = new TreeMap<Integer, Rectangle>();
+            Map<Integer, Rectangle> newBounds = new TreeMap<>();
             newBounds.put(toIndex, bounds.get(fromIndex1));
             if (fromIndex1 < toIndex) {
                 for (int i = fromIndex1 + 1; i <= toIndex; i++) {
@@ -192,8 +187,7 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
 
     boolean reposition() {
         boolean changed = false;
-        for (Object o : bounds.keySet()) {
-            Integer x = (Integer) o;
+        for (Integer x : bounds.keySet()) {
             Rectangle current = getCurrentCellBounds(x);
             Rectangle end = getCellBoundsAfterInsertion(x);
             if ((current != null) && (end != null)) {
@@ -280,7 +274,7 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
                 @SuppressWarnings("rawtypes")
                 ListCellRenderer rnd = list.getCellRenderer();
                 @SuppressWarnings("unchecked")
-                Component c = rnd.getListCellRendererComponent(list, getPlaceholder(), insertionIndex, false, false);
+                Component c = rnd.getListCellRendererComponent(list, PLACEHOLDER, insertionIndex, false, false);
                 r.y += c.getHeight();
             }
         }

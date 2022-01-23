@@ -64,7 +64,7 @@ public abstract class AbstractComponentDecorator {
     private Rectangle       bounds;
 
     /** Create a decorator for the given component. */
-    public AbstractComponentDecorator(JComponent c) {
+    protected AbstractComponentDecorator(JComponent c) {
         this(c, 1);
     }
 
@@ -73,7 +73,7 @@ public abstract class AbstractComponentDecorator {
      * from the target component. Negative values mean the decoration is painted
      * <em>before</em> the target component is painted.
      */
-    public AbstractComponentDecorator(JComponent c, int layerOffset) {
+    protected AbstractComponentDecorator(JComponent c, int layerOffset) {
         this(c, layerOffset, TOP);
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractComponentDecorator {
      * 
      * @see JLayeredPane
      */
-    public AbstractComponentDecorator(JComponent c, int layerOffset, int position) {
+    protected AbstractComponentDecorator(JComponent c, int layerOffset, int position) {
         component = c;
         this.layerOffset = layerOffset;
         this.position = position;
@@ -138,12 +138,12 @@ public abstract class AbstractComponentDecorator {
 
     protected void attach() {
         Window w = SwingUtilities.getWindowAncestor(component);
-        if (w instanceof RootPaneContainer) {
-            JLayeredPane lp = ((RootPaneContainer) w).getLayeredPane();
+        if (w instanceof RootPaneContainer rpc) {
+            JLayeredPane lp = rpc.getLayeredPane();
             Component layeredChild = component;
             int layer = JLayeredPane.DRAG_LAYER;
-            if (this instanceof BackgroundPainter) {
-                layer = ((BackgroundPainter) this).layer;
+            if (this instanceof BackgroundPainter bp) {
+                layer = bp.layer;
                 painter.setDecoratedLayer(layer);
             } else if (layeredChild == lp) {
                 // Is this the best layer to use?
@@ -228,8 +228,8 @@ public abstract class AbstractComponentDecorator {
             return visible;
         }
         Container cparent = c.getParent();
-        if (cparent instanceof JComponent) {
-            visible = ((JComponent) cparent).getVisibleRect();
+        if (cparent instanceof JComponent jparent) {
+            visible = jparent.getVisibleRect();
             visible.x -= c.getX();
             visible.y -= c.getY();
         }

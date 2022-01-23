@@ -61,7 +61,7 @@ public class AlternatingListCellRenderer<E> implements ListCellRenderer<E> {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             jc.setOpaque(true);
-            jc.setBorder(new EmptyBorder(0, 1, 0, 1));
+            jc.setBorder(new EmptyBorder(2, 1, 2, 1));
         }
         return c;
     }

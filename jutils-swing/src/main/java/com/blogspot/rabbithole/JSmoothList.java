@@ -52,7 +52,7 @@ public class JSmoothList<T extends Object> extends JList<T> {
                 setSelectedIndices(new int[] { toIndex, toIndex + amount - 1 });
             }
         };
-        Listener<T> listener = new Listener<T>(smoother);
+        Listener<T> listener = new Listener<>(smoother);
         addMouseListener(listener);
         addMouseMotionListener(listener);
     }
@@ -60,13 +60,13 @@ public class JSmoothList<T extends Object> extends JList<T> {
     @SuppressWarnings("unchecked")
     @Override
     public void setListData(Object[] listData) {
-        super.setModel(new ModifiableListModel<T>((T[]) listData));
+        super.setModel(new ModifiableListModel<>((T[]) listData));
     }
 
-    @SuppressWarnings({ "rawtypes", "cast", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void setListData(Vector listData) {
-        super.setModel(new ModifiableListModel<T>((Vector<T>) listData));
+        super.setModel(new ModifiableListModel<>(listData));
     }
 
     public void setModel(ModifiableListModel<T> model) {
@@ -91,7 +91,6 @@ public class JSmoothList<T extends Object> extends JList<T> {
             int dx = Math.abs(origin.x - where.x);
             int dy = Math.abs(origin.y - where.y);
             return dx > 3 || dy > 0;
-            // return Math.sqrt(dx * dx + dy * dy) > 0;
         }
 
         @Override
