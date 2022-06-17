@@ -207,24 +207,19 @@ public class ComponentListPrintable implements Printable {
         }
 
         Dimension size = new Dimension((int) pageFormat.getImageableWidth(), (int) pageFormat.getImageableHeight());
+        panel.addNotify();
         panel.setSize(size);
         panel.setMaximumSize(size);
         panel.setPreferredSize(size);
         panel.setMinimumSize(size);
-
+        panel.validate();
+        
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-
-        JFrame frame = new JFrame();
-        frame.add(panel);
-        frame.pack();
 
         disableDoubleBuffering(panel);
         panel.paint(g2d);
         enableDoubleBuffering(panel);
-
-        // Cleanup
-        frame.removeAll();
     }
 
     private static void disableDoubleBuffering(Component c) {

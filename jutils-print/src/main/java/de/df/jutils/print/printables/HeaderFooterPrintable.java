@@ -140,13 +140,11 @@ public class HeaderFooterPrintable implements Printable {
 
     @Override
     public int print(Graphics g, PageFormat pf, int index) throws PrinterException {
-        // EDTUtils.sleep();
         Object[] dynamic1 = dynamics.toArray();
         Object[] dynamic2 = null;
 
         boolean combine = false;
-        if (source instanceof HeaderFooterPrintable) {
-            HeaderFooterPrintable hfp = (HeaderFooterPrintable) source;
+        if (source instanceof HeaderFooterPrintable hfp) {
             combine = true;
             for (int x = 0; x < 3; x++) {
                 if ((getText(header[x], dynamic1).trim().length() > 0) && (getText(hfp.header[x], dynamic2).trim().length() > 0)) {

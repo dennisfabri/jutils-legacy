@@ -36,12 +36,7 @@ public class TextTablePrintable implements Printable {
 
     public TextTablePrintable(JTable table) {
         this.table = table;
-        EDTUtils.executeOnEDT(new Runnable() {
-            @Override
-            public void run() {
-                init();
-            }
-        });
+        EDTUtils.executeOnEDT(() -> init());
     }
 
     @Override

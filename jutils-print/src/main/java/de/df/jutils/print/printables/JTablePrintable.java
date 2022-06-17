@@ -3,6 +3,7 @@
  */
 package de.df.jutils.print.printables;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,7 +11,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
-import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ToolTipManager;
@@ -26,21 +27,22 @@ import de.df.jutils.gui.util.EDTUtils;
  */
 public class JTablePrintable implements Printable {
 
-    public static final int OPT_NONE     = 0;
-    public static final int OPT_HEADER   = 1;
+    public static final int OPT_NONE = 0;
+    public static final int OPT_HEADER = 1;
     public static final int OPT_RENDERER = 2;
 
-    public static final int OPT_ALL      = OPT_HEADER | OPT_RENDERER;
+    public static final int OPT_ALL = OPT_HEADER | OPT_RENDERER;
 
-    Printable               printable    = null;
-    JTable                  table        = null;
-    JDialog                 dummy        = null;
+    private Printable printable = null;
+    private JTable table = null;
+    private JPanel panel = null;
 
-    boolean                 resize       = false;
+    private boolean resize = false;
 
-    JTable.PrintMode        mode;
+    private JTable.PrintMode mode;
 
-    public JTablePrintable(JTable jtable, int optimize, boolean variableRows, JTable.PrintMode printmode, boolean resize, Font font) {
+    public JTablePrintable(JTable jtable, int optimize, boolean variableRows, JTable.PrintMode printmode,
+            boolean resize, Font font) {
         mode = printmode;
         this.resize = resize;
         this.table = jtable;
@@ -65,9 +67,14 @@ public class JTablePrintable implements Printable {
         }
         table.setSize(table.getPreferredSize());
 
-        dummy = new JDialog();
-        dummy.add(new JScrollPane(table));
-        EDTUtils.pack(dummy);
+        
+        
+        JScrollPane pane = new JScrollPane(table);
+        panel = new JPanel(new BorderLayout());
+        panel.add(pane, BorderLayout.CENTER);
+        panel.addNotify();
+        panel.setSize(table.getPreferredSize());
+        panel.validate();
 
         printable = table.getPrintable(printmode, null, null);
     }
@@ -76,6 +83,7 @@ public class JTablePrintable implements Printable {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.print.Printable#print(java.awt.Graphics,
      * java.awt.print.PageFormat, int)
      */
@@ -87,7 +95,6 @@ public class JTablePrintable implements Printable {
             EDTUtils.executeOnEDT(new PrintUpdater(pf));
         }
         return EDTUtils.print(printable, g, pf, page);
-        // return printable.print(g, pf, page);
     }
 
     private class PrintUpdater implements Runnable {
@@ -110,7 +117,9 @@ public class JTablePrintable implements Printable {
                         tc.setWidth(tc.getWidth() + colplus);
                         tc.setMinWidth(tc.getWidth() + colplus);
                     }
-                    EDTUtils.pack(dummy);
+                    panel.setSize(table.getPreferredSize());
+                    panel.validate();
+                    // EDTUtils.pack(dummy);
                     printable = table.getPrintable(mode, null, null);
                 }
             }

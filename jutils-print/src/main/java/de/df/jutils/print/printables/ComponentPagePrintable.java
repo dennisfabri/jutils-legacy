@@ -57,12 +57,6 @@ public class ComponentPagePrintable implements Printable {
 
         component.setMinimumSize(d);
 
-        // // Without this the Component will not be printed
-        Window frame = new Frame();
-        frame.setLayout(new FlowLayout());
-        frame.add(component);
-        frame.pack();
-
         double scale = 0;
         if (scaleDown) {
             Dimension preferred = component.getPreferredSize();
@@ -73,8 +67,6 @@ public class ComponentPagePrintable implements Printable {
             if (scale > 1.0) {
                 d.height *= scale;
                 d.width *= scale;
-                // width *= scale;
-                // height *= scale;
                 component.setMinimumSize(d);
             }
         }
@@ -86,8 +78,10 @@ public class ComponentPagePrintable implements Printable {
         if (scale > 1.0) {
             g2d.scale(1.0 / scale, 1.0 / scale);
         }
+        
+        component.addNotify();
         component.setSize(d);
-        component.doLayout();
+        // component.doLayout();
         component.validate();
 
         // Wait for all events in the EDT to be executed
@@ -96,11 +90,6 @@ public class ComponentPagePrintable implements Printable {
         disableDoubleBuffering(component);
         EDTUtils.print(component, g2d);
         enableDoubleBuffering(component);
-
-        // Cleanup
-        frame.removeAll();
-        frame.dispose();
-        frame = null;
 
         Runtime.getRuntime().gc();
     }

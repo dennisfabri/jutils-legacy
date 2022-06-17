@@ -37,15 +37,15 @@ import de.df.jutils.gui.util.EDTUtils;
 public class ComponentPackingPrintable implements Printable {
 
     private Component[] components = null;
-    private int         width      = 0;
-    private int         height     = 0;
-    private int         amountX    = 0;
-    private int         amountY    = 0;
-    private int         gapX       = 0;
-    private int         gapY       = 0;
-    private int         maxGapX    = -1;
-    private int         maxGapY    = -1;
-    private boolean     border     = true;
+    private int width = 0;
+    private int height = 0;
+    private int amountX = 0;
+    private int amountY = 0;
+    private int gapX = 0;
+    private int gapY = 0;
+    private int maxGapX = -1;
+    private int maxGapY = -1;
+    private boolean border = true;
 
     public ComponentPackingPrintable(Component... components) {
         this(-1, -1, components);
@@ -75,10 +75,9 @@ public class ComponentPackingPrintable implements Printable {
      */
     private void init() {
         for (Component component1 : components) {
-            Frame f = new Frame();
-            f.add(component1);
-            f.pack();
-            f.removeAll();
+            component1.addNotify();
+            component1.setSize(component1.getPreferredSize());
+            component1.validate();
 
             Dimension size = component1.getSize();
             if (width < size.width) {
@@ -186,19 +185,13 @@ public class ComponentPackingPrintable implements Printable {
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
         g2d.setClip(0, 0, size.width, size.height);
 
-        JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout());
-        frame.setUndecorated(true);
-        frame.add(panel, BorderLayout.CENTER);
-        frame.pack();
-
+        panel.addNotify();
+        panel.setPreferredSize(panel.getPreferredSize());
+        panel.validate();
+        
         disableDoubleBuffering(panel);
         EDTUtils.print(panel, g2d);
         enableDoubleBuffering(panel);
-
-        // Cleanup
-        frame.removeAll();
-        frame.dispose();
 
         return PAGE_EXISTS;
     }

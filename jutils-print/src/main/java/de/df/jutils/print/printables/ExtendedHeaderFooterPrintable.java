@@ -92,8 +92,6 @@ public class ExtendedHeaderFooterPrintable implements Printable {
         g2d.translate(x, y);
         c.print(g2d);
 
-        // EDTUtils.sleep();
-
         currentManager.setDoubleBufferingEnabled(true);
     }
 

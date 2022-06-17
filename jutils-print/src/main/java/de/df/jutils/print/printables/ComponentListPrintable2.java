@@ -41,13 +41,13 @@ import de.df.jutils.gui.util.EDTUtils;
 public class ComponentListPrintable2 implements Printable {
 
     private Component[] components = null;
-    private int         gapY       = 0;
+    private int gapY = 0;
 
-    private int         lastindex  = -1;
-    private int         offset     = 0;
-    private int         nextoffset = 0;
+    private int lastindex = -1;
+    private int offset = 0;
+    private int nextoffset = 0;
 
-    private boolean     border     = true;
+    private boolean border = true;
 
     public ComponentListPrintable2(boolean border, Component... components) {
         this(0, border, components);
@@ -68,12 +68,6 @@ public class ComponentListPrintable2 implements Printable {
         setDrawBorder(border);
         this.components = components;
         setGap(gap);
-        EDTUtils.executeOnEDT(new Runnable() {
-            @Override
-            public void run() {
-                init();
-            }
-        });
     }
 
     public void setGap(int gap) {
@@ -82,22 +76,6 @@ public class ComponentListPrintable2 implements Printable {
 
     public void setDrawBorder(boolean b) {
         border = b;
-    }
-
-    /**
-     * @param components
-     */
-    void init() {
-        // SimpleListBuilder slb = new SimpleListBuilder();
-        // Frame f = new Frame();
-        //
-        // for (int x = 0; x < components.length; x++) {
-        // slb.add(components[x]);
-        // }
-        //
-        // f.add(new JScrollPane(slb.getPanel(false)), BorderLayout.CENTER);
-        // EDTUtils.pack(f);
-        // f.removeAll();
     }
 
     @Override
@@ -115,7 +93,8 @@ public class ComponentListPrintable2 implements Printable {
             return NO_SUCH_PAGE;
         }
 
-        BufferedImage i = new BufferedImage((int) pageFormat.getWidth(), (int) pageFormat.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        BufferedImage i = new BufferedImage((int) pageFormat.getWidth(), (int) pageFormat.getHeight(),
+                BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D g2 = i.createGraphics();
 
         EDTUtils.executeOnEDT(new PagePrinter(g2, pageFormat));
@@ -127,7 +106,7 @@ public class ComponentListPrintable2 implements Printable {
 
     private class PagePrinter implements Runnable {
 
-        private Graphics   g;
+        private Graphics g;
         private PageFormat pf;
 
         public PagePrinter(Graphics gr, PageFormat p) {
@@ -172,9 +151,9 @@ public class ComponentListPrintable2 implements Printable {
         while ((height < pagesize.height) && (offset + x < components.length)) {
             for (int i = 0; i < 1; i++) {
                 Component component = components[offset + x];
-                if (component instanceof JComponent) {
+                if (component instanceof JComponent c) {
                     if (border) {
-                        ((JComponent) component).setBorder(new LineBorder(Color.BLACK, 1));
+                        c.setBorder(new LineBorder(Color.BLACK, 1));
                     }
                 } else {
                     JPanel p = new JPanel(new BorderLayout());
