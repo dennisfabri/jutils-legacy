@@ -173,11 +173,9 @@ public class JWarningTextField extends JTextField {
     }
 
     void checkFocus() {
-        if (force || (getText().length() > 0)) {
-            if (!isOk()) {
-                Toolkit.getDefaultToolkit().beep();
-                requestFocus();
-            }
+        if (force && !isOk()) {
+            Toolkit.getDefaultToolkit().beep();
+            requestFocus();
         }
     }
 
@@ -219,6 +217,6 @@ public class JWarningTextField extends JTextField {
     }
 
     public boolean isOk() {
-        return (isValidString() || isSpecialString()) && (!isForbiddenString());
+        return (isValidString() || isSpecialString()) && !isForbiddenString();
     }
 }

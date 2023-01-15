@@ -1,15 +1,11 @@
 package de.df.jutils.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
-import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
 public class JDoubleField extends JWarningTextField {
@@ -61,10 +57,6 @@ public class JDoubleField extends JWarningTextField {
 
     public JDoubleField(boolean required, boolean force) {
         this(EMPTY_FIELD, NO_MAXVALUE, required, force);
-    }
-
-    private JDoubleField(boolean required) {
-        this(NO_MAXVALUE, required);
     }
 
     public JDoubleField() {
