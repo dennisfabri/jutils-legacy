@@ -27,23 +27,22 @@ import javax.swing.event.MouseInputListener;
  * 
  * @author Santhosh Kumar T
  * @email santhosh@in.fiorano.com
- * @link
- *       http://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing
+ * @link http://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing
  */
 class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListener, SwingConstants {
 
-    private static final long     serialVersionUID = -899406324852168721L;
+    private static final long serialVersionUID = -899406324852168721L;
 
-    private static final Image[]  IMAGES           = ScrollUtils.createImages();
-    private static final Cursor[] CURSORS          = ScrollUtils.createCursors();
+    private static final Image[] IMAGES = ScrollUtils.createImages();
+    private static final Cursor[] CURSORS = ScrollUtils.createCursors();
 
-    private Component             oldGlassPane     = null;
-    private Point                 location         = null;
+    private Component oldGlassPane;
+    private Point location;
 
-    Timer                         movingTimer;
-    private Point                 mouseLocation;
-    private JViewport             viewport;
-    private int                   oldDirection     = -1;
+    Timer movingTimer;
+    private Point mouseLocation;
+    private JViewport viewport;
+    private int oldDirection = -1;
 
     public ScrollGlassPane(Component oldGlassPane, JViewport viewport, Point location) {
         this.oldGlassPane = oldGlassPane;
@@ -153,7 +152,7 @@ class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListen
         }
     }
 
-    private boolean ignoreMousePress = false;
+    private boolean ignoreMousePress;
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -176,7 +175,7 @@ class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListen
         changeCursor();
     }
 
-    private boolean dragged = false;
+    private boolean dragged;
 
     @Override
     public void mouseDragged(MouseEvent e) {

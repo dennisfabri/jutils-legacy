@@ -47,21 +47,21 @@ import javax.swing.SwingUtilities;
 // bounds
 public abstract class AbstractComponentDecorator {
 
-    public static final int TOP          = 0;
+    public static final int TOP = 0;
 
     /**
      * Account for the difference between the decorator actual origin and the
      * logical origin we want to pass to the {@link #paint} method.
      */
-    Point                   originOffset = new Point(0, 0);
+    Point originOffset = new Point(0, 0);
 
-    private Painter         painter;
-    JComponent              component;
-    private Container       parent;
-    private Listener        listener;
-    int                     layerOffset;
-    private int             position;
-    private Rectangle       bounds;
+    private Painter painter;
+    JComponent component;
+    private Container parent;
+    private Listener listener;
+    int layerOffset;
+    private int position;
+    private Rectangle bounds;
 
     /** Create a decorator for the given component. */
     protected AbstractComponentDecorator(JComponent c) {
@@ -69,8 +69,8 @@ public abstract class AbstractComponentDecorator {
     }
 
     /**
-     * Create a decorator for the given component, indicating the layer offset
-     * from the target component. Negative values mean the decoration is painted
+     * Create a decorator for the given component, indicating the layer offset from
+     * the target component. Negative values mean the decoration is painted
      * <em>before</em> the target component is painted.
      */
     protected AbstractComponentDecorator(JComponent c, int layerOffset) {
@@ -78,12 +78,12 @@ public abstract class AbstractComponentDecorator {
     }
 
     /**
-     * Create a decorator with the given position within its layer. Use
-     * {@link #TOP} to cover other decorations, or {@link #BOTTOM} to be covered
-     * by other decorations.
+     * Create a decorator with the given position within its layer. Use {@link #TOP}
+     * to cover other decorations, or {@link #BOTTOM} to be covered by other
+     * decorations.
      * <p>
-     * WARNING: BOTTOM doesn't currently work, probably a JLayeredPane bug in
-     * either the code or documentation.
+     * WARNING: BOTTOM doesn't currently work, probably a JLayeredPane bug in either
+     * the code or documentation.
      * 
      * @see JLayeredPane
      */
@@ -122,8 +122,8 @@ public abstract class AbstractComponentDecorator {
     /**
      * Provide for different tool tips depending on the actual location over the
      * decoration. Note that if you <em>only</em> override this method, you must
-     * also invoke {@link #setToolTipText(String)} with a non-<span
-     * class="javakeyword">null</span> argument.
+     * also invoke {@link #setToolTipText(String)} with a
+     * non-<span class="javakeyword">null</span> argument.
      * 
      * @see JComponent#getToolTipText(MouseEvent)
      */
@@ -189,8 +189,8 @@ public abstract class AbstractComponentDecorator {
     }
 
     /**
-     * Ensure the size of the decorator matches the current decoration bounds
-     * with appropriate clipping to viewports.
+     * Ensure the size of the decorator matches the current decoration bounds with
+     * appropriate clipping to viewports.
      */
     protected void synch() {
         Container painterParent = painter.getParent();
@@ -257,10 +257,9 @@ public abstract class AbstractComponentDecorator {
     }
 
     /**
-     * Return the bounds, relative to the decorated component, of the
-     * decoration. The default covers the entire component. Note that this
-     * method will be called from the constructor, so be careful when
-     * referencing derived class state.
+     * Return the bounds, relative to the decorated component, of the decoration.
+     * The default covers the entire component. Note that this method will be called
+     * from the constructor, so be careful when referencing derived class state.
      */
     protected Rectangle getDecorationBounds() {
         if (bounds == null) {
@@ -308,11 +307,10 @@ public abstract class AbstractComponentDecorator {
     }
 
     /**
-     * Define the decoration's appearance. The point (0,0) represents the upper
-     * left corner of the decorated component. The default clip mask will be the
-     * extents of the decoration bounds, as indicated by
-     * {@link #getDecorationBounds()}, which defaults to the decorated component
-     * bounds.
+     * Define the decoration's appearance. The point (0,0) represents the upper left
+     * corner of the decorated component. The default clip mask will be the extents
+     * of the decoration bounds, as indicated by {@link #getDecorationBounds()},
+     * which defaults to the decorated component bounds.
      */
     public abstract void paint(Graphics g);
 
@@ -340,7 +338,7 @@ public abstract class AbstractComponentDecorator {
 
         private static final long serialVersionUID = 4910141373259958758L;
 
-        private int               base;
+        private int base;
 
         public JComponent getComponent() {
             return AbstractComponentDecorator.this.getComponent();
@@ -398,7 +396,7 @@ public abstract class AbstractComponentDecorator {
         }
 
         private String key;
-        int            layer;
+        int layer;
 
         public BackgroundPainter(JLayeredPane p, int layer) {
             super(p, 0, TOP);
@@ -465,7 +463,7 @@ public abstract class AbstractComponentDecorator {
         }
 
         private List<Component> findOpaque(Component root) {
-            List<Component> list = new ArrayList<Component>();
+            List<Component> list = new ArrayList<>();
             if (root.isOpaque() && root instanceof JComponent) {
                 list.add(root);
                 ((JComponent) root).setOpaque(false);
@@ -480,7 +478,7 @@ public abstract class AbstractComponentDecorator {
         }
 
         private List<Component> findDoubleBuffered(Component root) {
-            List<Component> list = new ArrayList<Component>();
+            List<Component> list = new ArrayList<>();
             if (root.isDoubleBuffered() && root instanceof JComponent) {
                 list.add(root);
                 ((JComponent) root).setDoubleBuffered(false);
@@ -513,8 +511,8 @@ public abstract class AbstractComponentDecorator {
             Component[] kids = lp.getComponents();
             // Construct an area of the intersection of all decorators
             Area area = new Area();
-            List<Painter> painters = new ArrayList<Painter>();
-            List<Component> components = new ArrayList<Component>();
+            List<Painter> painters = new ArrayList<>();
+            List<Component> components = new ArrayList<>();
             for (int i = kids.length - 1; i >= 0; i--) {
                 if (kids[i] instanceof Painter) {
                     Painter p = (Painter) kids[i];
@@ -526,7 +524,7 @@ public abstract class AbstractComponentDecorator {
                     components.add(kids[i]);
                 }
             }
-            if (painters.size() == 0) {
+            if (painters.isEmpty()) {
                 dispose();
                 return;
             }

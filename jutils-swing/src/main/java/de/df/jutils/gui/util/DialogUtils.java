@@ -35,11 +35,13 @@ public final class DialogUtils {
         // Never used
     }
 
-    public static String showTextDialog(final JFrame parent, final String title, final String angabe, final String text) {
+    public static String showTextDialog(final JFrame parent, final String title, final String angabe,
+            final String text) {
         return showTextDialog(parent, title, angabe, text, 10);
     }
 
-    public static String showTextDialog(final JFrame parent, final String title, final String angabe, final String text, final int size) {
+    public static String showTextDialog(final JFrame parent, final String title, final String angabe, final String text,
+            final int size) {
         JTextDialog jtd = new JTextDialog(parent, title, angabe, size);
         if (text != null) {
             jtd.setText(text.trim());
@@ -59,7 +61,8 @@ public final class DialogUtils {
         return TaskDialogs.isConfirmed(parent, question, note != null ? note : "");
     }
 
-    public static boolean askAndWarn(final Window parent, final String title, final String question, final String note) {
+    public static boolean askAndWarn(final Window parent, final String title, final String question,
+            final String note) {
         return askAndWarn(parent, question, note);
     }
 
@@ -87,7 +90,8 @@ public final class DialogUtils {
         warn(parent, meldung, null);
     }
 
-    public static void showException(final Window parent, final String title, final String meldung, final String note, Exception ex) {
+    public static void showException(final Window parent, final String title, final String meldung, final String note,
+            Exception ex) {
         TaskDialog dlg = new TaskDialog(parent, title == null ? TaskDialog.makeKey("Exception") : title);
 
         String msg = ex.getMessage();
@@ -116,7 +120,8 @@ public final class DialogUtils {
     }
 
     public static int askForNumber(JFrame parent, String question, String note, int min, int max) {
-        JIntegerDialog id = new JIntegerDialog(parent, JUtilsI18n.get("de.dm.gui.window.EnterNumber"), question, note, min, min, max);
+        JIntegerDialog id = new JIntegerDialog(parent, JUtilsI18n.get("de.dm.gui.window.EnterNumber"), question, note,
+                min, min, max);
         if (min < 0) {
             throw new IllegalArgumentException("Min must not be lower than 0.");
         }

@@ -21,7 +21,7 @@ import de.df.jutils.gui.util.WindowUtils;
 import de.df.jutils.i18n.util.JUtilsI18n;
 import de.df.jutils.print.api.PrintableCreator;
 
-public class PrintExecutor {
+public final class PrintExecutor {
 
     private PrintExecutor() {
     }
@@ -110,11 +110,11 @@ public class PrintExecutor {
         return idialog;
     }
 
-    private static class PrintResponder implements NotifyingPrintable.PrintListener {
+    private static final class PrintResponder implements NotifyingPrintable.PrintListener {
 
-        JInfiniteProgressDialog dialog = null;
+        JInfiniteProgressDialog dialog;
 
-        public PrintResponder(JInfiniteProgressDialog dialog) {
+        private PrintResponder(JInfiniteProgressDialog dialog) {
             this.dialog = dialog;
         }
 
@@ -130,11 +130,11 @@ public class PrintExecutor {
             }
         }
 
-        private class TextRunnable implements Runnable {
+        private final class TextRunnable implements Runnable {
 
             private int index;
 
-            public TextRunnable(int i) {
+            private TextRunnable(int i) {
                 index = i;
             }
 

@@ -14,7 +14,7 @@ public class BasicTableModel extends SimpleTableModel {
      */
     private static final long serialVersionUID = 3760562001079775794L;
 
-    private Class<?>[]        types            = null;
+    private Class<?>[] types;
 
     public BasicTableModel(Object[] titles, Object[][] data, Class<?>[] ctypes) {
         super(data, titles);
@@ -23,6 +23,7 @@ public class BasicTableModel extends SimpleTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnClass(int)
      */
     @Override

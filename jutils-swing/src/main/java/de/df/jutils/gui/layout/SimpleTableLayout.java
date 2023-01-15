@@ -13,6 +13,7 @@ import java.awt.LayoutManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 public class SimpleTableLayout implements LayoutManager, Serializable {
@@ -30,7 +31,7 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
      * @see getHgap
      * @see setHgap
      */
-    private int               hgap;
+    private int hgap;
 
     /**
      * The flow layout manager allows a seperation of components with gaps. The
@@ -40,11 +41,11 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
      * @see getVgap
      * @see setVgap
      */
-    private int               vgap;
+    private int vgap;
 
-    private int               spalten;
+    private int spalten;
 
-    private int               select;
+    private int select;
 
     /**
      * Constructs a new <code>LineLayout</code> with a centered alignment and a
@@ -66,12 +67,9 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
      * <code>LineLayout.LEFT</code>,<code>LineLayout.RIGHT</code>, or
      * <code>LineLayout.CENTER</code>.
      * 
-     * @param align
-     *            the alignment value
-     * @param hgap
-     *            the horizontal gap between components
-     * @param vgap
-     *            the vertical gap between components
+     * @param align the alignment value
+     * @param hgap  the horizontal gap between components
+     * @param vgap  the vertical gap between components
      */
     public SimpleTableLayout(int spaltenanzahl, int hogap, int vegap) {
         this(spaltenanzahl, spaltenanzahl - 1, hogap, vegap);
@@ -108,8 +106,7 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     /**
      * Sets the horizontal gap between components.
      * 
-     * @param hgap
-     *            the horizontal gap between components
+     * @param hgap the horizontal gap between components
      * @see java.awt.LineLayout#getHgap
      * @since JDK1.1
      */
@@ -131,8 +128,7 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     /**
      * Sets the vertical gap between components.
      * 
-     * @param vgap
-     *            the vertical gap between components
+     * @param vgap the vertical gap between components
      * @see java.awt.LineLayout#getVgap
      * @since JDK1.1
      */
@@ -143,10 +139,8 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     /**
      * Adds the specified component to the layout. Not used by this class.
      * 
-     * @param name
-     *            the name of the component
-     * @param comp
-     *            the component to be added
+     * @param name the name of the component
+     * @param comp the component to be added
      */
     @Override
     public void addLayoutComponent(String name, Component comp) {
@@ -156,8 +150,7 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     /**
      * Removes the specified component from the layout. Not used by this class.
      * 
-     * @param comp
-     *            the component to remove
+     * @param comp the component to remove
      * @see java.awt.Container#removeAll
      */
     @Override
@@ -166,11 +159,10 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     }
 
     /**
-     * Returns the preferred dimensions for this layout given the <i>visible
-     * </i> components in the specified target container.
+     * Returns the preferred dimensions for this layout given the <i>visible </i>
+     * components in the specified target container.
      * 
-     * @param target
-     *            the component which needs to be laid out
+     * @param target the component which needs to be laid out
      * @return the preferred dimensions to lay out the subcomponents of the
      *         specified container
      * @see Container
@@ -238,10 +230,9 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
      * Returns the minimum dimensions needed to layout the <i>visible </i>
      * components contained in the specified target container.
      * 
-     * @param target
-     *            the component which needs to be laid out
-     * @return the minimum dimensions to lay out the subcomponents of the
-     *         specified container
+     * @param target the component which needs to be laid out
+     * @return the minimum dimensions to lay out the subcomponents of the specified
+     *         container
      * @see #preferredLayoutSize
      * @see java.awt.Container
      * @see java.awt.Container#doLayout
@@ -252,12 +243,11 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
     }
 
     /**
-     * Lays out the container. This method lets each component take its
-     * preferred size by reshaping the components in the target container in
-     * order to satisfy the alignment of this <code>LineLayout</code> object.
+     * Lays out the container. This method lets each component take its preferred
+     * size by reshaping the components in the target container in order to satisfy
+     * the alignment of this <code>LineLayout</code> object.
      * 
-     * @param target
-     *            the specified component being laid out
+     * @param target the specified component being laid out
      * @see Container
      * @see java.awt.Container#doLayout
      */
@@ -368,24 +358,24 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
      */
     @SuppressWarnings({ "unchecked", "cast" })
     private LinkedList<Component>[] separateIntoColumns(Container target, int nmembers) {
-        ArrayList<LinkedList<Component>> sp = new ArrayList<LinkedList<Component>>(spalten);
+        List<LinkedList<Component>> sp = new ArrayList<>(spalten);
         for (int x = 0; x < spalten; x++) {
-            sp.add(new LinkedList<Component>());
+            sp.add(new LinkedList<>());
         }
         int spalte = 0;
         for (int i = 0; i < nmembers; i++) {
             Component m = target.getComponent(i);
             if (m.isVisible()) {
                 sp.get(spalte).addLast(m);
-                spalte = ((spalte + 1) % spalten);
+                spalte = (spalte + 1) % spalten;
             }
         }
         return (LinkedList<Component>[]) sp.toArray(new LinkedList[spalten]);
     }
 
     /**
-     * Returns a string representation of this <code>LineLayout</code> object
-     * and its values.
+     * Returns a string representation of this <code>LineLayout</code> object and
+     * its values.
      * 
      * @return a string representation of this layout
      */

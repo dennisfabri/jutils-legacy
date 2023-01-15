@@ -27,13 +27,13 @@ public class JPrintTable extends JTable {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long  serialVersionUID = 3832617391833299257L;
+    private static final long serialVersionUID = 3832617391833299257L;
 
-    private static int         VALUE            = 230;
+    private static int value = 230;
 
-    private static final Color GRIDCOLOR        = Color.BLACK;
-    private static final Color ODDCOLOR         = Color.WHITE;
-    private static Color       EVENCOLOR        = new Color(VALUE, VALUE, VALUE);
+    private static final Color GRIDCOLOR = Color.BLACK;
+    private static final Color ODDCOLOR = Color.WHITE;
+    private static Color evencolor = new Color(value, value, value);
 
     public static void setRowMarker(int v) {
         if (v < 0) {
@@ -42,16 +42,16 @@ public class JPrintTable extends JTable {
         if (v > 255) {
             throw new IllegalArgumentException("Value must not be higher than 255: " + v);
         }
-        VALUE = v;
-        EVENCOLOR = new Color(VALUE, VALUE, VALUE);
+        value = v;
+        evencolor = new Color(value, value, value);
     }
 
     public static int getRowMarker() {
-        return VALUE;
+        return value;
     }
 
     public static Color getRowMarkerColor() {
-        return EVENCOLOR;
+        return evencolor;
     }
 
     /**
@@ -109,7 +109,7 @@ public class JPrintTable extends JTable {
     /**
      * @param tm
      * @param tcm
-     *            @param lsm
+     * @param lsm
      */
     public JPrintTable(TableModel tm, TableColumnModel tcm, ListSelectionModel lsm) {
         super(tm, tcm, lsm);
@@ -130,9 +130,9 @@ public class JPrintTable extends JTable {
 
     public static void initPrintableJTable(JTable table, boolean colors) {
         JTableHeader anHeader = table.getTableHeader();
-        anHeader.setDefaultRenderer(new PrintHeaderRenderer(EVENCOLOR));
+        anHeader.setDefaultRenderer(new PrintHeaderRenderer(evencolor));
         anHeader.setForeground(Color.BLACK);
-        anHeader.setBackground(EVENCOLOR);
+        anHeader.setBackground(evencolor);
         anHeader.setBorder(new InsetsBorder(GRIDCOLOR, 0, 0, 1, 0));
 
         if (table instanceof JGroupableTable) {
@@ -147,7 +147,7 @@ public class JPrintTable extends JTable {
 
         table.setIntercellSpacing(new Dimension(0, 0));
         if (colors) {
-            JTableUtils.setAlternatingTableCellRenderer(table, EVENCOLOR, ODDCOLOR);
+            JTableUtils.setAlternatingTableCellRenderer(table, evencolor, ODDCOLOR);
         }
         table.setShowGrid(!colors);
         table.setGridColor(GRIDCOLOR);

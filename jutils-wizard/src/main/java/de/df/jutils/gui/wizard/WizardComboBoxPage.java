@@ -5,7 +5,6 @@ package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -42,20 +41,22 @@ public class WizardComboBoxPage<T extends Object> extends AWizardPage implements
         }
     }
 
-    JComboBox<T>[]        buttons = null;
-    private JPanel        panel   = new JWizardPanel();
+    JComboBox<T>[] buttons;
+    private JPanel panel = new JWizardPanel();
     private final JWizard wizard;
 
     public WizardComboBoxPage(JWizard w, String title, String note, String[] names, T[][] values) {
         this(w, title, note, names, null, values, null);
     }
 
-    private static <T extends Object> void checkArguments(String[] names, boolean[] enabled, T[][] values, int[] selection) {
+    private static <T extends Object> void checkArguments(String[] names, boolean[] enabled, T[][] values,
+            int[] selection) {
         if (names == null) {
             throw new NullPointerException("String[] options must " + "not be null!");
         }
         if ((enabled != null) && (enabled.length != names.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] names!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] names!");
         }
         if (values == null) {
             throw new IllegalArgumentException("T[][] values must not be null!");
@@ -72,7 +73,8 @@ public class WizardComboBoxPage<T extends Object> extends AWizardPage implements
             }
         }
         if ((selection != null) && (selection.length != names.length)) {
-            throw new IllegalArgumentException("int[] selection must be null" + " or have the same length as String[] names!");
+            throw new IllegalArgumentException(
+                    "int[] selection must be null" + " or have the same length as String[] names!");
         }
         if (selection != null) {
             for (int x = 0; x < values.length; x++) {
@@ -84,7 +86,8 @@ public class WizardComboBoxPage<T extends Object> extends AWizardPage implements
     }
 
     @SuppressWarnings("unchecked")
-    public WizardComboBoxPage(JWizard w, String title, String note, String[] names, boolean[] enabled, T[][] values, int[] selection) {
+    public WizardComboBoxPage(JWizard w, String title, String note, String[] names, boolean[] enabled, T[][] values,
+            int[] selection) {
         super(title, note);
         checkArguments(names, enabled, values, selection);
         wizard = w;
@@ -101,16 +104,13 @@ public class WizardComboBoxPage<T extends Object> extends AWizardPage implements
             if (selection != null) {
                 index = selection[x];
             }
-            buttons[x] = new JComboBox<T>(value);
+            buttons[x] = new JComboBox<>(value);
             buttons[x].setSelectedIndex(index);
             if (enabled != null) {
                 buttons[x].setEnabled(enabled[x]);
             }
-            buttons[x].addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    notifyUpdate();
-                }
+            buttons[x].addItemListener(e -> {
+                notifyUpdate();
             });
             panel.add(new JLabel(names[x] + ":"), CC.xy(2, 3 + 2 * x));
             panel.add(buttons[x], CC.xy(4, 3 + 2 * x));

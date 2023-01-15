@@ -7,13 +7,13 @@ import javax.swing.JComponent;
 
 public abstract class AWizardPage {
 
-    public static final int NO_NEXT_PAGE       = -1;
+    public static final int NO_NEXT_PAGE = -1;
     public static final int NEXT_PAGE_BY_INDEX = -2;
 
-    private final String    title;
-    private final String    note;
-    private int             index              = NEXT_PAGE_BY_INDEX;
-    private boolean         enabled            = true;
+    private final String title;
+    private final String note;
+    private int index = NEXT_PAGE_BY_INDEX;
+    private boolean enabled = true;
 
     public AWizardPage() {
         this(null, null);

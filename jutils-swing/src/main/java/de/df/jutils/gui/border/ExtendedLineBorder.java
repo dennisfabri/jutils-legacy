@@ -15,12 +15,12 @@ public final class ExtendedLineBorder extends AbstractBorder {
      */
     private static final long serialVersionUID = 3256438127291086130L;
 
-    private int               top              = 1;
-    private int               left             = 1;
-    private int               bottom           = 1;
-    private int               right            = 1;
+    private int top = 1;
+    private int left = 1;
+    private int bottom = 1;
+    private int right = 1;
 
-    private Color             color            = null;
+    private Color color;
 
     public ExtendedLineBorder() {
         super();
@@ -52,11 +52,13 @@ public final class ExtendedLineBorder extends AbstractBorder {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.border.Border#paintBorder(java.awt.Component,
      * java.awt.Graphics, int, int, int, int)
      */
     @Override
-    public void paintBorder(final Component c, final Graphics g, final int x, final int y, final int width, final int height) {
+    public void paintBorder(final Component c, final Graphics g, final int x, final int y, final int width,
+            final int height) {
         int x2 = x + width - 1;
         int y2 = y + height - 1;
         if (color == null) {
@@ -89,6 +91,7 @@ public final class ExtendedLineBorder extends AbstractBorder {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
      */
     @Override

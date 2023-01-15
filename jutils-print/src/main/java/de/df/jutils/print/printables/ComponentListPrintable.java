@@ -15,7 +15,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.RepaintManager;
@@ -40,15 +39,15 @@ import de.df.jutils.gui.util.EDTUtils;
 
 public class ComponentListPrintable implements Printable {
 
-    private Component[] components = null;
-    private int         width      = 0;
-    private int         height     = 0;
-    private int         amountY    = 0;
-    private int         gapY       = 0;
-    private int         maxGapY    = -1;
-    private int         minGapY    = 0;
+    private Component[] components;
+    private int width;
+    private int height;
+    private int amountY;
+    private int gapY;
+    private int maxGapY = -1;
+    private int minGapY;
 
-    private boolean     border     = true;
+    private boolean border = true;
 
     public ComponentListPrintable(boolean border, Component... components) {
         this(0, -1, border, components);
@@ -69,12 +68,7 @@ public class ComponentListPrintable implements Printable {
         setDrawBorder(border);
         this.components = components;
         setGap(min, max);
-        EDTUtils.executeOnEDT(new Runnable() {
-            @Override
-            public void run() {
-                init();
-            }
-        });
+        EDTUtils.executeOnEDT(this::init);
     }
 
     public void setGap(int min, int max) {
@@ -89,7 +83,7 @@ public class ComponentListPrintable implements Printable {
     /**
      * @param components
      */
-     private void init() {
+    private void init() {
         SimpleListBuilder slb = new SimpleListBuilder(1);
         Frame f = new Frame();
 
@@ -152,9 +146,9 @@ public class ComponentListPrintable implements Printable {
 
     private class PagePrinter implements Runnable {
 
-        private Graphics   g;
+        private Graphics g;
         private PageFormat pf;
-        private int        offset;
+        private int offset;
 
         public PagePrinter(Graphics gr, PageFormat p, int o) {
             g = gr;
@@ -213,7 +207,7 @@ public class ComponentListPrintable implements Printable {
         panel.setPreferredSize(size);
         panel.setMinimumSize(size);
         panel.validate();
-        
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 

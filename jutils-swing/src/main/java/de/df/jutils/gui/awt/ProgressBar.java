@@ -11,15 +11,15 @@ import java.awt.Graphics2D;
 
 class ProgressBar extends Component {
 
-    private static final long  serialVersionUID = 4960265360749246356L;
+    private static final long serialVersionUID = 4960265360749246356L;
 
-    private static final Color FOG              = new Color(230, 230, 230);
-    private static final Color GRAY1            = Color.GRAY;
-    private static final Color GRAY2            = Color.GRAY;
+    private static final Color FOG = new Color(230, 230, 230);
+    private static final Color GRAY1 = Color.GRAY;
+    private static final Color GRAY2 = Color.GRAY;
 
-    private int                min              = 0;
-    private int                max              = 1;
-    private int                value            = 0;
+    private int min;
+    private int max = 1;
+    private int value;
 
     public ProgressBar(int min, int max) {
         setBackground(Color.WHITE);

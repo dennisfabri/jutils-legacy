@@ -18,8 +18,8 @@ package org.jdesktop.swingx.autocomplete;
 
 /**
  * <p>
- * This class is used to provide string representations for objects when
- * doing automatic completion.
+ * This class is used to provide string representations for objects when doing
+ * automatic completion.
  * </p>
  * <p>
  * A class inherited from this class could be used, when the object's
@@ -76,13 +76,13 @@ package org.jdesktop.swingx.autocomplete;
 public abstract class ObjectToStringConverter {
 
     /**
-     * Returns all possible <tt>String</tt> representations for a given item.
-     * The default implementation wraps the method <tt>getPreferredStringForItem</tt>.
-     * It returns an empty array, if the wrapped method returns <tt>null</tt>. Otherwise
-     * it returns a one dimensional array containing the wrapped method's return value.
+     * Returns all possible <tt>String</tt> representations for a given item. The
+     * default implementation wraps the method <tt>getPreferredStringForItem</tt>.
+     * It returns an empty array, if the wrapped method returns <tt>null</tt>.
+     * Otherwise it returns a one dimensional array containing the wrapped method's
+     * return value.
      *
-     * @param item
-     *            the item to convert
+     * @param item the item to convert
      * @return possible <tt>String</tt> representation for the given item.
      */
     String[] getPossibleStringsForItem(Object item) {
@@ -93,15 +93,15 @@ public abstract class ObjectToStringConverter {
     /**
      * Returns the preferred <tt>String</tt> representations for a given item.
      * 
-     * @param item
-     *            the item to convert
+     * @param item the item to convert
      * @return the preferred <tt>String</tt> representation for the given item.
      */
     public abstract String getPreferredStringForItem(Object item);
 
     /**
-     * This field contains the default implementation, that returns <tt>item.toString()</tt>
-     * for any item <tt>!=null</tt>. For any item <tt>==null</tt>, it returns <tt>null</tt> as well.
+     * This field contains the default implementation, that returns
+     * <tt>item.toString()</tt> for any item <tt>!=null</tt>. For any item
+     * <tt>==null</tt>, it returns <tt>null</tt> as well.
      */
     public static final ObjectToStringConverter DEFAULT_IMPLEMENTATION = new DefaultObjectToStringConverter();
 

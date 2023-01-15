@@ -5,8 +5,10 @@ package de.df.jutils.io.csv;
 
 public class FixedDecimal extends Number implements Comparable<FixedDecimal> {
 
-    private double  value;
-    private int     length;
+    private static final long serialVersionUID = 1;
+
+    private double value;
+    private int length;
     private boolean empty;
 
     public FixedDecimal(double v, int length) {

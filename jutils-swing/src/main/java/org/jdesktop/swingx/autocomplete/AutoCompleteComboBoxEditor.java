@@ -24,8 +24,8 @@ import javax.swing.ComboBoxEditor;
 /**
  * <p>
  * Wrapper around the combobox editor that translates combobox items into
- * strings. The methods <tt>setItem</tt> and <tt>getItem</tt> are modified
- * to account for the string conversion.
+ * strings. The methods <tt>setItem</tt> and <tt>getItem</tt> are modified to
+ * account for the string conversion.
  * </p>
  * <p>
  * This is necessary for those cases where the combobox items have no useful
@@ -44,20 +44,18 @@ import javax.swing.ComboBoxEditor;
 class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /** the original combo box editor */
-    final ComboBoxEditor          wrapped;
+    final ComboBoxEditor wrapped;
     /** the converter used to convert items into their string representation */
     final ObjectToStringConverter stringConverter;
     /** last selected item */
-    private Object                oldItem;
+    private Object oldItem;
 
     /**
      * Creates a new <tt>AutoCompleteComboBoxEditor</tt>.
      *
-     * @param wrapped
-     *            the original <tt>ComboBoxEditor</tt> to be wrapped
-     * @param stringConverter
-     *            the converter to use to convert items into their
-     *            string representation.
+     * @param wrapped         the original <tt>ComboBoxEditor</tt> to be wrapped
+     * @param stringConverter the converter to use to convert items into their
+     *                        string representation.
      */
     public AutoCompleteComboBoxEditor(ComboBoxEditor wrapped, ObjectToStringConverter stringConverter) {
         this.wrapped = wrapped;
@@ -66,6 +64,7 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
+     * 
      * @see javax.swing.ComboBoxEditor#getEditorComponent()
      */
     @Override
@@ -75,6 +74,7 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
+     * 
      * @see javax.swing.ComboBoxEditor#setItem(java.lang.Object)
      */
     @Override
@@ -85,6 +85,7 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
+     * 
      * @see javax.swing.ComboBoxEditor#getItem()
      */
     @Override
@@ -103,6 +104,7 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
+     * 
      * @see javax.swing.ComboBoxEditor#selectAll()
      */
     @Override
@@ -112,7 +114,9 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
-     * @see javax.swing.ComboBoxEditor#addActionListener(java.awt.event.ActionListener)
+     * 
+     * @see
+     * javax.swing.ComboBoxEditor#addActionListener(java.awt.event.ActionListener)
      */
     @Override
     public void addActionListener(ActionListener l) {
@@ -121,7 +125,9 @@ class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /*
      * (non-javadoc)
-     * @see javax.swing.ComboBoxEditor#removeActionListener(java.awt.event.ActionListener)
+     * 
+     * @see javax.swing.ComboBoxEditor#removeActionListener(java.awt.event.
+     * ActionListener)
      */
     @Override
     public void removeActionListener(ActionListener l) {

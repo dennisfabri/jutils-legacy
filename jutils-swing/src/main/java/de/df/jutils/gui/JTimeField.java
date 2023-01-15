@@ -32,11 +32,11 @@ public final class JTimeField extends javax.swing.JPanel {
 
     private Color color;
 
-    private JIntegerField source = null;
+    private JIntegerField source;
     private JLabel minuten;
     private JLabel sekunden;
     private JLabel hundertstel;
-    private int value = 0;
+    private int value;
     private Insets insets = new Insets(2, 2, 2, 2);
 
     /** Creates new form JTimeField */
@@ -48,8 +48,7 @@ public final class JTimeField extends javax.swing.JPanel {
 
     @Override
     public Insets getInsets() {
-        Insets i = new Insets(insets.top, insets.left, insets.bottom, insets.right);
-        return i;
+        return new Insets(insets.top, insets.left, insets.bottom, insets.right);
     }
 
     public boolean isValidValue() {
@@ -149,7 +148,7 @@ public final class JTimeField extends javax.swing.JPanel {
             integer = 0;
         }
 
-        int m = (integer / 10000);
+        int m = integer / 10000;
         int s = (integer / 100) % 100;
         int z = integer % 100;
 

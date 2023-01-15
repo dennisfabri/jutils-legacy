@@ -9,8 +9,8 @@ package de.df.jutils.plugin;
  */
 public class ANullPlugin extends APlugin {
 
-    private static final PanelInfo[]  NO_PANELS  = new PanelInfo[0];
-    private static final MenuInfo[]   NO_MENUES  = new MenuInfo[0];
+    private static final PanelInfo[] NO_PANELS = new PanelInfo[0];
+    private static final MenuInfo[] NO_MENUES = new MenuInfo[0];
     private static final ButtonInfo[] NO_BUTTONS = new ButtonInfo[0];
     private static final ActionInfo[] NO_ACTIONS = new ActionInfo[0];
 
@@ -21,6 +21,7 @@ public class ANullPlugin extends APlugin {
 
     /*
      * (non-Javadoc)
+     * 
      * @see de.dm.auswertung.gui.beta.plugin.AuswertungPlugIn#getPanels()
      */
     @Override
@@ -30,6 +31,7 @@ public class ANullPlugin extends APlugin {
 
     /*
      * (non-Javadoc)
+     * 
      * @see de.dm.auswertung.gui.beta.plugin.AuswertungPlugIn#getQuickButtons()
      */
     @Override

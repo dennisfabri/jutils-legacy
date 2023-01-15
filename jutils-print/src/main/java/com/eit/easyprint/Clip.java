@@ -38,19 +38,16 @@ class Clip implements Printable {
     /** The component we delegate the painting to */
     private Printable component;
     /** Top of the page */
-    private int       start;
+    private int start;
     /** Height of the page */
-    private int       height;
+    private int height;
 
     /**
      * Class Constructor
      * 
-     * @param component
-     *            Component that is clipped
-     * @param start
-     *            top coordinate of the page
-     * @param height
-     *            height of the page
+     * @param component Component that is clipped
+     * @param start     top coordinate of the page
+     * @param height    height of the page
      */
     public Clip(Printable component, int start, int height) {
         this.component = component;
@@ -61,12 +58,9 @@ class Clip implements Printable {
     /**
      * Print the page described by this clip.
      * 
-     * @param graphics
-     *            Graphics object we paint the component upon
-     * @param format
-     *            The format of the page
-     * @param page
-     *            The index of the page
+     * @param graphics Graphics object we paint the component upon
+     * @param format   The format of the page
+     * @param page     The index of the page
      * @return A status code: Printable.PAGE_EXISTS if the page exists
      * @see java.awt.print.Printable
      */
@@ -80,7 +74,7 @@ class Clip implements Printable {
         g.translate((int) format.getImageableX(), (int) format.getImageableY());
 
         // move the clip to the requested page
-        g.translate(0, (-1) * start);
+        g.translate(0, -1 * start);
 
         // restrict the paintable area
         int width = (int) Math.ceil(format.getWidth());

@@ -4,22 +4,23 @@ import de.df.jutils.gui.JInfiniteProgressDialog;
 import de.df.jutils.gui.JInfiniteProgressFrame;
 
 public final class InfiniteProgressUtils {
-	private InfiniteProgressUtils() {}
+    private InfiniteProgressUtils() {
+    }
 
-	public static void setTextAsync(JInfiniteProgressFrame f, String text) {
-	    EDTUtils.executeOnEDTAsync(new SetTextRunnable(f, text));
-	}
+    public static void setTextAsync(JInfiniteProgressFrame f, String text) {
+        EDTUtils.executeOnEDTAsync(new SetTextRunnable(f, text));
+    }
 
-	public static void setTextAsync(JInfiniteProgressDialog f, String text) {
-		EDTUtils.executeOnEDTAsync(new SetTextRunnable2(f, text));
-	}
-	
-    private static class SetTextRunnable implements Runnable {
+    public static void setTextAsync(JInfiniteProgressDialog f, String text) {
+        EDTUtils.executeOnEDTAsync(new SetTextRunnable2(f, text));
+    }
+
+    private static final class SetTextRunnable implements Runnable {
 
         private JInfiniteProgressFrame w;
-        private String                 v;
+        private String v;
 
-        public SetTextRunnable(JInfiniteProgressFrame w, String v) {
+        private SetTextRunnable(JInfiniteProgressFrame w, String v) {
             this.w = w;
             this.v = v;
         }
@@ -30,12 +31,12 @@ public final class InfiniteProgressUtils {
         }
     }
 
-    private static class SetTextRunnable2 implements Runnable {
+    private static final class SetTextRunnable2 implements Runnable {
 
         private JInfiniteProgressDialog w;
-        private String                  v;
+        private String v;
 
-        public SetTextRunnable2(JInfiniteProgressDialog w, String v) {
+        private SetTextRunnable2(JInfiniteProgressDialog w, String v) {
             this.w = w;
             this.v = v;
         }
@@ -45,5 +46,5 @@ public final class InfiniteProgressUtils {
             w.setText(v);
         }
 
-    }	
+    }
 }

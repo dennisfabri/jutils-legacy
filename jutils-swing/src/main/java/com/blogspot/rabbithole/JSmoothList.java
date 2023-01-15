@@ -24,11 +24,11 @@ public class JSmoothList<T extends Object> extends JList<T> {
     private static final long serialVersionUID = 3630789186278640531L;
 
     public JSmoothList(T[] data) {
-        this(new ModifiableListModel<T>(data));
+        this(new ModifiableListModel<>(data));
     }
 
     public JSmoothList() {
-        this(new ModifiableListModel<T>());
+        this(new ModifiableListModel<>());
     }
 
     public JSmoothList(ModifiableListModel<T> m) {
@@ -74,14 +74,14 @@ public class JSmoothList<T extends Object> extends JList<T> {
     }
 
     /**
-     * Simple JList-local drag/drop handler. Invokes the smoother according to
-     * user input. A similar method could be used to accept drags originating
-     * outside of the JList.
+     * Simple JList-local drag/drop handler. Invokes the smoother according to user
+     * input. A similar method could be used to accept drags originating outside of
+     * the JList.
      */
     static class Listener<T> extends MouseAdapter {
         private ADropSmoother<T> smoother;
-        private boolean          dragActive;
-        private Point            origin;
+        private boolean dragActive;
+        private Point origin;
 
         public Listener(ADropSmoother<T> smoother) {
             this.smoother = smoother;

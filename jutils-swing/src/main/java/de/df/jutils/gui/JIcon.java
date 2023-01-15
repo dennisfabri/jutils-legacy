@@ -15,10 +15,10 @@ public class JIcon extends JComponent {
 
     private static final long serialVersionUID = 5253477068852817430L;
 
-    private Image             image;
-    private boolean           scaleup          = true;
+    private Image image;
+    private boolean scaleup = true;
 
-    private Dimension         preferred        = null;
+    private Dimension preferred;
 
     public JIcon(Image i, boolean scaleup) {
         image = i;

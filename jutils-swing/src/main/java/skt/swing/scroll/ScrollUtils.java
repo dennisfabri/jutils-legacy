@@ -22,23 +22,24 @@ import javax.swing.JViewport;
  */
 final class ScrollUtils {
 
-    public static final int      DIRECTION_TOP_BIT      = 0;
-    public static final int      DIRECTION_RIGHT_BIT    = 1;
-    public static final int      DIRECTION_BOTTOM_BIT   = 2;
-    public static final int      DIRECTION_LEFT_BIT     = 3;
+    public static final int DIRECTION_TOP_BIT = 0;
+    public static final int DIRECTION_RIGHT_BIT = 1;
+    public static final int DIRECTION_BOTTOM_BIT = 2;
+    public static final int DIRECTION_LEFT_BIT = 3;
 
-    public static final int      DIRECTION_NONE         = 0;
-    public static final int      DIRECTION_TOP          = 1;
-    public static final int      DIRECTION_RIGHT        = 2;
-    public static final int      DIRECTION_BOTTOM       = 4;
-    public static final int      DIRECTION_LEFT         = 8;
-    public static final int      DIRECTION_TOP_RIGHT    = 3;
-    public static final int      DIRECTION_BOTTOM_RIGHT = 6;
-    public static final int      DIRECTION_BOTTOM_LEFT  = 12;
-    public static final int      DIRECTION_TOP_LEFT     = 9;
-    public static final int      DIRECTIONS_ALL         = 15;
+    public static final int DIRECTION_NONE = 0;
+    public static final int DIRECTION_TOP = 1;
+    public static final int DIRECTION_RIGHT = 2;
+    public static final int DIRECTION_BOTTOM = 4;
+    public static final int DIRECTION_LEFT = 8;
+    public static final int DIRECTION_TOP_RIGHT = 3;
+    public static final int DIRECTION_BOTTOM_RIGHT = 6;
+    public static final int DIRECTION_BOTTOM_LEFT = 12;
+    public static final int DIRECTION_TOP_LEFT = 9;
+    public static final int DIRECTIONS_ALL = 15;
 
-    private static final Polygon ARROW                  = new Polygon(new int[] { 6, 12, 8, 8, 4, 4, 0, 6 }, new int[] { 0, 6, 6, 12, 12, 6, 6, 0 }, 8);
+    private static final Polygon ARROW = new Polygon(new int[] { 6, 12, 8, 8, 4, 4, 0, 6 },
+            new int[] { 0, 6, 6, 12, 12, 6, 6, 0 }, 8);
 
     private ScrollUtils() {
         super();

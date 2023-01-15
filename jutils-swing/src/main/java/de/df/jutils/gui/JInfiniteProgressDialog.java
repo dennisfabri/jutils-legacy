@@ -16,7 +16,7 @@ public class JInfiniteProgressDialog extends JDialog {
 
     private static final long serialVersionUID = 4050486728878141494L;
 
-    private JComponent        glass;
+    private JComponent glass;
 
     public JInfiniteProgressDialog() {
         super();
@@ -111,7 +111,7 @@ public class JInfiniteProgressDialog extends JDialog {
     }
 
     private boolean animated = true;
-    private boolean running  = false;
+    private boolean running;
 
     public synchronized void stopProgress() {
         glass.setVisible(false);

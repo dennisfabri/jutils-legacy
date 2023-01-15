@@ -12,9 +12,9 @@ public class JGlassPanel<T extends Component> extends JPanel {
 
     private static final long serialVersionUID = 3258128068173312306L;
 
-    private CardLayout        layout           = new CardLayout();
-    private JGlassPane        glass            = new JGlassPane();
-    private T                 component        = null;
+    private CardLayout layout = new CardLayout();
+    private JGlassPane glass = new JGlassPane();
+    private T component = null;
 
     public JGlassPanel(T c) {
         component = c;

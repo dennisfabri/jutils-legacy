@@ -47,11 +47,11 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
 
     // Help distinguish multiple hangs in the log, and match start and end too.
     // Only access this via getNewHangNumber.
-    private static int hangCount = 0;
+    private static int hangCount;
 
     // Prevents us complaining about hangs during start-up, which are probably
     // the JVM vendor's fault.
-    boolean haveShownSomeComponent = false;
+    boolean haveShownSomeComponent;
 
     // The currently outstanding event dispatches. The implementation of
     // modal dialogs is a common cause for multiple outstanding dispatches.
@@ -135,7 +135,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
             if (a.length != b.length) {
                 return false;
             }
-            for (int i = 0; i < a.length; ++i) {
+            for (int i = 0; i < a.length; i++) {
                 if (!a[i].equals(b[i])) {
                     return false;
                 }
@@ -147,7 +147,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
          * Returns how long this dispatch has been going on (in milliseconds).
          */
         private long timeSoFar() {
-            return (System.currentTimeMillis() - lastDispatchTimeMillis);
+            return System.currentTimeMillis() - lastDispatchTimeMillis;
         }
 
         public void dispose() {
@@ -216,7 +216,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
         }
     }
 
-    private boolean isDetailedLoggingEnabled = false;
+    private boolean isDetailedLoggingEnabled;
 
     public void setDetailedLogging(boolean enabled) {
         isDetailedLoggingEnabled = enabled;
@@ -224,7 +224,7 @@ public final class EventDispatchThreadHangMonitor extends EventQueue {
 
     private void debug(String which) {
         if (isDetailedLoggingEnabled) {
-            for (int i = dispatches.size(); i >= 0; --i) {
+            for (int i = dispatches.size(); i >= 0; i--) {
                 System.out.print(' ');
             }
             System.out.println(which);

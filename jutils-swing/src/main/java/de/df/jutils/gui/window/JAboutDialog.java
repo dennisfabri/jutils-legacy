@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -52,7 +51,7 @@ public class JAboutDialog extends JDialog {
 
     private static final long serialVersionUID = 3256441408645576248L;
 
-    private final JFrame      parent;
+    private final JFrame parent;
 
     public JAboutDialog(JFrame parent, String title, Icon image, JComponent[] components) {
         super(parent, true);
@@ -85,7 +84,8 @@ public class JAboutDialog extends JDialog {
             imageLabel.setBackground(UIUtils.HEADER_BACKGROUND);
             imageLabel.setOpaque(true);
             imageLabel.setBorder(
-                    new CompoundBorder(new ExtendedLineBorder(UIUtils.HEADER_BORDERCOLOR, 0, 0, 1, 0), new ExtendedLineBorder(Color.WHITE, 4, 0, 8, 0)));
+                    new CompoundBorder(new ExtendedLineBorder(UIUtils.HEADER_BORDERCOLOR, 0, 0, 1, 0),
+                            new ExtendedLineBorder(Color.WHITE, 4, 0, 8, 0)));
         }
         if ((components != null) && (components.length > 0)) {
             count++;
@@ -123,11 +123,8 @@ public class JAboutDialog extends JDialog {
             pos += 2;
         }
         JButton close = new JButton(JUtilsI18n.get("Close"));
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setVisible(false);
-            }
+        close.addActionListener(arg0 -> {
+            setVisible(false);
         });
         add(close, CC.xy(2, pos, "right,fill"));
         pack();
@@ -135,13 +132,13 @@ public class JAboutDialog extends JDialog {
 
     private static Object[][] getSystemInfos() {
         Enumeration<Object> props = System.getProperties().keys();
-        LinkedList<String> keys = new LinkedList<String>();
+        LinkedList<String> keys = new LinkedList<>();
         while (props.hasMoreElements()) {
             String key = (String) props.nextElement();
             keys.addLast(key);
         }
         Collections.sort(keys);
-        LinkedList<String> values = new LinkedList<String>();
+        LinkedList<String> values = new LinkedList<>();
         ListIterator<String> li = keys.listIterator();
         while (li.hasNext()) {
             values.addLast(System.getProperty(li.next()));
@@ -161,8 +158,8 @@ public class JAboutDialog extends JDialog {
     private static Object[][] getUISettings() {
         UIDefaults uiDefaults = UIManager.getDefaults();
         Enumeration<Object> props = uiDefaults.keys();
-        LinkedList<String> keys = new LinkedList<String>();
-        LinkedList<Object> values = new LinkedList<Object>();
+        LinkedList<String> keys = new LinkedList<>();
+        LinkedList<Object> values = new LinkedList<>();
         while (props.hasMoreElements()) {
             Object key = props.nextElement();
             String k = key.toString();
@@ -241,7 +238,7 @@ public class JAboutDialog extends JDialog {
 
     static final class UITableCellRenderer extends DefaultTableCellRenderer {
         private static final long serialVersionUID = -1755780817170708793L;
-        private JButton           b                = new JButton();
+        private JButton b = new JButton();
 
         private boolean checkFontUI(JLabel l, Object value) {
             if (value instanceof FontUIResource) {
@@ -302,7 +299,8 @@ public class JAboutDialog extends JDialog {
             if (value instanceof Icon) {
                 try {
                     Icon cui = (Icon) value;
-                    BufferedImage i = new BufferedImage(cui.getIconWidth(), cui.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage i = new BufferedImage(cui.getIconWidth(), cui.getIconHeight(),
+                            BufferedImage.TYPE_INT_ARGB);
                     Graphics g = i.getGraphics();
                     cui.paintIcon(b, g, 0, 0);
                     l.setIcon(new ImageIcon(i));
@@ -343,7 +341,8 @@ public class JAboutDialog extends JDialog {
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             JLabel l = null;
             if (c instanceof JLabel) {

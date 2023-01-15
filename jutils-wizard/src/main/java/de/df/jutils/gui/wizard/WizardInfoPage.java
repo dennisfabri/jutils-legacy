@@ -16,10 +16,10 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public class WizardInfoPage extends AWizardPage {
 
-    private JLabel[] texts  = null;
-    private JLabel[] values = null;
+    private JLabel[] texts;
+    private JLabel[] values;
 
-    private JPanel   panel  = new JPanel();
+    private JPanel panel = new JPanel();
 
     public WizardInfoPage(String title, String note, String[] text, String[] value) {
         super(title, note);

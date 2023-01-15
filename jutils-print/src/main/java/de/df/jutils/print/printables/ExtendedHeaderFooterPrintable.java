@@ -23,24 +23,25 @@ import de.df.jutils.gui.util.EDTUtils;
  */
 public class ExtendedHeaderFooterPrintable implements Printable {
 
-    private Font            font   = null;
-    private Component       header = null;
-    private Component       footer = null;
-    private Printable       source = null;
+    private Font font;
+    private Component header;
+    private Component footer;
+    private Printable source;
 
-    private int             halign = 1;
-    private int             falign = 1;
+    private int halign = 1;
+    private int falign = 1;
 
-    public static final int LEFT   = 0;
+    public static final int LEFT = 0;
     public static final int CENTER = 1;
-    public static final int RIGHT  = 2;
-    public static final int FILL   = 3;
+    public static final int RIGHT = 2;
+    public static final int FILL = 3;
 
     public ExtendedHeaderFooterPrintable(Printable main, Component header, Component footer, Font f) {
         this(main, header, footer, FILL, FILL, f);
     }
 
-    public ExtendedHeaderFooterPrintable(Printable main, Component header, Component footer, int alignh, int alignf, Font font) {
+    public ExtendedHeaderFooterPrintable(Printable main, Component header, Component footer, int alignh, int alignf,
+            Font font) {
         if (main == null) {
             throw new NullPointerException();
         }
@@ -111,7 +112,7 @@ public class ExtendedHeaderFooterPrintable implements Printable {
 
     private static class Initializer implements Runnable {
 
-        private Component  header;
+        private Component header;
         private PageFormat pf;
 
         public Initializer(Component h, PageFormat p) {
@@ -166,7 +167,8 @@ public class ExtendedHeaderFooterPrintable implements Printable {
                     print(header, (Graphics2D) g2d.create(), pf, (int) pf.getImageableY(), halign);
                 }
                 if (!noFooter()) {
-                    print(footer, (Graphics2D) g2d.create(), pf, (int) (pf.getImageableY() + pf.getImageableHeight() - footer.getHeight()), falign);
+                    print(footer, (Graphics2D) g2d.create(), pf,
+                            (int) (pf.getImageableY() + pf.getImageableHeight() - footer.getHeight()), falign);
                 }
             }
         }
@@ -178,7 +180,8 @@ public class ExtendedHeaderFooterPrintable implements Printable {
             return NO_SUCH_PAGE;
         }
 
-        g2d.setClip((int) ranged.getImageableX() - 1, (int) ranged.getImageableY() - 1, (int) ranged.getImageableWidth() + 2,
+        g2d.setClip((int) ranged.getImageableX() - 1, (int) ranged.getImageableY() - 1,
+                (int) ranged.getImageableWidth() + 2,
                 (int) ranged.getImageableHeight() + 2);
 
         // Print central area
@@ -191,8 +194,8 @@ public class ExtendedHeaderFooterPrintable implements Printable {
         if (noHeadersAndFooters()) {
             ranged = pf;
         } else {
-            int height1 = (header == null ? 0 : header.getHeight());
-            int height2 = (footer == null ? 0 : footer.getHeight());
+            int height1 = header == null ? 0 : header.getHeight();
+            int height2 = footer == null ? 0 : footer.getHeight();
 
             // Creating Pageformt for central area
             ranged = new PageFormat();
@@ -205,7 +208,8 @@ public class ExtendedHeaderFooterPrintable implements Printable {
                 break;
             case PageFormat.LANDSCAPE:
             case PageFormat.REVERSE_LANDSCAPE:
-                p.setImageableArea(page.getImageableX() + height1, page.getImageableY(), page.getImageableWidth() - height1 - height2,
+                p.setImageableArea(page.getImageableX() + height1, page.getImageableY(),
+                        page.getImageableWidth() - height1 - height2,
                         page.getImageableHeight());
                 break;
             default:
@@ -219,6 +223,7 @@ public class ExtendedHeaderFooterPrintable implements Printable {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.print.Printable#print(java.awt.Graphics,
      * java.awt.print.PageFormat, int)
      */

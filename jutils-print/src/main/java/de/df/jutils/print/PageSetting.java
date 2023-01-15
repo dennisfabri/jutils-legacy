@@ -25,9 +25,9 @@ public class PageSetting implements Serializable {
     public PageSetting(String name, PageFormat pf) {
         this.name = name;
         this.orientation = pf.getOrientation();
-        
+
         pf.setOrientation(PageFormat.PORTRAIT);
-        
+
         this.pageWidth = pf.getPaper().getWidth();
         this.pageHeight = pf.getPaper().getHeight();
         this.imageableX = pf.getImageableX();
@@ -55,8 +55,10 @@ public class PageSetting implements Serializable {
         return name;
     }
 
+    @Override
     public String toString() {
-        return String.format("PageSetting '%s': %d (%.2f %.2f) (%.2f %.2f %.2f %.2f)", name, orientation, pageWidth, pageHeight,
+        return String.format("PageSetting '%s': %d (%.2f %.2f) (%.2f %.2f %.2f %.2f)", name, orientation, pageWidth,
+                pageHeight,
                 imageableX, imageableY, imageableWidth, imageableHeight);
     }
 }

@@ -22,7 +22,7 @@ public final class GraphicsUtils {
         // Hide
     }
 
-    private static enum Gradients {
+    private enum Gradients {
         OCEAN, AQUA, GRAY
     }
 
@@ -73,18 +73,14 @@ public final class GraphicsUtils {
             return paintAquaGradient(g2, x, y, width, height, gstart, gend);
         case OCEAN:
             return paintOceanGradient(g2, x, y, width, height, gstart, gend);
-        default:
         case GRAY:
+        default:
             return paintFlat2Gradient(g2, x, y, width, height, gstart, gend);
         }
     }
 
     public static Color getGradientBorderColor() {
-        switch (getGradient()) {
-        case GRAY:
-        default:
-            return UIManager.getColor("ToolBar.shadow");
-        }
+        return UIManager.getColor("ToolBar.shadow");
     }
 
     private static Color paintFlat2Gradient(Graphics g2, final int x, final int y, final int width, final int height,

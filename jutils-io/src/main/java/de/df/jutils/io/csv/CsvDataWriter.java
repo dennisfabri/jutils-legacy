@@ -6,8 +6,8 @@ package de.df.jutils.io.csv;
 public interface CsvDataWriter {
 
     /**
-     * Checks if the parameter o can be convertet into its String-representation
-     * by this converter.
+     * Checks if the parameter o can be convertet into its String-representation by
+     * this converter.
      * 
      * @param o
      * @return

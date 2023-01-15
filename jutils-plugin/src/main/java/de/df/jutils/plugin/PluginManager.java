@@ -7,9 +7,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Map;
 
 import de.df.jutils.gui.awt.ProgressSplashWindow;
 import de.df.jutils.gui.util.DialogUtils;
@@ -31,21 +29,19 @@ import de.df.jutils.util.TimeMeasurement;
  */
 public class PluginManager implements IPluginManager {
 
-    private static Logger log = LoggerFactory.getLogger(PluginManager.class);
-
-    private JPFrame gui = null;
+    private JPFrame gui;
 
     private String info = "";
     private String name = "";
-    private boolean changed = false;
-    private Hashtable<String, PluginData> security;
-    private Hashtable<String, IFeature> features;
+    private boolean changed;
+    private Map<String, PluginData> security;
+    private Map<String, IFeature> features;
     private LinkedList<IFeature> sortedPlugins;
     private final LinkedList<IRemoteActionListener> remotes;
 
     private FileLock lock;
 
-    private boolean verbose = false;
+    private boolean verbose;
 
     private void setSplashStatus(ProgressSplashWindow splash, String text) {
         if (splash != null) {
@@ -124,7 +120,7 @@ public class PluginManager implements IPluginManager {
 
     private static List<PluginData> searchPlugIns(String path, TimeMeasurement tm) {
         PluginContainer pc = new PluginContainer();
-        
+
         File dir = new File(System.getProperty("user.dir") + File.separator + path);
         if (dir.exists() && dir.isDirectory()) {
             File[] files = dir.listFiles();
@@ -225,7 +221,7 @@ public class PluginManager implements IPluginManager {
     }
 
     IPlugin[] getPlugIns() {
-        LinkedList<IPlugin> plugins = new LinkedList<IPlugin>();
+        LinkedList<IPlugin> plugins = new LinkedList<>();
         ListIterator<IFeature> li = sortedPlugins.listIterator();
         while (li.hasNext()) {
             IFeature feature = li.next();
@@ -296,7 +292,7 @@ public class PluginManager implements IPluginManager {
         sendDataUpdateEventInternal(due);
     }
 
-    private final LinkedList<UpdateEvent> events = new LinkedList<UpdateEvent>();
+    private final LinkedList<UpdateEvent> events = new LinkedList<>();
 
     /**
      * This method is more compilicated as it seems, but we have to make sure, that
@@ -318,7 +314,7 @@ public class PluginManager implements IPluginManager {
 
         while (events.size() > 0) {
             synchronized (events) {
-                if (events.size() == 0) {
+                if (events.isEmpty()) {
                     return;
                 }
                 due = events.getFirst();
@@ -356,8 +352,8 @@ public class PluginManager implements IPluginManager {
 
     static class DataUpdateRunnable implements Runnable {
 
-        private UpdateEvent due = null;
-        private IFeature plugin = null;
+        private UpdateEvent due;
+        private IFeature plugin;
 
         public void set(IFeature plugin, UpdateEvent due) {
             this.due = due;
@@ -481,8 +477,7 @@ public class PluginManager implements IPluginManager {
 
     private boolean accept(String titel, String text, String note) {
         if (changed) {
-            boolean result = DialogUtils.askAndWarn(getWindow(), text, note);
-            return result;
+            return DialogUtils.askAndWarn(getWindow(), text, note);
         }
         return true;
     }

@@ -23,10 +23,10 @@ public class JWarningTextField extends JTextField {
     public static final int EMPTY_FIELD = -1;
     public static final int NO_MAXVALUE = 0;
 
-    private boolean required = false;
-    private boolean force = false;
+    private boolean required;
+    private boolean force;
 
-    private FocusListener selectionfocuslistener = null;
+    private FocusListener selectionfocuslistener;
 
     public JWarningTextField(boolean required, boolean force) {
         super();
@@ -82,7 +82,7 @@ public class JWarningTextField extends JTextField {
         return required;
     }
 
-    private String[] specials = null;
+    private String[] specials;
 
     public boolean isSpecialString() {
         if (specials == null) {
@@ -129,7 +129,7 @@ public class JWarningTextField extends JTextField {
         updateOk();
     }
 
-    private String[] forbidden = null;
+    private String[] forbidden;
 
     public boolean isForbiddenString() {
         if (forbidden == null) {
@@ -161,7 +161,7 @@ public class JWarningTextField extends JTextField {
         return validator == null || validator.validate(getText());
     }
 
-    private Validator validator = null;
+    private Validator validator;
 
     public static interface Validator {
         public boolean validate(String value);
@@ -179,8 +179,8 @@ public class JWarningTextField extends JTextField {
         }
     }
 
-    private static final Icons icons = new Icons(); 
-    
+    private static final Icons icons = new Icons();
+
     private Border originalBorder;
     private Border warnBorder;
     private Border errorBorder;
@@ -192,7 +192,7 @@ public class JWarningTextField extends JTextField {
             errorBorder = new IconBorder(icons.getErrorIcon(), originalBorder);
         }
     }
-    
+
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

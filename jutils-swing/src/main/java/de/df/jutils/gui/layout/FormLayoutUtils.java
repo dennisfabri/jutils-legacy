@@ -124,19 +124,20 @@ public final class FormLayoutUtils {
             value = aligns[index];
         }
         switch (value) {
-        default:
-        case SwingConstants.LEFT:
-            return "left";
         case SwingConstants.RIGHT:
             return "right";
         case SwingConstants.CENTER:
             return "center";
         case SwingConstants.NEXT:
             return "fill";
+        case SwingConstants.LEFT:
+        default:
+            return "left";
         }
     }
 
-    public static JPanel createTable(JPanel p, String title, Object[] titles, Object[][] data, int[] aligns, int align, boolean growall) {
+    public static JPanel createTable(JPanel p, String title, Object[] titles, Object[][] data, int[] aligns, int align,
+            boolean growall) {
         if (p == null) {
             p = new JPanel();
         }
@@ -147,13 +148,15 @@ public final class FormLayoutUtils {
             columns = Math.max(columns, aData.length);
         }
 
-        int offset = (title != null && aligns != null ? aligns.length * 2 : 0);
+        int offset = title != null && aligns != null ? aligns.length * 2 : 0;
 
         FormLayout layout;
         if (growall) {
-            layout = new FormLayout(createGrowingLayoutString(columns), createLayoutString(rows + (title != null ? 1 : 0)));
+            layout = new FormLayout(createGrowingLayoutString(columns),
+                    createLayoutString(rows + (title != null ? 1 : 0)));
         } else {
-            layout = new FormLayout("4dlu,fill:default:grow," + createLayoutString(columns - 1), createLayoutString(rows + (title != null ? 1 : 0)));
+            layout = new FormLayout("4dlu,fill:default:grow," + createLayoutString(columns - 1),
+                    createLayoutString(rows + (title != null ? 1 : 0)));
         }
         if (rows > 1) {
             setRowGroups(layout, rows);

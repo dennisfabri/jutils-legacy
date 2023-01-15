@@ -48,19 +48,19 @@ public class JUndoButton<T> extends JPanel {
         return new ImageIcon(i);
     }
 
-    private static final Icon           ARROW_ICON = createArrow();
+    private static final Icon ARROW_ICON = createArrow();
 
-    JButton                             button;
-    JToggleButton                       arrow;
-    protected JPopupMenu                menu;
-    JLabel                              status;
-    private int                         index      = 0;
-    protected JList<T>                  list;
-    private int                         maxsize;
+    JButton button;
+    JToggleButton arrow;
+    protected JPopupMenu menu;
+    JLabel status;
+    private int index;
+    protected JList<T> list;
+    private int maxsize;
 
-    private ModifiableListModel<T>      data       = new ModifiableListModel<T>();
+    private ModifiableListModel<T> data = new ModifiableListModel<>();
 
-    private LinkedList<UndoListener<T>> listeners  = new LinkedList<UndoListener<T>>();
+    private LinkedList<UndoListener<T>> listeners = new LinkedList<>();
 
     public JUndoButton(String name, Icon icon, int size) {
         super(new BorderLayout(0, 0));
@@ -86,8 +86,8 @@ public class JUndoButton<T> extends JPanel {
         }
         arrow.setMargin(i);
 
-        data = new ModifiableListModel<T>();
-        list = new JIntervalList<T>(data);
+        data = new ModifiableListModel<>();
+        list = new JIntervalList<>(data);
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -116,15 +116,12 @@ public class JUndoButton<T> extends JPanel {
 
         });
 
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                undo(0);
-            }
+        button.addActionListener(e -> {
+            undo(0);
         });
 
-        JScrollPane scroll = new JScrollPane(list, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scroll = new JScrollPane(list, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setBorder(null);
 
         status = new JLabel("100 Actions");
@@ -261,7 +258,7 @@ public class JUndoButton<T> extends JPanel {
                 boolean toggle = false;
                 StackTraceElement[] ste = Thread.currentThread().getStackTrace();
                 for (StackTraceElement aSte : ste) {
-                    if (aSte.getMethodName().indexOf("actionPerformed") >= 0) {
+                    if (aSte.getMethodName().contains("actionPerformed")) {
                         toggle = true;
                     }
                 }

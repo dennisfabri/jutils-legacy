@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
 public class StringToolsTest {
 
     private final char[] chars = new char[] { '\'', 'a', 'b', '\'', ' ', 'd' };
-    private final String ps    = File.separator;
+    private final String ps = File.separator;
 
     @Test
     public void testSkip1() {

@@ -3,6 +3,7 @@ package de.df.jutils.plugin.data;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,12 +45,12 @@ public class PluginContainer {
 
         return true;
     }
-    
+
     public List<PluginData> topsort(TimeMeasurement tm) {
         checkAndCleanDependencies();
-        
-        Hashtable<String, Node<PluginData>> nodes = initializeNodes();
-        
+
+        Map<String, Node<PluginData>> nodes = initializeNodes();
+
         final List<Node<PluginData>> nodeList = new ArrayList<>();
         plugins.forEach(pd -> {
             Node<PluginData> node = nodes.get(pd.getId());
@@ -57,15 +58,15 @@ public class PluginContainer {
             for (Dependency aDep : pd.getDependencies()) {
                 Node<PluginData> n = nodes.get(aDep.getPluginname());
                 node.addEdge(n);
-            }            
+            }
         });
 
         tm.finish("Topsort");
         return TopSort.sort(nodeList).stream().map(n -> n.getData()).collect(Collectors.toList());
     }
 
-    private Hashtable<String, Node<PluginData>> initializeNodes() {
-        Hashtable<String, Node<PluginData>> nodes = new Hashtable<>();
+    private Map<String, Node<PluginData>> initializeNodes() {
+        Map<String, Node<PluginData>> nodes = new Hashtable<>();
         if (!plugins.isEmpty()) {
             for (PluginData plugin : plugins) {
                 Node<PluginData> node = new Node<>(plugin);

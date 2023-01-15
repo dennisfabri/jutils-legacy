@@ -31,15 +31,16 @@ public final class JIntegerDialog extends JDialog {
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 3978985466349237809L;
-    public static final int   RET_CANCEL       = 0;
-    public static final int   RET_OK           = 1;
+    public static final int RET_CANCEL = 0;
+    public static final int RET_OK = 1;
 
-    private JIntegerField     name;
-    private int               returnStatus     = RET_CANCEL;
+    private JIntegerField name;
+    private int returnStatus = RET_CANCEL;
 
-    private int               value;
+    private int value;
 
-    public JIntegerDialog(final Frame parent, final String title, final String question, String note, int value, int min, int max) {
+    public JIntegerDialog(final Frame parent, final String title, final String question, String note, int value,
+            int min, int max) {
         super(parent, title, true);
         this.value = value;
         initComponents(question, note, min, max);
@@ -61,7 +62,8 @@ public final class JIntegerDialog extends JDialog {
     private void initComponents(final String angabe, String note, int min, int max) {
         addWindowListener(new CancelWindowAdapter());
 
-        FormLayout layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,4dlu,fill:default,4dlu,fill:default,4dlu");
+        FormLayout layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu",
+                "4dlu,fill:default,4dlu,fill:default,4dlu,fill:default,4dlu");
         getContentPane().setLayout(layout);
 
         JButton okButton = new JButton();

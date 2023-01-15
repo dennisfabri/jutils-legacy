@@ -3,14 +3,13 @@
  */
 package de.df.jutils.util;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.df.jutils.reflection.ReflectionUtils;
 
@@ -19,14 +18,11 @@ import de.df.jutils.reflection.ReflectionUtils;
  */
 public class SimpleReflectionTest {
 
-    private Object  o = null;
-    private boolean b = false;
-
+    private Object o;
 
     @BeforeEach
     public void setUp() {
         o = null;
-        b = false;
     }
 
     @Test
@@ -42,7 +38,8 @@ public class SimpleReflectionTest {
     }
 
     @Test
-    public void testExecuteConstructor() throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException,
+    public void testExecuteConstructor()
+            throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException,
             InstantiationException, IllegalAccessException, InvocationTargetException {
         o = ReflectionUtils.executeConstructor("java.lang.String");
         if (!(o instanceof String)) {
@@ -51,25 +48,15 @@ public class SimpleReflectionTest {
         try {
             o = ReflectionUtils.executeConstructor("java.lang.String2");
             fail();
-        } catch (SecurityException e) {
-            // ok
-        } catch (IllegalArgumentException e) {
-            // ok
-        } catch (ClassNotFoundException e) {
-            // ok
-        } catch (NoSuchMethodException e) {
-            // ok
-        } catch (InstantiationException e) {
-            // ok
-        } catch (IllegalAccessException e) {
-            // ok
-        } catch (InvocationTargetException e) {
+        } catch (SecurityException | IllegalArgumentException | ClassNotFoundException | NoSuchMethodException
+                | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             // ok
         }
     }
 
     @Test
-    public void testExecuteMethod() throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException,
+    public void testExecuteMethod()
+            throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
         o = ReflectionUtils.executeMethod("java.lang.System", "currentTimeMillis");
         assertNotNull(o);
@@ -77,17 +64,8 @@ public class SimpleReflectionTest {
         try {
             o = ReflectionUtils.executeMethod("java.lang.System", "currentTimeMillis2");
             fail();
-        } catch (SecurityException e) {
-            // ok
-        } catch (IllegalArgumentException e) {
-            // ok
-        } catch (ClassNotFoundException e) {
-            // ok
-        } catch (NoSuchMethodException e) {
-            // ok
-        } catch (IllegalAccessException e) {
-            // ok
-        } catch (InvocationTargetException e) {
+        } catch (SecurityException | IllegalArgumentException | ClassNotFoundException | NoSuchMethodException
+                | IllegalAccessException | InvocationTargetException e) {
             // ok
         }
     }

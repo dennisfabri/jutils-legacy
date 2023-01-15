@@ -23,9 +23,9 @@ public class JWizardFrame extends JInfiniteProgressFrame {
 
     private static final long serialVersionUID = 3761970462556764212L;
 
-    final JWizard             wizard;
+    final JWizard wizard;
 
-    private final JFrame      parent;
+    private final JFrame parent;
 
     public JWizardFrame(JFrame parent, String title) {
         this(parent, title, null, false);

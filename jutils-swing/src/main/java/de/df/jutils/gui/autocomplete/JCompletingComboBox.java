@@ -51,7 +51,7 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
      */
     private static final long serialVersionUID = 3257005466784445492L;
 
-    private boolean required = false;
+    private boolean required;
 
     public JCompletingComboBox() {
         this(false);
@@ -137,7 +137,7 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
         return originalBorder;
     }
 
-    private Status status = null;
+    private Status status;
 
     private void updateStatus() {
         Status newStatus = Status.Valid;
@@ -170,7 +170,7 @@ public class JCompletingComboBox<T extends Object> extends JComboBox<T> {
     }
 
     private enum Status {
-        Valid, Empty, Invalid;
+        Valid, Empty, Invalid
     }
 
     public boolean isValidValue() {

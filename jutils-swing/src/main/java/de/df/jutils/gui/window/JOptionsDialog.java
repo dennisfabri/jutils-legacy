@@ -4,7 +4,6 @@
 package de.df.jutils.gui.window;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -28,16 +27,16 @@ import de.df.jutils.i18n.util.JUtilsI18n;
 
 public class JOptionsDialog extends JDialog {
 
-    private static final long           serialVersionUID = 3256728398460891959L;
+    private static final long serialVersionUID = 3256728398460891959L;
 
-    private JButton                     cancel;
-    private JButton                     ok;
-    private JButton                     apply;
-    private boolean                     changed;
-    private boolean                     isOk;
-    private JComponent                  content;
+    private JButton cancel;
+    private JButton ok;
+    private JButton apply;
+    private boolean changed;
+    private boolean isOk;
+    private JComponent content;
     private LinkedList<OptionsListener> listeners;
-    private AIconBundle                 ib;
+    private AIconBundle ib;
 
     public JOptionsDialog(JFrame parent, String title, boolean modal, JComponent c, AIconBundle ib) {
         this(parent, title, modal, ib);
@@ -63,13 +62,15 @@ public class JOptionsDialog extends JDialog {
         ok = new JButton(JUtilsI18n.get("Ok"), ib.getSmallIcon("ok"));
         apply = new JButton(JUtilsI18n.get("Apply"), ib.getSmallIcon("apply"));
 
-        FormLayout layout = new FormLayout("4dlu,fill:default:grow,4dlu", "4dlu,fill:default:grow,4dlu,fill:default,4dlu");
+        FormLayout layout = new FormLayout("4dlu,fill:default:grow,4dlu",
+                "4dlu,fill:default:grow,4dlu,fill:default,4dlu");
         setLayout(layout);
         add(getButtons(), CC.xy(2, 4));
     }
 
     private JComponent getButtons() {
-        FormLayout layout = new FormLayout("0dlu:grow,fill:default,4dlu,fill:default,4dlu,fill:default,0dlu", "0dlu,fill:default,0dlu");
+        FormLayout layout = new FormLayout("0dlu:grow,fill:default,4dlu,fill:default,4dlu,fill:default,0dlu",
+                "0dlu,fill:default,0dlu");
         layout.setColumnGroups(new int[][] { { 2, 4, 6 } });
         JPanel p = new JPanel(layout);
         p.add(ok, CC.xy(2, 2));
@@ -79,24 +80,15 @@ public class JOptionsDialog extends JDialog {
     }
 
     private void initListeners() {
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setVisible(false);
-                fireApply();
-            }
+        ok.addActionListener(arg0 -> {
+            setVisible(false);
+            fireApply();
         });
-        apply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                fireApply();
-            }
+        apply.addActionListener(arg0 -> {
+            fireApply();
         });
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                fireCancel();
-            }
+        cancel.addActionListener(arg0 -> {
+            fireCancel();
         });
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

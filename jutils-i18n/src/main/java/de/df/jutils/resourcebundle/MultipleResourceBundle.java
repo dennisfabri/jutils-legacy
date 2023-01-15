@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  */
 public final class MultipleResourceBundle extends ResourceBundle {
 
-    private LinkedList<ResourceBundle> resourceBundles = new LinkedList<ResourceBundle>();
+    private LinkedList<ResourceBundle> resourceBundles = new LinkedList<>();
 
     private boolean verbose = true;
 

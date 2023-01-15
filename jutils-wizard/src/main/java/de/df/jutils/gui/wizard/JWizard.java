@@ -6,7 +6,6 @@ package de.df.jutils.gui.wizard;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Stack;
@@ -25,39 +24,39 @@ import de.df.jutils.i18n.UIElementsProvider;
 
 public class JWizard extends JPanel {
 
-    private static final String       WIZARD_PREVIOUS  = "de.dm.wizard.previous";
-    private static final String       WIZARD_NEXT      = "de.dm.wizard.next";
-    private static final String       WIZARD_CANCEL    = "de.dm.wizard.cancel";
-    private static final String       WIZARD_FINISH    = "de.dm.wizard.finish";
+    private static final String WIZARD_PREVIOUS = "de.dm.wizard.previous";
+    private static final String WIZARD_NEXT = "de.dm.wizard.next";
+    private static final String WIZARD_CANCEL = "de.dm.wizard.cancel";
+    private static final String WIZARD_FINISH = "de.dm.wizard.finish";
 
-    private static final long         serialVersionUID = 3763091960105022007L;
+    private static final long serialVersionUID = 3763091960105022007L;
 
-    private static UIElementsProvider basicProvider    = null;
+    private static UIElementsProvider basicProvider;
 
-    private CardLayout                infoLayout       = new CardLayout();
-    private CardLayout                centerLayout     = new CardLayout();
+    private CardLayout infoLayout = new CardLayout();
+    private CardLayout centerLayout = new CardLayout();
 
-    private JPanel                    info             = new JPanel(infoLayout);
-    private JPanel                    center           = new JPanel(centerLayout);
+    private JPanel info = new JPanel(infoLayout);
+    private JPanel center = new JPanel(centerLayout);
 
-    protected JButton                 next             = null;
-    protected JButton                 previous         = null;
-    protected JButton                 finish           = null;
-    protected JButton                 cancel           = null;
+    protected JButton next;
+    protected JButton previous;
+    protected JButton finish;
+    protected JButton cancel;
 
-    private boolean                   nextEnabled      = true;
-    private boolean                   previousEnabled  = true;
-    private boolean                   finishEnabled    = false;
-    private boolean                   cancelEnabled    = true;
+    private boolean nextEnabled = true;
+    private boolean previousEnabled = true;
+    private boolean finishEnabled;
+    private boolean cancelEnabled = true;
 
-    private UIElementsProvider        provider         = null;
+    private UIElementsProvider provider;
 
-    private LinkedList<AWizardPage>   pages            = new LinkedList<AWizardPage>();
-    private LinkedList<Object>        listeners        = new LinkedList<Object>();
+    private LinkedList<AWizardPage> pages = new LinkedList<>();
+    private LinkedList<Object> listeners = new LinkedList<>();
 
-    protected Stack<Integer>          pageStack        = new Stack<Integer>();
+    protected Stack<Integer> pageStack = new Stack<>();
 
-    protected int                     index            = 0;
+    protected int index;
 
     public JWizard() {
         this(null);
@@ -210,39 +209,29 @@ public class JWizard extends JPanel {
 
     private JPanel getButtons() {
         finish = getButton(WIZARD_FINISH);
-        finish.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                notifyFinish();
-            }
+        finish.addActionListener(arg0 -> {
+            notifyFinish();
         });
         cancel = getButton(WIZARD_CANCEL);
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                notifyCancel();
-            }
+        cancel.addActionListener(arg0 -> {
+            notifyCancel();
         });
         next = getButton(WIZARD_NEXT);
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                nextPage();
-            }
+        next.addActionListener(arg0 -> {
+            nextPage();
         });
         previous = getButton(WIZARD_PREVIOUS);
-        previous.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                previousPage();
-            }
+        previous.addActionListener(arg0 -> {
+            previousPage();
         });
 
         finish.setEnabled(false);
         next.setEnabled(false);
         previous.setEnabled(false);
 
-        FormLayout layout = new FormLayout("4dlu:grow,fill:default,4dlu,fill:default,16dlu," + "fill:default,4dlu,fill:default,4dlu", "4dlu,fill:default,4dlu");
+        FormLayout layout = new FormLayout(
+                "4dlu:grow,fill:default,4dlu,fill:default,16dlu," + "fill:default,4dlu,fill:default,4dlu",
+                "4dlu,fill:default,4dlu");
         layout.setColumnGroups(new int[][] { { 2, 4, 6, 8 } });
         JPanel buttons = new JPanel(layout);
 
@@ -284,7 +273,7 @@ public class JWizard extends JPanel {
     }
 
     public void start(int steps) {
-        if (pages.size() == 0) {
+        if (pages.isEmpty()) {
             throw new IllegalStateException();
         }
         pageStack.clear();
@@ -411,7 +400,7 @@ public class JWizard extends JPanel {
         notifyPageSwitch(forward);
     }
 
-    private boolean isFinished = false;
+    private boolean isFinished;
 
     public boolean isFinished() {
         return isFinished;

@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -88,8 +87,10 @@ public final class StringTools {
     }
 
     public static String toHtml(String text) {
-        String[][] tokens = new String[][] { { "&", "&amp;" }, { "\u00e4", "&auml;" }, { "\u00f6", "&ouml;" }, { "\u00fc", "&uuml;" }, { "\u00c4", "&Auml;" },
-                { "\u00d6", "&Ouml;" }, { "\u00dc", "&Uuml;" }, { "\u00df", "&szlig;" }, { "<", "&lt;" }, { ">", "&gt;" }
+        String[][] tokens = new String[][] { { "&", "&amp;" }, { "\u00e4", "&auml;" }, { "\u00f6", "&ouml;" },
+                { "\u00fc", "&uuml;" }, { "\u00c4", "&Auml;" },
+                { "\u00d6", "&Ouml;" }, { "\u00dc", "&Uuml;" }, { "\u00df", "&szlig;" }, { "<", "&lt;" },
+                { ">", "&gt;" }
 
         };
         for (String[] token : tokens) {
@@ -138,8 +139,6 @@ public final class StringTools {
 
     private static int hexToByte(char c) {
         switch (c) {
-        default:
-            return -1;
         case '0':
             return 0;
         case '1':
@@ -172,13 +171,13 @@ public final class StringTools {
             return 14;
         case 'f':
             return 15;
+        default:
+            return -1;
         }
     }
 
     private static char toHex(byte i) {
         switch (i) {
-        default:
-            return ' ';
         case 0:
             return '0';
         case 1:
@@ -211,6 +210,8 @@ public final class StringTools {
             return 'e';
         case 15:
             return 'f';
+        default:
+            return ' ';
         }
     }
 
@@ -231,12 +232,11 @@ public final class StringTools {
     }
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    
+
     /**
      * Erzeugt aus einer Zahl den entsprechenden Buchstaben des Alphabets.
      * 
-     * @param zahl
-     *            Nummer des Buchstaben im Alphabet
+     * @param zahl Nummer des Buchstaben im Alphabet
      * @return Der zahl-te Buchstabe im Alphabet
      */
     public static String characterString(final int zahl) {
@@ -247,7 +247,7 @@ public final class StringTools {
             return "-" + zahl;
         }
         return String.valueOf(ALPHABET.charAt(zahl - 1));
-    }    
+    }
 
     private static final char[] CRC = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ".toCharArray();
 
@@ -361,8 +361,8 @@ public final class StringTools {
         if (sep == null) {
             throw new NullPointerException();
         }
-        LinkedList<String> result = new LinkedList<String>();
-        while (s.indexOf(sep) > -1) {
+        LinkedList<String> result = new LinkedList<>();
+        while (s.contains(sep)) {
             int index = s.indexOf(sep);
             result.addLast(s.substring(0, index));
             s = s.substring(index + 1);
@@ -429,11 +429,11 @@ public final class StringTools {
     }
 
     /**
-     * Wandelt den in Sekunden gegebenen double in einen String vom Format mm:ss,ss um.
+     * Wandelt den in Sekunden gegebenen double in einen String vom Format mm:ss,ss
+     * um.
      * 
-     * @param zeit
-     *            Enth\u00e4\u00fc00e4lt die Zeit in Hundertstel-Sekunden. @return Liefert die Zeit im \u00fcblichen
-     *            Format.
+     * @param zeit Enth\u00e4\u00fc00e4lt die Zeit in Hundertstel-Sekunden. @return
+     *             Liefert die Zeit im \u00fcblichen Format.
      */
     public static String zeitString(final long zeit) {
         return zeitString(zeit, ',');
@@ -459,11 +459,11 @@ public final class StringTools {
     }
 
     /**
-     * Diese Methode wandelt eine Zahl (double) in die f\u00fcr Punkte korrekte Darstellen (2 Nachkommastellen) um.
+     * Diese Methode wandelt eine Zahl (double) in die f\u00fcr Punkte korrekte
+     * Darstellen (2 Nachkommastellen) um.
      * 
-     * @param punkte
-     *            Die Punkte die formatiert werden sollen @return Liefert einen korrekt formatierten String f\u00fcr
-     *            Punkte zur\u00fcck.
+     * @param punkte Die Punkte die formatiert werden sollen @return Liefert einen
+     *               korrekt formatierten String f\u00fcr Punkte zur\u00fcck.
      */
     public static String punkteString(final double punkte) {
         return punkteString(punkte, true);
@@ -473,7 +473,7 @@ public final class StringTools {
         int punkteHundert = (int) Math.round(punkte * 100);
         int punkteGanz = punkteHundert / 100;
         if (nachkomma) {
-            punkteHundert -= (punkteGanz * 100);
+            punkteHundert -= punkteGanz * 100;
             String s = "" + punkteGanz + ',';
             if (punkteHundert < 10) {
                 s += '0';
@@ -579,7 +579,7 @@ public final class StringTools {
         return sb.toString();
     }
 
-    public static String CRC(String pre) {
+    public static String crc(String pre) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(1024);
         PrintStream ps;
         try {

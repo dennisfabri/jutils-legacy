@@ -25,8 +25,8 @@ public class JWizardDialog extends JInfiniteProgressDialog {
 
     private static final long serialVersionUID = 4050206323331314483L;
 
-    final JWizard             wizard;
-    private final Window      parent;
+    final JWizard wizard;
+    private final Window parent;
 
     public JWizardDialog(JFrame parent, String title, JWizard wizard) {
         this(parent, title, wizard, false);

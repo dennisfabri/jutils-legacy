@@ -9,13 +9,13 @@ package de.df.jutils.plugin;
  */
 public class UpdateEvent {
 
-    private final long           reason;
-    private final String         title;
-    private final Object         data;
-    private final IFeature       source;
-    private final Object         addition;
+    private final long reason;
+    private final String title;
+    private final Object data;
+    private final IFeature source;
+    private final Object addition;
 
-    private static ReasonChecker checker = null;
+    private static ReasonChecker checker;
 
     public UpdateEvent(String title, long updatereason, IFeature source) {
         this(title, updatereason, null, null, source);

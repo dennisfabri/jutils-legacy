@@ -28,14 +28,14 @@ public final class ProgressSplashWindow extends Dialog {
 
     public static final String[] DOTS = new String[] { " .", " ..", " ..." };
 
-    private Component imageLabel = null;
+    private Component imageLabel;
     private Label textLabel = new Label("");
     private ProgressBar progress = new ProgressBar(0, 10);
     private int status = -1;
-    private int factor = 0;
-    private int maximum = 0;
+    private int factor;
+    private int maximum;
     private String statusText = "";
-    private int number = 0;
+    private int number;
     private boolean autoclose = true;
 
     /**

@@ -29,18 +29,18 @@ import javax.swing.text.JTextComponent;
  */
 abstract class AutoCompleter {
 
-    private Action              acceptAction     = new AcceptAction(AUTOCOMPLETER);
-    private DocumentListener    documentListener = new PopupDocumentListener();
-    private Action              showAction       = new ShowAction(AUTOCOMPLETER);
-    private Action              upAction         = new UpAction(AUTOCOMPLETER);
-    private Action              hidePopupAction  = new HidePopupAction(AUTOCOMPLETER);
+    private Action acceptAction = new AcceptAction(AUTOCOMPLETER);
+    private DocumentListener documentListener = new PopupDocumentListener();
+    private Action showAction = new ShowAction(AUTOCOMPLETER);
+    private Action upAction = new UpAction(AUTOCOMPLETER);
+    private Action hidePopupAction = new HidePopupAction(AUTOCOMPLETER);
 
-    protected JList<String>     list             = new JList<String>();
-    protected JPopupMenu        popup            = new JPopupMenu();
-    protected JTextComponent    textComp;
+    protected JList<String> list = new JList<>();
+    protected JPopupMenu popup = new JPopupMenu();
+    protected JTextComponent textComp;
 
     // NOI18N
-    private static final String AUTOCOMPLETER    = "AUTOCOMPLETER";
+    private static final String AUTOCOMPLETER = "AUTOCOMPLETER";
 
     public AutoCompleter(JTextComponent comp) {
         textComp = comp;
@@ -56,14 +56,17 @@ abstract class AutoCompleter {
         popup.add(scroll);
 
         if (textComp instanceof JTextField) {
-            textComp.registerKeyboardAction(showAction, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), JComponent.WHEN_FOCUSED);
+            textComp.registerKeyboardAction(showAction, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),
+                    JComponent.WHEN_FOCUSED);
             textComp.getDocument().addDocumentListener(documentListener);
         } else {
-            textComp.registerKeyboardAction(showAction, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_DOWN_MASK), JComponent.WHEN_FOCUSED);
+            textComp.registerKeyboardAction(showAction,
+                    KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_DOWN_MASK), JComponent.WHEN_FOCUSED);
         }
 
         textComp.registerKeyboardAction(upAction, KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), JComponent.WHEN_FOCUSED);
-        textComp.registerKeyboardAction(hidePopupAction, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_FOCUSED);
+        textComp.registerKeyboardAction(hidePopupAction, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_FOCUSED);
 
         popup.addPopupMenuListener(new PopupMenuListener() {
             @Override
@@ -91,7 +94,8 @@ abstract class AutoCompleter {
                 if (!(textComp instanceof JTextField)) {
                     textComp.getDocument().addDocumentListener(documentListener);
                 }
-                textComp.registerKeyboardAction(acceptAction, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
+                textComp.registerKeyboardAction(acceptAction, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+                        JComponent.WHEN_FOCUSED);
                 int size = list.getModel().getSize();
                 list.setVisibleRowCount(size < 10 ? size : 10);
 
@@ -128,8 +132,8 @@ abstract class AutoCompleter {
     }
 
     /**
-     * Selects the previous item in the list. It won't change the selection if
-     * the currently selected item is already the first item.
+     * Selects the previous item in the list. It won't change the selection if the
+     * currently selected item is already the first item.
      */
     protected void selectPreviousPossibleValue() {
         int si = list.getSelectedIndex();
@@ -148,6 +152,7 @@ abstract class AutoCompleter {
 
     @SuppressWarnings("serial")
     private static final class HidePopupAction extends AbstractAction {
+        private static final long serialVersionUID = 1;
         private final String autocompleter;
 
         HidePopupAction(String autocompleter) {
@@ -167,6 +172,7 @@ abstract class AutoCompleter {
 
     @SuppressWarnings("serial")
     private static final class UpAction extends AbstractAction {
+        private static final long serialVersionUID = 1;
         private final String autocompleter;
 
         UpAction(String autocompleter) {
@@ -188,6 +194,7 @@ abstract class AutoCompleter {
 
     @SuppressWarnings("serial")
     private static final class ShowAction extends AbstractAction {
+        private static final long serialVersionUID = 1;
         private final String autocompleter;
 
         ShowAction(String autocompleter) {
@@ -228,6 +235,7 @@ abstract class AutoCompleter {
 
     @SuppressWarnings("serial")
     private static final class AcceptAction extends AbstractAction {
+        private static final long serialVersionUID = 1;
         private final String autocompleter;
 
         AcceptAction(String autocompleter) {

@@ -8,7 +8,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
-public class EmptyPrintable implements Printable {
+public final class EmptyPrintable implements Printable {
 
     public static final Printable Instance = new EmptyPrintable();
 

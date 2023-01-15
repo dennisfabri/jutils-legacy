@@ -14,7 +14,7 @@ public class JInfiniteProgressFrame extends JFrame {
 
     private static final long serialVersionUID = 3257564027247736368L;
 
-    private JComponent        glass;
+    private JComponent glass;
 
     public JInfiniteProgressFrame() {
         super();
@@ -80,7 +80,7 @@ public class JInfiniteProgressFrame extends JFrame {
     }
 
     private boolean animated = true;
-    private boolean running  = false;
+    private boolean running;
 
     public void stopProgress() {
         super.setEnabled(true);

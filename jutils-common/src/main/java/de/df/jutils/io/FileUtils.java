@@ -30,7 +30,7 @@ public final class FileUtils {
         try {
             is = new FileInputStream(name);
             br = new BufferedReader(new InputStreamReader(is, "Cp1252"));
-            LinkedList<String> result = new LinkedList<String>();
+            LinkedList<String> result = new LinkedList<>();
             String data = br.readLine();
             while (data != null) {
                 if (data.length() > 0) {
@@ -70,7 +70,7 @@ public final class FileUtils {
         try {
             is = new FileInputStream(name);
             br = new BufferedReader(new InputStreamReader(is, encoding));
-            LinkedList<String> result = new LinkedList<String>();
+            LinkedList<String> result = new LinkedList<>();
             String data = br.readLine();
             while (data != null) {
                 if (data.length() > 0) {
@@ -107,7 +107,7 @@ public final class FileUtils {
     public static String[] readTextFile(InputStream is, String encoding) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(is, encoding));
-            LinkedList<String> result = new LinkedList<String>();
+            LinkedList<String> result = new LinkedList<>();
             String data = br.readLine();
             while (data != null) {
                 if (data.length() > 0) {
@@ -123,7 +123,7 @@ public final class FileUtils {
     }
 
     public static byte[] readFile(InputStream is) throws IOException {
-        
+
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             byte[] temp = new byte[1024];
             int size = is.read(temp);

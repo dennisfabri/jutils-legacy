@@ -39,15 +39,16 @@ final class Converter {
             throw new FormatErrorException(2, "Keine Liste am Anfang der Datei!");
         }
         LinkedList<?> ll = (LinkedList<?>) t.getDaten();
-        if (ll.size() == 0) {
-            throw new FormatErrorException(3, "Liste am Anfang der Datei hat falsche Gr\u00F6\u00DF (" + ll.size() + "<1)!");
+        if (ll.isEmpty()) {
+            throw new FormatErrorException(3,
+                    "Liste am Anfang der Datei hat falsche Gr\u00F6\u00DF (" + ll.size() + "<1)!");
         }
         Object o = ll.getFirst();
         if (!(o instanceof String)) {
             throw new FormatErrorException(4, "Kein String am Anfang der Datei!");
         }
         String s = (String) o;
-        if (!s.equals("plugin")) {
+        if (!"plugin".equals(s)) {
             throw new FormatErrorException(5, "Falsche ID (" + s + ") am Anfang der Datei");
         }
         PluginData plugin = new PluginData();
@@ -67,18 +68,19 @@ final class Converter {
                 if (tag.getTagID() == XMLTag.TAG_ANFANG) {
                     Object tagData = tag.getDaten();
                     if (tagData instanceof LinkedList) {
-                        LinkedList<?> data = ((LinkedList<?>) tagData);
-                        if ((data.size() == 2) && ("dependency".equals(data.get(0))) && (data.get(1) instanceof String[][])) {
+                        LinkedList<?> data = (LinkedList<?>) tagData;
+                        if ((data.size() == 2) && ("dependency".equals(data.get(0)))
+                                && (data.get(1) instanceof String[][])) {
                             String[][] innerData = (String[][]) data.get(1);
                             String id = null;
                             boolean optional = false;
                             for (String[] anInnerData : innerData) {
                                 for (int x = 0; x < anInnerData.length; x += 2) {
-                                    if (anInnerData[x].equals("id")) {
+                                    if ("id".equals(anInnerData[x])) {
                                         id = anInnerData[x + 1];
                                     }
-                                    if (anInnerData[x].equals("optional")) {
-                                        optional = anInnerData[x + 1].equalsIgnoreCase("true");
+                                    if ("optional".equals(anInnerData[x])) {
+                                        optional = "true".equalsIgnoreCase(anInnerData[x + 1]);
                                     }
                                 }
                             }
@@ -100,16 +102,16 @@ final class Converter {
         for (String[] object : objects) {
             String name = object[0];
             String data = object[1];
-            if (name.equals("name")) {
+            if ("name".equals(name)) {
                 plugin.setName(data);
             }
-            if (name.equals("description")) {
+            if ("description".equals(name)) {
                 plugin.setDescription(data);
             }
-            if (name.equals("id")) {
+            if ("id".equals(name)) {
                 plugin.setId(data);
             }
-            if (name.equals("classname")) {
+            if ("classname".equals(name)) {
                 plugin.setClassname(data);
             }
         }
@@ -119,7 +121,7 @@ final class Converter {
         if (tagged == null) {
             return null;
         }
-        LinkedList<XMLTag> ergebnis = new LinkedList<XMLTag>();
+        LinkedList<XMLTag> ergebnis = new LinkedList<>();
         ListIterator<XMLTag> li = tagged.listIterator();
         while (li.hasNext()) {
             XMLTag t = li.next();
@@ -136,7 +138,7 @@ final class Converter {
                 }
             }
         }
-        if (ergebnis.size() == 0) {
+        if (ergebnis.isEmpty()) {
             return null;
         }
         return ergebnis;

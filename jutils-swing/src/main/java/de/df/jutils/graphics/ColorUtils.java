@@ -81,7 +81,7 @@ public final class ColorUtils {
         double r = rx * color.getRed();
         double g = gx * color.getGreen();
         double b = bx * color.getBlue();
-        return ((r + g + b) > 400);
+        return (r + g + b) > 400;
     }
 
     public static boolean areSimilar(Color c1, Color c2, int distance) {
@@ -111,26 +111,26 @@ public final class ColorUtils {
     }
 
     public static Color toSaturated(Color source, float weight) {
-        float[] hsb = Color2HSB(source);
+        float[] hsb = color2HSB(source);
         hsb[1] = Math.max(0.0f, Math.min(1.0f, hsb[1] + (1.0f - hsb[1]) * weight));
-        return HSB2Color(hsb[0], hsb[1], hsb[2]);
+        return hSB2Color(hsb[0], hsb[1], hsb[2]);
     }
 
     public static Color brighter(Color source, float weight) {
-        float[] hsb = Color2HSB(source);
+        float[] hsb = color2HSB(source);
         hsb[2] = Math.max(0.0f, Math.min(1.0f, hsb[2] + (1.0f - hsb[2]) * weight));
-        return HSB2Color(hsb[0], hsb[1], hsb[2]);
+        return hSB2Color(hsb[0], hsb[1], hsb[2]);
     }
 
-    public static float[] Color2HSB(Color c) {
-        return RGB2HSB(c.getRed(), c.getGreen(), c.getBlue());
+    public static float[] color2HSB(Color c) {
+        return rGB2HSB(c.getRed(), c.getGreen(), c.getBlue());
     }
 
-    public static float[] RGB2HSB(int r, int g, int b) {
+    public static float[] rGB2HSB(int r, int g, int b) {
         return Color.RGBtoHSB(r, g, b, null);
     }
 
-    public static Color HSB2Color(float h, float s, float b) {
+    public static Color hSB2Color(float h, float s, float b) {
         return Color.getHSBColor(h, s, b);
     }
 }

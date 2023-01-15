@@ -4,19 +4,20 @@
 package de.df.jutils.gui.util;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 
 public abstract class AIconBundle {
 
-    public static final int              SMALL  = 16;
-    public static final int              MEDIUM = 32;
-    public static final int              LARGE  = 48;
+    public static final int SMALL = 16;
+    public static final int MEDIUM = 32;
+    public static final int LARGE = 48;
 
-    private Hashtable<String, ImageIcon> icons;
+    private Map<String, ImageIcon> icons;
 
     public AIconBundle() {
-        icons = new Hashtable<String, ImageIcon>();
+        icons = new Hashtable<>();
     }
 
     protected abstract ImageIcon readIcon(String name, int size);

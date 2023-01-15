@@ -24,20 +24,20 @@ public class MultiplePrintable implements Printable {
     /**
      * Holds the number of the last page given by print
      */
-    private int                     lastPage     = -1;
+    private int lastPage = -1;
     /**
      * Holds the pageIndex which was 0 of the current printable
      */
-    private int                     lastZeroPage = -1;
+    private int lastZeroPage = -1;
     /**
      * Stores all printables that may be used
      */
-    private LinkedList<Printable>   printables   = new LinkedList<Printable>();
+    private LinkedList<Printable> printables = new LinkedList<>();
     /**
      * Holds the pointer to the currently used printable
      */
-    private ListIterator<Printable> iterator     = printables.listIterator();
-    private Printable               printable    = null;
+    private ListIterator<Printable> iterator = printables.listIterator();
+    private Printable printable;
 
     public MultiplePrintable() {
         super();
@@ -81,6 +81,7 @@ public class MultiplePrintable implements Printable {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.print.Printable#print(java.awt.Graphics,
      * java.awt.print.PageFormat, int)
      */
@@ -139,7 +140,7 @@ public class MultiplePrintable implements Printable {
             throw new PrinterException("Wrong order of pages!");
         }
         lastPage = pageIndex;
-        if (printables.size() == 0) {
+        if (printables.isEmpty()) {
             return NO_SUCH_PAGE;
         }
         if (printable == null) {

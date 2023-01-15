@@ -5,8 +5,8 @@ package de.df.jutils.io.csv;
 
 public class CsvSimpleDoubleConverter implements CsvDataWriter {
 
-    private char decimalPoint   = '.';
-    private int  fractionDigits = 2;
+    private char decimalPoint = '.';
+    private int fractionDigits = 2;
 
     public CsvSimpleDoubleConverter() {
         this('.', 2);

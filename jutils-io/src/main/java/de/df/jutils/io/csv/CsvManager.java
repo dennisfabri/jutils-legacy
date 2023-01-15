@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public final class CsvManager {
 
-    private static char                      separator = ',';
+    private static char separator = ',';
 
     private static LinkedList<CsvDataWriter> converters;
 
@@ -22,7 +22,7 @@ public final class CsvManager {
             separator = dfs.getPatternSeparator();
         }
 
-        converters = new LinkedList<CsvDataWriter>();
+        converters = new LinkedList<>();
         addWriterConverter(new CsvStringConverter());
     }
 

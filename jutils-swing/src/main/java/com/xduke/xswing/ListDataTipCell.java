@@ -33,7 +33,7 @@ class ListDataTipCell implements DataTipCell {
 
     @SuppressWarnings("rawtypes")
     private final JList list;
-    private final int   rowIndex;
+    private final int rowIndex;
 
     ListDataTipCell(JList<?> list, int rowIndex) {
         this.list = list;

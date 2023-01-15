@@ -3,6 +3,7 @@ package de.df.jutils.plugin.data;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -11,17 +12,17 @@ import de.df.jutils.plugin.io.Dependency;
 
 public class PluginData extends DefaultHandler {
 
-    private Hashtable<String, Dependency> dependencies;
-    private String                        name        = null;
-    private String                        description = null;
-    private String                        classname   = null;
-    private String                        id          = null;
-    private IFeature                      api         = null;
-    private String                        uid         = null;
+    private Map<String, Dependency> dependencies;
+    private String name;
+    private String description;
+    private String classname;
+    private String id;
+    private IFeature api;
+    private String uid;
 
     public PluginData() {
         super();
-        dependencies = new Hashtable<String, Dependency>();
+        dependencies = new Hashtable<>();
     }
 
     public void addDependency(Dependency dependency) {
@@ -48,8 +49,7 @@ public class PluginData extends DefaultHandler {
     }
 
     /**
-     * @param description
-     *            The description to set.
+     * @param description The description to set.
      */
     public void setDescription(String plugindescription) {
         this.description = plugindescription;
@@ -95,8 +95,7 @@ public class PluginData extends DefaultHandler {
     }
 
     /**
-     * @param source
-     *            The source to set.
+     * @param source The source to set.
      */
     public void setClassname(String source) {
         this.classname = source;
@@ -110,8 +109,7 @@ public class PluginData extends DefaultHandler {
     }
 
     /**
-     * @param id
-     *            The id to set.
+     * @param id The id to set.
      */
     public void setId(String pluginid) {
         this.id = pluginid;
@@ -125,8 +123,7 @@ public class PluginData extends DefaultHandler {
     }
 
     /**
-     * @param api
-     *            The api to set.
+     * @param api The api to set.
      */
     public void setPlugin(IFeature feature) {
         this.api = feature;
@@ -140,8 +137,7 @@ public class PluginData extends DefaultHandler {
     }
 
     /**
-     * @param uid
-     *            The uid to set.
+     * @param uid The uid to set.
      */
     public void setUID(String pluginuid) {
         this.uid = pluginuid;

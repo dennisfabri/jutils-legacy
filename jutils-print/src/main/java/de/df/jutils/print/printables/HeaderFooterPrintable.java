@@ -22,15 +22,15 @@ import java.util.LinkedList;
  */
 public class HeaderFooterPrintable implements Printable {
 
-    private Font               font     = null;
-    private MessageFormat[]    header   = new MessageFormat[3];
-    private MessageFormat[]    footer   = new MessageFormat[3];
-    private Printable          source   = null;
-    private LinkedList<Object> dynamics = new LinkedList<Object>();
+    private Font font;
+    private MessageFormat[] header = new MessageFormat[3];
+    private MessageFormat[] footer = new MessageFormat[3];
+    private Printable source;
+    private LinkedList<Object> dynamics = new LinkedList<>();
 
-    public static final int    LEFT     = 0;
-    public static final int    CENTER   = 1;
-    public static final int    RIGHT    = 2;
+    public static final int LEFT = 0;
+    public static final int CENTER = 1;
+    public static final int RIGHT = 2;
 
     /**
      * 
@@ -147,11 +147,13 @@ public class HeaderFooterPrintable implements Printable {
         if (source instanceof HeaderFooterPrintable hfp) {
             combine = true;
             for (int x = 0; x < 3; x++) {
-                if ((getText(header[x], dynamic1).trim().length() > 0) && (getText(hfp.header[x], dynamic2).trim().length() > 0)) {
+                if ((getText(header[x], dynamic1).trim().length() > 0)
+                        && (getText(hfp.header[x], dynamic2).trim().length() > 0)) {
                     combine = false;
                     break;
                 }
-                if ((getText(footer[x], dynamic1).trim().length() > 0) && (getText(hfp.footer[x], dynamic2).trim().length() > 0)) {
+                if ((getText(footer[x], dynamic1).trim().length() > 0)
+                        && (getText(hfp.footer[x], dynamic2).trim().length() > 0)) {
                     combine = false;
                     break;
                 }
@@ -160,18 +162,22 @@ public class HeaderFooterPrintable implements Printable {
 
         if (combine) {
             HeaderFooterPrintable hfp = (HeaderFooterPrintable) source;
-            return print(g, pf, index, dynamic1, font, header, footer, dynamic2, hfp.font, hfp.header, hfp.footer, hfp.source);
+            return print(g, pf, index, dynamic1, font, header, footer, dynamic2, hfp.font, hfp.header, hfp.footer,
+                    hfp.source);
         }
         return print(g, pf, index, dynamic1, font, header, footer, null, null, null, null, source);
     }
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.print.Printable#print(java.awt.Graphics,
      * java.awt.print.PageFormat, int)
      */
-    public static int print(Graphics g, PageFormat pf, int index, Object[] dynamic1, Font font1, MessageFormat[] header1, MessageFormat[] footer1,
-            Object[] dynamic2, Font font2, MessageFormat[] header2, MessageFormat[] footer2, Printable source) throws PrinterException {
+    public static int print(Graphics g, PageFormat pf, int index, Object[] dynamic1, Font font1,
+            MessageFormat[] header1, MessageFormat[] footer1,
+            Object[] dynamic2, Font font2, MessageFormat[] header2, MessageFormat[] footer2, Printable source)
+            throws PrinterException {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.WHITE);
 
@@ -201,32 +207,20 @@ public class HeaderFooterPrintable implements Printable {
             double w = page.getImageableWidth();
             double h = page.getImageableHeight();
             if (noFooters(footer1, dynamic1) && noFooters(footer2, dynamic2)) {
-                switch (pf.getOrientation()) {
-                default:
-                case PageFormat.PORTRAIT:
-                    x = page.getImageableX();
-                    y = page.getImageableY() + 2 * height;
-                    w = page.getImageableWidth();
-                    h = page.getImageableHeight() - 2 * height;
-                    break;
-                case PageFormat.LANDSCAPE:
-                case PageFormat.REVERSE_LANDSCAPE:
+                if (pf.getOrientation() == PageFormat.LANDSCAPE) {
                     x = page.getImageableX() + 2 * height;
                     y = page.getImageableY();
                     w = page.getImageableWidth() - 2 * height;
                     h = page.getImageableHeight();
-                    break;
+                } else {
+                    x = page.getImageableX();
+                    y = page.getImageableY() + 2 * height;
+                    w = page.getImageableWidth();
+                    h = page.getImageableHeight() - 2 * height;
                 }
             } else {
                 if (noHeaders(header1, dynamic1) && noHeaders(header2, dynamic2)) {
                     switch (pf.getOrientation()) {
-                    default:
-                    case PageFormat.PORTRAIT:
-                        x = page.getImageableX();
-                        y = page.getImageableY();
-                        w = page.getImageableWidth();
-                        h = page.getImageableHeight() - 2 * height;
-                        break;
                     case PageFormat.LANDSCAPE:
                     case PageFormat.REVERSE_LANDSCAPE:
                         x = page.getImageableX();
@@ -234,28 +228,26 @@ public class HeaderFooterPrintable implements Printable {
                         w = page.getImageableWidth() - 2 * height;
                         h = page.getImageableHeight();
                         break;
+                    default:
+                        x = page.getImageableX();
+                        y = page.getImageableY();
+                        w = page.getImageableWidth();
+                        h = page.getImageableHeight() - 2 * height;
                     }
                 } else {
                     switch (pf.getOrientation()) {
-                    default:
-                    case PageFormat.PORTRAIT:
-                        x = page.getImageableX();
-                        y = page.getImageableY() + 2 * height;
-                        w = page.getImageableWidth();
-                        h = page.getImageableHeight() - 4 * height;
-                        break;
                     case PageFormat.LANDSCAPE:
-                        x = page.getImageableX() + 2 * height;
-                        y = page.getImageableY();
-                        w = page.getImageableWidth() - 4 * height;
-                        h = page.getImageableHeight();
-                        break;
                     case PageFormat.REVERSE_LANDSCAPE:
                         x = page.getImageableX() + 2 * height;
                         y = page.getImageableY();
                         w = page.getImageableWidth() - 4 * height;
                         h = page.getImageableHeight();
                         break;
+                    default:
+                        x = page.getImageableX();
+                        y = page.getImageableY() + 2 * height;
+                        w = page.getImageableWidth();
+                        h = page.getImageableHeight() - 4 * height;
                     }
                 }
             }
@@ -269,7 +261,8 @@ public class HeaderFooterPrintable implements Printable {
         }
 
         Graphics g2x = g2d.create();
-        g2x.setClip((int) ranged.getImageableX(), (int) ranged.getImageableY(), (int) ranged.getImageableWidth() + 1, (int) ranged.getImageableHeight() + 1);
+        g2x.setClip((int) ranged.getImageableX(), (int) ranged.getImageableY(), (int) ranged.getImageableWidth() + 1,
+                (int) ranged.getImageableHeight() + 1);
         int result = source.print(g2x, ranged, index);
 
         if (result == PAGE_EXISTS) {
@@ -284,10 +277,12 @@ public class HeaderFooterPrintable implements Printable {
                     print(header2[x], g2d, pf, (float) pf.getImageableY(), x, dynamic2);
                 }
                 if (!noFooters(footer1, dynamic1)) {
-                    print(footer1[x], g2d, pf, (float) (pf.getImageableY() + pf.getImageableHeight() - fm.getHeight() * 1.5), x, dynamic1);
+                    print(footer1[x], g2d, pf,
+                            (float) (pf.getImageableY() + pf.getImageableHeight() - fm.getHeight() * 1.5), x, dynamic1);
                 }
                 if (!noFooters(footer2, dynamic2)) {
-                    print(footer2[x], g2d, pf, (float) (pf.getImageableY() + pf.getImageableHeight() - fm.getHeight() * 1.5), x, dynamic2);
+                    print(footer2[x], g2d, pf,
+                            (float) (pf.getImageableY() + pf.getImageableHeight() - fm.getHeight() * 1.5), x, dynamic2);
                 }
             }
         }

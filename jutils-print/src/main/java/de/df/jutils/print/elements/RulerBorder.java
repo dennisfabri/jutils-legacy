@@ -20,7 +20,7 @@ public class RulerBorder implements Border {
 
     private static final String NUMBERS = "1234567890";
 
-    private JLabel              label   = new JLabel(NUMBERS);
+    private JLabel label = new JLabel(NUMBERS);
 
     public RulerBorder() {
         JFrame f = new JFrame();
@@ -70,18 +70,17 @@ public class RulerBorder implements Border {
             pos += stepsize;
             counter++;
             switch (counter % 4) {
-            default:
-            case 0:
-                String s = "" + (counter / 4);
-                g.drawString(s, (int) Math.round(pos - 0.5 * fm.stringWidth(s) + x), (int) Math.round(offset + y));
-                break;
-            case 1:
-            case 3:
-                g.drawLine((int) Math.round(pos + x), (int) Math.round(h / 2.0 - 1 + y), (int) Math.round(pos + x), (int) Math.round(h / 2.0 + 1 + y));
+            case 1, 3:
+                g.drawLine((int) Math.round(pos + x), (int) Math.round(h / 2.0 - 1 + y), (int) Math.round(pos + x),
+                        (int) Math.round(h / 2.0 + 1 + y));
                 break;
             case 2:
-                g.drawLine((int) Math.round(pos + y), (int) Math.round(h / 2.0 - 2 + y), (int) Math.round(pos + x), (int) Math.round(h / 2.0 + 2 + y));
+                g.drawLine((int) Math.round(pos + y), (int) Math.round(h / 2.0 - 2 + y), (int) Math.round(pos + x),
+                        (int) Math.round(h / 2.0 + 2 + y));
                 break;
+            default:
+                String s = "" + (counter / 4);
+                g.drawString(s, (int) Math.round(pos - 0.5 * fm.stringWidth(s) + x), (int) Math.round(offset + y));
             }
         }
 
@@ -93,20 +92,19 @@ public class RulerBorder implements Border {
             pos += stepsize;
             counter++;
             switch (counter % 4) {
+            case 1, 3:
+                g.drawLine((int) Math.round(h / 2.0 - 1 + x), (int) Math.round(pos + y),
+                        (int) Math.round(h / 2.0 + 1 + x), (int) Math.round(pos + y));
+                break;
+            case 2:
+                g.drawLine((int) Math.round(h / 2.0 - 2 + x), (int) Math.round(pos + y),
+                        (int) Math.round(h / 2.0 + 2 + x), (int) Math.round(pos + y));
+                break;
             default:
-            case 0:
                 String s = "" + (counter / 4);
                 g.rotate(-Math.PI / 2);
                 g.drawString(s, (int) -Math.round(pos + fm.stringWidth(s) / 2.0 + y), (int) Math.round(offset + x));
                 g.rotate(Math.PI / 2);
-                break;
-            case 1:
-            case 3:
-                g.drawLine((int) Math.round(h / 2.0 - 1 + x), (int) Math.round(pos + y), (int) Math.round(h / 2.0 + 1 + x), (int) Math.round(pos + y));
-                break;
-            case 2:
-                g.drawLine((int) Math.round(h / 2.0 - 2 + x), (int) Math.round(pos + y), (int) Math.round(h / 2.0 + 2 + x), (int) Math.round(pos + y));
-                break;
             }
         }
 

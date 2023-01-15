@@ -14,6 +14,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -46,11 +47,11 @@ public class JPFrame extends JGlassFrame {
      */
     private static final long serialVersionUID = 3258125869083210547L;
 
-    protected PluginManager controller = null;
+    protected PluginManager controller;
 
     private JMenuBar menues = new JMenuBar();
     private JToolBar quickbuttons = new JToolBar();
-    private JPanelContainer panelcontainer = null;
+    private JPanelContainer panelcontainer;
 
     private StatusBar statusbar = new StatusBar();
     private JLabel statustext = new JLabel();
@@ -67,7 +68,7 @@ public class JPFrame extends JGlassFrame {
             }
         });
 
-        Hashtable<String, Boolean> actions = new Hashtable<>();
+        Map<String, Boolean> actions = new Hashtable<>();
         int counter = 0;
 
         // set the controller
@@ -219,7 +220,7 @@ public class JPFrame extends JGlassFrame {
                 }
                 for (JComponent qbutton : qbuttons) {
                     if (qbutton instanceof JButton) {
-                        JButton button = ((JButton) qbutton);
+                        JButton button = (JButton) qbutton;
                         button.setRolloverEnabled(true);
                         // button.setMargin(new Insets(1, 1, 1, 1));
                     }
@@ -234,7 +235,7 @@ public class JPFrame extends JGlassFrame {
         LinkedList<MenuInfo> menuinfos = new LinkedList<>(menuinfos2);
         Collections.sort(menuinfos);
 
-        Hashtable<String, LinkedList<MenuInfo>> table = new Hashtable<>();
+        Map<String, LinkedList<MenuInfo>> table = new Hashtable<>();
         LinkedList<String> names = new LinkedList<>();
 
         ListIterator<MenuInfo> li = menuinfos.listIterator();

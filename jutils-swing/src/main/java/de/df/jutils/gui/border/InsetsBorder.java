@@ -13,12 +13,12 @@ public final class InsetsBorder extends AbstractBorder {
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 3258413949668898869L;
-    private int               top              = 1;
-    private int               left             = 1;
-    private int               bottom           = 1;
-    private int               right            = 1;
+    private int top = 1;
+    private int left = 1;
+    private int bottom = 1;
+    private int right = 1;
 
-    private Color             color            = Color.BLACK;
+    private Color color = Color.BLACK;
 
     public InsetsBorder() {
         super();
@@ -34,11 +34,13 @@ public final class InsetsBorder extends AbstractBorder {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.border.Border#paintBorder(java.awt.Component,
      * java.awt.Graphics, int, int, int, int)
      */
     @Override
-    public void paintBorder(final Component c, final Graphics g, final int x, final int y, final int width, final int height) {
+    public void paintBorder(final Component c, final Graphics g, final int x, final int y, final int width,
+            final int height) {
         int x2 = x + width - 1;
         int y2 = y + height - 1;
         g.setColor(color);
@@ -67,6 +69,7 @@ public final class InsetsBorder extends AbstractBorder {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
      */
     @Override

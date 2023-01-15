@@ -11,7 +11,7 @@ public class JGlassFrame extends JFrame {
 
     private static final long serialVersionUID = 3257564027247736368L;
 
-    private JGlassPane        glass            = new JGlassPane(this);
+    private JGlassPane glass = new JGlassPane(this);
 
     public JGlassFrame() {
         super();

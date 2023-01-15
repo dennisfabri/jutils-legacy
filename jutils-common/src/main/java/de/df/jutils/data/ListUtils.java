@@ -29,7 +29,7 @@ public final class ListUtils {
     }
 
     public static <T> LinkedList<T> mergeLists(final LinkedList<T>[] lsi) {
-        LinkedList<T> ll = new LinkedList<T>();
+        LinkedList<T> ll = new LinkedList<>();
         for (LinkedList<T> aLsi : lsi) {
             ll.addAll(aLsi);
         }
@@ -39,11 +39,12 @@ public final class ListUtils {
     @SuppressWarnings("unchecked")
     public static <T> LinkedList<T>[] split(final LinkedList<T> list, int index) {
         if ((index < 0) || (index > list.size())) {
-            throw new IllegalArgumentException("Index to high or to low. Should be between 0 and " + list.size() + " and was " + index + ".");
+            throw new IllegalArgumentException(
+                    "Index to high or to low. Should be between 0 and " + list.size() + " and was " + index + ".");
         }
         LinkedList<T>[] listen = new LinkedList[2];
         for (int x = 0; x < 2; x++) {
-            listen[x] = new LinkedList<T>();
+            listen[x] = new LinkedList<>();
         }
 
         int pos = 0;

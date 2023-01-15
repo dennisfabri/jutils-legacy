@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 public final class ReflectionUtils {
 
     private static final Class<?>[] NO_PARAMETER_TYPES = new Class<?>[0];
-    private static final Object[]   NO_ARGUMENTS       = new Object[0];
+    private static final Object[] NO_ARGUMENTS = new Object[0];
 
     private ReflectionUtils() {
         // Never used
@@ -20,7 +20,8 @@ public final class ReflectionUtils {
     }
 
     public static Object executeConstructor(final String klasse)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException {
         return Class.forName(klasse).getConstructor(NO_PARAMETER_TYPES).newInstance(NO_ARGUMENTS);
     }
 

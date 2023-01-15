@@ -12,9 +12,9 @@ import javax.swing.JPanel;
  */
 public class PanelInfo implements Comparable<PanelInfo> {
 
-    private final int     priotity;
-    private final String  name;
-    private final Icon    icon;
+    private final int priotity;
+    private final String name;
+    private final Icon icon;
     private final boolean onTop;
     private final boolean scrollerNeeded;
 
@@ -48,7 +48,7 @@ public class PanelInfo implements Comparable<PanelInfo> {
         return priotity;
     }
 
-    private JPanel panel = null;
+    private JPanel panel;
 
     public final JPanel getPanel() {
         if (panel == null) {

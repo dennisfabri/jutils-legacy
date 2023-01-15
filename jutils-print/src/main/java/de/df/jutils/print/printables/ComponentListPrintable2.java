@@ -40,12 +40,12 @@ import de.df.jutils.gui.util.EDTUtils;
  */
 public class ComponentListPrintable2 implements Printable {
 
-    private Component[] components = null;
-    private int gapY = 0;
+    private Component[] components;
+    private int gapY;
 
     private int lastindex = -1;
-    private int offset = 0;
-    private int nextoffset = 0;
+    private int offset;
+    private int nextoffset;
 
     private boolean border = true;
 

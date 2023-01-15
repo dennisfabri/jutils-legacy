@@ -16,7 +16,8 @@ import javax.swing.ImageIcon;
 /**
  * Original version from Naveed Quadri
  * 
- * Source: https://naveedmurtuza.blogspot.com/2010/11/simple-swing-validation-using.html
+ * Source:
+ * https://naveedmurtuza.blogspot.com/2010/11/simple-swing-validation-using.html
  * Visited: 09.05.2021
  *
  * @author Naveed Quadri, Dennis Fabri
@@ -24,6 +25,7 @@ import javax.swing.ImageIcon;
 public class ResourceManager {
 
     private ResourceBundle properties;
+
     /**
      *
      * @param propertiesFile
@@ -33,8 +35,9 @@ public class ResourceManager {
         if (index < 0) {
             index = propertiesFile.lastIndexOf("/");
         }
-        
-        properties = ResourceBundle.getBundle(propertiesFile, Locale.getDefault(), ResourceManager.class.getClassLoader());
+
+        properties = ResourceBundle.getBundle(propertiesFile, Locale.getDefault(),
+                ResourceManager.class.getClassLoader());
     }
 
     /**

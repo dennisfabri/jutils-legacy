@@ -38,6 +38,7 @@ public class JRotatingLabel extends JLabel {
     /*
      * @Override public void setHorizontalAlignment(int alignment) {
      * super.setVerticalAlignment(alignment); }
+     * 
      * @Override public void setVerticalAlignment(int alignment) {
      * super.setHorizontalAlignment(alignment); }
      */

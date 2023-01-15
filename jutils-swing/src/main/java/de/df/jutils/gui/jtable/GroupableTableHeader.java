@@ -35,7 +35,7 @@ public class GroupableTableHeader extends JTableHeader {
         UIManager.put("de.df.jutils.gui.jtable.GroupableTableHeaderUI", GroupableTableHeaderUI.class);
     }
 
-    private Vector<Object> columnGroups = null;
+    private Vector<Object> columnGroups;
 
     @Override
     public String getUIClassID() {
@@ -55,7 +55,7 @@ public class GroupableTableHeader extends JTableHeader {
 
     public void addColumnGroup(ColumnGroup g) {
         if (columnGroups == null) {
-            columnGroups = new Vector<Object>();
+            columnGroups = new Vector<>();
         }
         columnGroups.addElement(g);
     }
@@ -67,7 +67,7 @@ public class GroupableTableHeader extends JTableHeader {
         Enumeration<Object> e = columnGroups.elements();
         while (e.hasMoreElements()) {
             ColumnGroup cGroup = (ColumnGroup) e.nextElement();
-            Vector<Object> cGroups = cGroup.getColumnGroups(col, new Vector<Object>());
+            Vector<Object> cGroups = cGroup.getColumnGroups(col, new Vector<>());
             if (cGroups != null) {
                 return cGroups.elements();
             }

@@ -36,19 +36,20 @@ import javax.swing.CellRendererPane;
 import javax.swing.JToolTip;
 
 /**
- * Note: It's important to inherit from JToolTip: Mouse events get dispatched to the parent.<br/>
- * I do not really know why this is so. At least PopupFactory creates a different type of popup
- * if the content is instance of JToolTip.
+ * Note: It's important to inherit from JToolTip: Mouse events get dispatched to
+ * the parent.<br/>
+ * I do not really know why this is so. At least PopupFactory creates a
+ * different type of popup if the content is instance of JToolTip.
  */
 class DataTipComponent extends JToolTip {
 
     private static final long serialVersionUID = 1893475893L;
 
-    private DataTipCell       cell;
-    private CellRendererPane  rendererPane;
-    private Rectangle         withoutBorderRectangle;
-    private Color             backgroundColor;
-    private boolean           isHeavyWeight;
+    private DataTipCell cell;
+    private CellRendererPane rendererPane;
+    private Rectangle withoutBorderRectangle;
+    private Color backgroundColor;
+    private boolean isHeavyWeight;
 
     DataTipComponent(DataTipCell cell, Rectangle withoutBorderRectangle, Color backgroundColor) {
         this.cell = cell;
@@ -70,9 +71,10 @@ class DataTipComponent extends JToolTip {
     }
 
     /**
-     * Overriden to always return false, so that no component ever receives mouse events.
-     * Instead a mouse press will be caught on the popup's window ancestor, the popup will be hidden and the mouse press redispatched
-     * to the underlying component.
+     * Overriden to always return false, so that no component ever receives mouse
+     * events. Instead a mouse press will be caught on the popup's window ancestor,
+     * the popup will be hidden and the mouse press redispatched to the underlying
+     * component.
      */
     @Override
     public boolean contains(int x, int y) {
@@ -101,9 +103,12 @@ class DataTipComponent extends JToolTip {
         if (component == null) {
             return;
         }
-        // Leave the component's opacity settings as is, just paint the background myself.
-        // This seems to be the only viable solution: DefaultTableCellRenderer overrides isOpaque() and returns
-        // true only if renderer color does not equal parent color. The problem is that rendererPane.paintComponent()
+        // Leave the component's opacity settings as is, just paint the background
+        // myself.
+        // This seems to be the only viable solution: DefaultTableCellRenderer overrides
+        // isOpaque() and returns
+        // true only if renderer color does not equal parent color. The problem is that
+        // rendererPane.paintComponent()
         // re-parents the renderer.
         g.setColor(backgroundColor);
         int width = getWidth();

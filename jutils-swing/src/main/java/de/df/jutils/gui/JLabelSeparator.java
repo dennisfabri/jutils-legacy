@@ -24,9 +24,9 @@ public class JLabelSeparator extends JPanel {
      */
     private static final long serialVersionUID = 3762530101090662449L;
 
-    private final JLabel      label;
-    JSeparator                left             = new JSeparator();
-    JSeparator                right            = new JSeparator();
+    private final JLabel label;
+    JSeparator left = new JSeparator();
+    JSeparator right = new JSeparator();
 
     public JLabelSeparator(final String name) {
         this(name, null, true);
@@ -44,7 +44,8 @@ public class JLabelSeparator extends JPanel {
         label = new JLabel(name);
 
         if (useleft) {
-            FormLayout layout = new FormLayout("4dlu, 4dlu, fill:default, 4dlu, fill:default:grow", "0px:grow,pref,0px:grow");
+            FormLayout layout = new FormLayout("4dlu, 4dlu, fill:default, 4dlu, fill:default:grow",
+                    "0px:grow,pref,0px:grow");
             setLayout(layout);
             add(left, CC.xy(1, 2));
             add(label, CC.xy(3, 2));
@@ -106,6 +107,7 @@ public class JLabelSeparator extends JPanel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.Component#paint(java.awt.Graphics)
      */
     @Override

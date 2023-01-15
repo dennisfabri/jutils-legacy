@@ -36,13 +36,13 @@ import de.df.jutils.gui.util.EDTUtils;
 
 public class ComponentPackingPrintable implements Printable {
 
-    private Component[] components = null;
-    private int width = 0;
-    private int height = 0;
-    private int amountX = 0;
-    private int amountY = 0;
-    private int gapX = 0;
-    private int gapY = 0;
+    private Component[] components;
+    private int width;
+    private int height;
+    private int amountX;
+    private int amountY;
+    private int gapX;
+    private int gapY;
     private int maxGapX = -1;
     private int maxGapY = -1;
     private boolean border = true;
@@ -188,7 +188,7 @@ public class ComponentPackingPrintable implements Printable {
         panel.addNotify();
         panel.setPreferredSize(panel.getPreferredSize());
         panel.validate();
-        
+
         disableDoubleBuffering(panel);
         EDTUtils.print(panel, g2d);
         enableDoubleBuffering(panel);

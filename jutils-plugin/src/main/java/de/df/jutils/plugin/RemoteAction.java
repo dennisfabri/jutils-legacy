@@ -8,7 +8,7 @@ public class RemoteAction {
     private final String verb;
     private final String command;
 
-    private boolean      consumed = false;
+    private boolean consumed;
 
     public RemoteAction(String verb, String command) {
         this.verb = verb;

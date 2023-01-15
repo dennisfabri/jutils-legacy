@@ -40,30 +40,27 @@ class PageFactory {
     /** Component to be split up */
     private PrintableTextPane component;
     /** Format of the page we print upon */
-    private PageFormat        pageFormat;
+    private PageFormat pageFormat;
     /** Book with the pages for the component */
-    private Book              book;
+    private Book book;
 
     /** Maximum height of a page */
-    private int               pageHeight;
+    private int pageHeight;
     /** Height of the component */
-    private int               componentHeight;
+    private int componentHeight;
 
     /** Y start coordinate of the current Page */
-    private int               pageStart;
+    private int pageStart;
     /** Current End of the page */
-    private int               pageEnd;
+    private int pageEnd;
 
     /**
-     * Create the PageFactory. The construction of the Factory will already
-     * trigger the creation of the pages. They can be retrieved using the
-     * getPages() method
+     * Create the PageFactory. The construction of the Factory will already trigger
+     * the creation of the pages. They can be retrieved using the getPages() method
      * 
      * @see #getPages()
-     * @param component
-     *            The Component beeing printed
-     * @param pageFormat
-     *            The format of the Pages used for printing
+     * @param component  The Component beeing printed
+     * @param pageFormat The format of the Pages used for printing
      */
     PageFactory(PrintableTextPane component, PageFormat pageFormat) {
         this.component = component;
@@ -116,10 +113,8 @@ class PageFactory {
      * This method traverses recursively the view hirarchy in order to split the
      * component between views onto several pages.
      * 
-     * @param view
-     *            View to split up
-     * @param shape
-     *            Shape of the the view
+     * @param view  View to split up
+     * @param shape Shape of the the view
      */
     private void splitView(View view, Shape shape) throws Exception {
         // we don't handle views which are not shaped
@@ -143,9 +138,8 @@ class PageFactory {
                 // => It does not fit on the current page
 
                 /*
-                 * if this single view is higher than a single page, we
-                 * distribute it on several pages. This is the only case where
-                 * we split an atomic view.
+                 * if this single view is higher than a single page, we distribute it on several
+                 * pages. This is the only case where we split an atomic view.
                  */
                 if (viewHeight > pageHeight) {
                     while (pageEnd < viewBottom) { // as long as we haven't put

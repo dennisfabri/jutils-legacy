@@ -46,7 +46,7 @@ import javax.swing.SwingUtilities;
  * bounds (e.g. scrollpane) or at the cell bounds (e.g. table row height is too
  * small).
  */
-public class DataTipManager {
+public final class DataTipManager {
     private static DataTipManager instance;
 
     private ListDataTipListener listMouseListener = new ListDataTipListener();
@@ -55,13 +55,14 @@ public class DataTipManager {
     private Component parentComponent;
     private Window tipComponentWindow;
     private MouseEvent lastMouseEvent;
+
     private DataTipManager() {
         try {
             long eventMask = AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK
                     | AWTEvent.MOUSE_WHEEL_EVENT_MASK;
             Toolkit.getDefaultToolkit().addAWTEventListener(new MouseEventModifier(), eventMask);
         } catch (AccessControlException e) {
-                throw new RuntimeException("DataTipManager needs to run in a trusted application", e);
+            throw new RuntimeException("DataTipManager needs to run in a trusted application", e);
         }
     }
 

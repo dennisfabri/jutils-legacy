@@ -17,9 +17,9 @@ public class JTransparentButton extends JButton {
     /**
      * Comment for <code>serialVersionUID</code>
      */
-    private static final long   serialVersionUID = 3546358414209987128L;
+    private static final long serialVersionUID = 3546358414209987128L;
 
-    private static final Insets NO_INSETS        = new Insets(0, 0, 0, 0);
+    private static final Insets NO_INSETS = new Insets(0, 0, 0, 0);
 
     /**
      * 

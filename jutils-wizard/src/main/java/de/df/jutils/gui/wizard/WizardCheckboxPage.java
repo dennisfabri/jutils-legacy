@@ -5,7 +5,6 @@ package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.JCheckBox;
@@ -43,8 +42,8 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    JCheckBox[]           buttons = null;
-    private JPanel        panel   = new JWizardPanel();
+    JCheckBox[] buttons;
+    private JPanel panel = new JWizardPanel();
     private final JWizard wizard;
 
     public WizardCheckboxPage(JWizard w, String title, String note, String[] options) {
@@ -59,21 +58,25 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         this(w, title, note, options, null, null, selected);
     }
 
-    public WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips, boolean[] selected) {
+    public WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips,
+            boolean[] selected) {
         this(w, title, note, options, tooltips, null, selected);
     }
 
-    private WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips, boolean[] enabled, boolean[] selected) {
+    private WizardCheckboxPage(JWizard w, String title, String note, String[] options, String[] tooltips,
+            boolean[] enabled, boolean[] selected) {
         super(title, note);
         wizard = w;
         if (options == null) {
             throw new NullPointerException("String[] options must " + "not be null!");
         }
         if ((enabled != null) && (enabled.length != options.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
         if ((selected != null) && (selected.length != options.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
         StringBuilder topdown = new StringBuilder("0px:grow");
         for (int x = 0; x < options.length; x++) {
@@ -94,12 +97,9 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
             if (selected != null) {
                 setSelectedIndexI(x, selected[x]);
             }
-            buttons[x].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    notifyUpdate();
-                    notifySelectionChange();
-                }
+            buttons[x].addActionListener(arg0 -> {
+                notifyUpdate();
+                notifySelectionChange();
             });
         }
     }
@@ -114,7 +114,7 @@ public class WizardCheckboxPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    private LinkedList<ChangeListener> listeners = new LinkedList<ChangeListener>();
+    private LinkedList<ChangeListener> listeners = new LinkedList<>();
 
     public void addSelectionListener(ChangeListener cl) {
         listeners.addLast(cl);

@@ -219,16 +219,16 @@ public final class JTableUtils {
         }
     }
 
-    private static class RendererGetter implements Runnable {
+    private static final class RendererGetter implements Runnable {
 
-        private Component renderer = null;
+        private Component renderer;
 
-        private JTable    table;
-        private int       x;
-        private int       y;
-        private Object    value;
+        private JTable table;
+        private int x;
+        private int y;
+        private Object value;
 
-        public RendererGetter(JTable t, int i, int j, Object v) {
+        private RendererGetter(JTable t, int i, int j, Object v) {
             this.table = t;
             this.x = i;
             this.y = j;

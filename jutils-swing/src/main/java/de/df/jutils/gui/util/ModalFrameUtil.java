@@ -9,13 +9,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Based on code from "Santhosh Kumar T" posten on jroller. Modified by Dennis Fabri.
+ * Based on code from "Santhosh Kumar T" posten on jroller. Modified by Dennis
+ * Fabri.
  * 
  * @author Santhosh Kumar T
  * @author Dennis Fabri
  * @email santhosh@in.fiorano.com
- * @url
- *      http://jroller.com/page/santhosh/20050625#are_you_missing_maximize_button
+ * @url http://jroller.com/page/santhosh/20050625#are_you_missing_maximize_button
  */
 public final class ModalFrameUtil {
 
@@ -51,12 +51,7 @@ public final class ModalFrameUtil {
                 owner.removeWindowListener(this);
                 owner.setEnabled(true);
 
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        owner.toFront();
-                    }
-                });
+                EventQueue.invokeLater(owner::toFront);
             }
         });
 
@@ -97,12 +92,7 @@ public final class ModalFrameUtil {
                 owner.setEnabled(true);
                 owner.removeWindowListener(this);
 
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        owner.toFront();
-                    }
-                });
+                EventQueue.invokeLater(owner::toFront);
             }
         });
 

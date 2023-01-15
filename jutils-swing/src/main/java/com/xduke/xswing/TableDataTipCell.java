@@ -79,7 +79,7 @@ class TableDataTipCell implements DataTipCell {
 
     @Override
     public int hashCode() {
-        
+
         int result;
         result = rowIndex;
         result = 29 * result + columnIndex;

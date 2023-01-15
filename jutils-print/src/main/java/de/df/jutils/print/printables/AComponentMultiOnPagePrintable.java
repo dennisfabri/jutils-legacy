@@ -37,13 +37,12 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
         case TWO_PER_PAGE:
             return 2;
         default:
-        case FOUR_PER_PAGE:
             return 4;
         }
     }
 
     private static JPanel getWhitePanel() {
-        return EDTUtils.executeOnEDTwithReturn(() -> getWhitePanelI());
+        return EDTUtils.executeOnEDTwithReturn(AComponentMultiOnPagePrintable::getWhitePanelI);
     }
 
     protected static JPanel getWhitePanelI() {
@@ -59,10 +58,10 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
 
     private static final class AddingRunnable implements Runnable {
 
-        private final JPanel     page;
+        private final JPanel page;
         private final JComponent p;
-        private final int        posx;
-        private final int        posy;
+        private final int posx;
+        private final int posy;
 
         public AddingRunnable(JPanel page, JComponent p, int posx, int posy) {
             this.page = page;
@@ -95,10 +94,8 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
             layouty = "fill:4dlu:grow";
             break;
         default:
-        case FOUR_PER_PAGE:
             layoutx = "fill:4dlu:grow,fill:" + right + "px,1px,fill:" + left + "px,fill:4dlu:grow";
             layouty = "fill:4dlu:grow,fill:" + bottom + "px,1px,fill:" + top + "px,fill:4dlu:grow";
-            break;
         }
         FormLayout layout = new FormLayout(layoutx, layouty);
         switch (mode) {
@@ -108,10 +105,8 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
             layout.setColumnGroups(new int[][] { { 1, 5 } });
             break;
         default:
-        case FOUR_PER_PAGE:
             layout.setColumnGroups(new int[][] { { 1, 5 } });
             layout.setRowGroups(new int[][] { { 1, 5 } });
-            break;
         }
 
         JPanel page = new JPanel(layout);
@@ -127,7 +122,6 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
             page.add(getWhitePanelI(), CC.xy(4, 1));
             break;
         default:
-        case FOUR_PER_PAGE:
             page.add(getWhitePanelI(), CC.xy(2, 1));
             page.add(getWhitePanelI(), CC.xy(4, 1));
 
@@ -143,7 +137,6 @@ public abstract class AComponentMultiOnPagePrintable implements Printable {
 
             page.add(getWhitePanelI(), CC.xy(2, 5));
             page.add(getWhitePanelI(), CC.xy(4, 5));
-            break;
         }
 
         return page;

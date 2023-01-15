@@ -24,11 +24,11 @@ final class LabeledBorder extends AbstractBorder {
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 3762536715289768244L;
-    private String            name             = "";
-    private int               hgap             = 10;
-    private int               vgap             = 3;
-    private boolean           rightBordered    = true;
-    private int               minheight        = 0;
+    private String name = "";
+    private int hgap = 10;
+    private int vgap = 3;
+    private boolean rightBordered = true;
+    private int minheight;
 
     LabeledBorder(final String labelName) {
         setName(labelName);

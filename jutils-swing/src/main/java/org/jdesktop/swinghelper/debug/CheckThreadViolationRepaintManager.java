@@ -9,9 +9,9 @@ import javax.swing.SwingUtilities;
 /**
  * <p>
  * This class is used to detect Event Dispatch Thread rule violations<br>
- * See <a
- * href="http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html">How
- * to Use Threads</a> for more info
+ * See <a href=
+ * "http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html">How to
+ * Use Threads</a> for more info
  * </p>
  * <p>
  * This is a modification of original idea of Scott Delap<br>
@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
  */
 public class CheckThreadViolationRepaintManager extends RepaintManager {
     // it is recommended to pass the complete check
-    private boolean                   completeCheck = false;
+    private boolean completeCheck;
     private WeakReference<JComponent> lastComponent;
 
     public boolean isCompleteCheck() {
@@ -68,7 +68,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
             if (lastComponent != null && c == lastComponent.get()) {
                 return;
             }
-            lastComponent = new WeakReference<JComponent>(c);
+            lastComponent = new WeakReference<>(c);
             System.err.println();
             System.err.println("EDT violation detected");
             System.err.println(c);

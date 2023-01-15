@@ -23,10 +23,10 @@ public final class PageSetup {
 
     public static final float DPI = 72;
 
-    private static HashMap<String, PageFormat> prasTable = null;
-    private static PrintService ps = null;
-    private static Printable psPrintable = null;
-    private static PageFormat defaultPageFormat = null;
+    private static Map<String, PageFormat> prasTable;
+    private static PrintService ps;
+    private static Printable psPrintable;
+    private static PageFormat defaultPageFormat;
 
     static {
         ps = null;
@@ -43,7 +43,7 @@ public final class PageSetup {
     }
 
     public static void setPageSettings(PageSetting[] pageSettings) {
-        HashMap<String, PageFormat> settings = new HashMap<>();
+        Map<String, PageFormat> settings = new HashMap<>();
         if (pageSettings != null) {
             for (PageSetting ps : pageSettings) {
                 settings.put(ps.getName(), ps.toPageFormat());
@@ -128,13 +128,13 @@ public final class PageSetup {
         return false;
     }
 
-    private static class PageFormatGetter implements Printable {
+    private static final class PageFormatGetter implements Printable {
 
-        private boolean done = false;
+        private boolean done;
         private Printable printable;
         private String jobname;
 
-        public PageFormatGetter(String jobname, Printable p) {
+        private PageFormatGetter(String jobname, Printable p) {
             this.jobname = jobname;
             this.printable = p;
         }
@@ -210,11 +210,6 @@ public final class PageSetup {
             }
         }
         ps = null;
-        for (PrintService service : services) {
-            if (!service.getName().equals("Microsoft XPS Document Writer")) {
-                return service;
-            }
-        }
         return services[0];
     }
 
@@ -254,6 +249,9 @@ public final class PageSetup {
         @Override
         public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
             return NO_SUCH_PAGE;
+        }
+
+        private PageSetupPrintable() {
         }
     }
 

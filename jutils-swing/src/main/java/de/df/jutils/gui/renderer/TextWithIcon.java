@@ -8,7 +8,7 @@ import javax.swing.Icon;
 public class TextWithIcon {
 
     private final String data;
-    private final Icon   icon;
+    private final Icon icon;
 
     public TextWithIcon(String data, Icon icon) {
         if (data != null) {
@@ -28,6 +28,6 @@ public class TextWithIcon {
 
     @Override
     public String toString() {
-        return (data == null ? "" : data);
+        return data == null ? "" : data;
     }
 }

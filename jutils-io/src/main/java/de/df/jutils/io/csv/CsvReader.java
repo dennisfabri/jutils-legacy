@@ -10,11 +10,11 @@ import de.df.jutils.io.FileUtils;
 import de.df.jutils.util.StringTools;
 
 public class CsvReader {
-    private char                      separator;
+    private char separator;
     private LinkedList<CsvDataReader> converters;
 
     CsvReader(CsvDataReader[] cdc, char separator) {
-        converters = new LinkedList<CsvDataReader>();
+        converters = new LinkedList<>();
         for (CsvDataReader aCdc : cdc) {
             converters.addLast(aCdc);
         }

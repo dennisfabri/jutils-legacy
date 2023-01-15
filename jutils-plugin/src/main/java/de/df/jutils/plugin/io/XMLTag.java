@@ -12,19 +12,19 @@ import java.util.ListIterator;
  */
 class XMLTag {
 
-    public static final String[] NAMEN       = { "Nichts", "Anfang", "Ende  ", "Toggle", "Other ", "Info" };
+    public static final String[] NAMEN = { "Nichts", "Anfang", "Ende  ", "Toggle", "Other ", "Info" };
 
-    public static final int      TAG_NOTHING = 0;
-    public static final int      TAG_ANFANG  = 1;
-    public static final int      TAG_ENDE    = 2;
-    public static final int      TAG_TOGGLE  = 3;
-    public static final int      TAG_OTHER   = 4;
-    public static final int      TAG_INFO    = 5;
-    public static final int      TAG_MAX     = 5;
+    public static final int TAG_NOTHING = 0;
+    public static final int TAG_ANFANG = 1;
+    public static final int TAG_ENDE = 2;
+    public static final int TAG_TOGGLE = 3;
+    public static final int TAG_OTHER = 4;
+    public static final int TAG_INFO = 5;
+    public static final int TAG_MAX = 5;
 
-    private final int            tagID;
+    private final int tagID;
 
-    private final Object         daten;
+    private final Object daten;
 
     /** Creates a new instance of Tag */
 
@@ -62,7 +62,7 @@ class XMLTag {
         }
         if (o instanceof LinkedList) {
             int zahl = 0;
-            LinkedList<Object> ll = ((LinkedList<Object>) o);
+            LinkedList<Object> ll = (LinkedList<Object>) o;
             ListIterator<Object> li = ll.listIterator();
             StringBuilder sb = new StringBuilder();
             sb.append("LinkedList[");

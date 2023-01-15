@@ -33,7 +33,7 @@ import javax.swing.tree.TreePath;
 
 class TreeDataTipCell implements DataTipCell {
     private final JTree tree;
-    private final int   rowIndex;
+    private final int rowIndex;
 
     public TreeDataTipCell(JTree tree, int rowIndex) {
         this.tree = tree;
@@ -48,8 +48,7 @@ class TreeDataTipCell implements DataTipCell {
     @Override
     public Rectangle getCellBounds() {
         TreePath treePath = tree.getPathForRow(rowIndex);
-        Rectangle cellRect = tree.getPathBounds(treePath);
-        return cellRect;
+        return tree.getPathBounds(treePath);
     }
 
     @Override
@@ -62,7 +61,8 @@ class TreeDataTipCell implements DataTipCell {
         boolean hasFocus = tree.hasFocus() && rowIndex == tree.getLeadSelectionRow();
         Object item = treePath.getLastPathComponent();
         boolean isLeaf = treeModel.isLeaf(item);
-        Component component = renderer.getTreeCellRendererComponent(tree, item, isSelected, isExpanded, isLeaf, rowIndex, hasFocus);
+        Component component = renderer.getTreeCellRendererComponent(tree, item, isSelected, isExpanded, isLeaf,
+                rowIndex, hasFocus);
         component.setFont(tree.getFont());
         return component;
     }
@@ -78,11 +78,7 @@ class TreeDataTipCell implements DataTipCell {
 
         TreeDataTipCell treeDataTipCell = (TreeDataTipCell) o;
 
-        if (rowIndex != treeDataTipCell.rowIndex) {
-            return false;
-        }
-
-        return true;
+        return rowIndex == treeDataTipCell.rowIndex;
     }
 
     @Override

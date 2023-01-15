@@ -2,7 +2,6 @@ package de.df.jutils.gui.window;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,59 +22,49 @@ public class JSelectionDialog extends JDialog {
 
     private static final long serialVersionUID = -9078628731839451352L;
 
-    private JCheckBox[]       boxes;
-    private boolean           allowEmpty;
+    private JCheckBox[] boxes;
+    private boolean allowEmpty;
 
-    private JButton           ok;
-    private JButton           cancel;
+    private JButton ok;
+    private JButton cancel;
 
-    boolean                   accepted         = false;
+    boolean accepted;
 
     public JSelectionDialog(JFrame parent, String title, String[] options, boolean allowempty, AIconBundle icons) {
         this(parent, title, options, null, allowempty, icons);
     }
 
-    public JSelectionDialog(JFrame parent, String title, String[] options, boolean[] selected, boolean allowempty, AIconBundle icons) {
+    public JSelectionDialog(JFrame parent, String title, String[] options, boolean[] selected, boolean allowempty,
+            AIconBundle icons) {
         super(parent, title, true);
         this.allowEmpty = allowempty;
         this.boxes = new JCheckBox[options.length];
         for (int x = 0; x < options.length; x++) {
             boxes[x] = new JCheckBox(options[x], (selected == null) || selected[x]);
-            boxes[x].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    checkEmpty();
-                }
+            boxes[x].addActionListener(e -> {
+                checkEmpty();
             });
         }
 
         WindowUtils.addEscapeAction(this);
-        WindowUtils.addEnterAction(this, new Runnable() {
-            @Override
-            public void run() {
-                accepted = true;
-                setVisible(false);
-            }
+        WindowUtils.addEnterAction(this, () -> {
+            accepted = true;
+            setVisible(false);
         });
 
         ok = new JButton(JUtilsI18n.get("Ok"), icons.getSmallIcon("ok"));
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                accepted = true;
-                setVisible(false);
-            }
+        ok.addActionListener(e -> {
+            accepted = true;
+            setVisible(false);
         });
         cancel = new JButton(JUtilsI18n.get("Cancel"), icons.getSmallIcon("cancel"));
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                accepted = false;
-                setVisible(false);
-            }
+        cancel.addActionListener(e -> {
+            accepted = false;
+            setVisible(false);
         });
 
-        FormLayout layout = new FormLayout("4dlu,0px:grow,fill:default,4dlu,fill:default,4dlu", FormLayoutUtils.createLayoutString(boxes.length + 1));
+        FormLayout layout = new FormLayout("4dlu,0px:grow,fill:default,4dlu,fill:default,4dlu",
+                FormLayoutUtils.createLayoutString(boxes.length + 1));
         setLayout(layout);
 
         for (int x = 0; x < boxes.length; x++) {

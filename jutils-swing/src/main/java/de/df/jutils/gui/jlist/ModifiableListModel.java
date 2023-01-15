@@ -16,7 +16,7 @@ public class ModifiableListModel<T extends Object> extends AbstractListModel<T> 
 
     private static final long serialVersionUID = 8145547222092502695L;
 
-    protected LinkedList<T>   data;
+    protected LinkedList<T> data;
 
     public ModifiableListModel() {
         data = new LinkedList<>();

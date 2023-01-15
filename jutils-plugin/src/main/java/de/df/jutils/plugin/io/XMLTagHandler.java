@@ -8,11 +8,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 class XMLTagHandler extends DefaultHandler {
 
-    private LinkedList<XMLTag> ergebnis = new LinkedList<XMLTag>();
+    private LinkedList<XMLTag> ergebnis = new LinkedList<>();
 
     @Override
     public void startDocument() throws SAXException {
-        ergebnis = new LinkedList<XMLTag>();
+        ergebnis = new LinkedList<>();
     }
 
     @Override
@@ -21,7 +21,8 @@ class XMLTagHandler extends DefaultHandler {
     }
 
     @Override
-    public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes attrs) throws SAXException {
+    public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes attrs)
+            throws SAXException {
         String eName = localName; // element name
         if ("".equals(eName)) {
             eName = qualifiedName; // namespaceAware = false
@@ -31,7 +32,7 @@ class XMLTagHandler extends DefaultHandler {
             return;
         }
 
-        LinkedList<Object> daten = new LinkedList<Object>();
+        LinkedList<Object> daten = new LinkedList<>();
         daten.addLast(eName);
         String[][] o = new String[attrs.getLength()][2];
         for (int i = 0; i < attrs.getLength(); i++) {

@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class FileLock {
 
-    private FileOutputStream lock     = null;
-    private String           filename = null;
+    private FileOutputStream lock;
+    private String filename;
 
     public FileLock(String name) {
         String tmp = System.getProperty("java.io.tmpdir");

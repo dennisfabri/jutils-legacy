@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLayer;
 import javax.swing.JTextField;
 
-public class ComboBoxUtil {
+public final class ComboBoxUtil {
 
     private ComboBoxUtil() {
     }

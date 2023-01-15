@@ -3,18 +3,16 @@
  */
 package de.df.jutils.plugin.topsort;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * @author Dennis Fabri
- * @date 21.11.2004
- */
 public class Node<T> {
 
-    private T                          data;
-    private int                        indegree = 0;
-    private Hashtable<String, Node<T>> nodes    = new Hashtable<String, Node<T>>();
+    private T data;
+    private int indegree;
+    private Map<String, Node<T>> nodes = new HashMap<>();
 
     public Node(T d) {
         data = d;
@@ -38,8 +36,8 @@ public class Node<T> {
         return null;
     }
 
-    public Enumeration<Node<T>> getNodes() {
-        return nodes.elements();
+    public Collection<Node<T>> getNodes() {
+        return new ArrayList<>(nodes.values());
     }
 
     public int getIndegree() {

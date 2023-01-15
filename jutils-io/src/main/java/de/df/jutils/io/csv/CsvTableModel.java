@@ -9,8 +9,8 @@ public class CsvTableModel extends DefaultTableModel {
 
     private static final long serialVersionUID = -1698293297858884386L;
 
-    private final Object[]    title;
-    private final Object[][]  data;
+    private final Object[] title;
+    private final Object[][] data;
 
     CsvTableModel(Object[][] d, Object[] t) {
         super(d, t);

@@ -9,7 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
@@ -43,8 +42,8 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    private JIntSpinner[]         buttons = null;
-    private JPanel        panel   = new JWizardPanel();
+    private JIntSpinner[] buttons;
+    private JPanel panel = new JWizardPanel();
     private final JWizard wizard;
 
     public WizardIntegerPage(JWizard w, String title, String note, String[] names) {
@@ -60,20 +59,25 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
             throw new NullPointerException("String[] options must " + "not be null!");
         }
         if ((enabled != null) && (enabled.length != names.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
         if ((values != null) && (values.length != names.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
         if ((min != null) && (min.length != names.length)) {
-            throw new IllegalArgumentException("int[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "int[] enabled must be null" + " or have the same length as String[] options!");
         }
         if ((max != null) && (max.length != names.length)) {
-            throw new IllegalArgumentException("int[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "int[] enabled must be null" + " or have the same length as String[] options!");
         }
     }
 
-    public WizardIntegerPage(JWizard w, String title, String note, String[] names, boolean[] enabled, int[] values, int[] min, int[] max) {
+    public WizardIntegerPage(JWizard w, String title, String note, String[] names, boolean[] enabled, int[] values,
+            int[] min, int[] max) {
         super(title, note);
         checkArguments(names, enabled, values, min, max);
         wizard = w;
@@ -101,11 +105,8 @@ public class WizardIntegerPage extends AWizardPage implements UpdateListener {
             if (enabled != null) {
                 buttons[x].setEnabled(enabled[x]);
             }
-            buttons[x].addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent arg0) {
-                    notifyUpdate();
-                }
+            buttons[x].addChangeListener(arg0 -> {
+                notifyUpdate();
             });
             panel.add(new JLabel(names[x] + ":"), CC.xy(2, 3 + 2 * x));
             panel.add(buttons[x], CC.xy(4, 3 + 2 * x));

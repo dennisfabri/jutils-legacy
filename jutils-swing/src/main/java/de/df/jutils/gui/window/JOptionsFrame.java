@@ -4,7 +4,6 @@
 package de.df.jutils.gui.window;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,18 +25,18 @@ import de.df.jutils.i18n.util.JUtilsI18n;
 
 public class JOptionsFrame extends JFrame {
 
-    private static final long           serialVersionUID = 3256728398460891959L;
+    private static final long serialVersionUID = 3256728398460891959L;
 
-    private JButton                     cancel;
-    private JButton                     ok;
-    private JButton                     apply;
-    private boolean                     changed;
-    private boolean                     isOk;
-    private JComponent                  content;
+    private JButton cancel;
+    private JButton ok;
+    private JButton apply;
+    private boolean changed;
+    private boolean isOk;
+    private JComponent content;
     private LinkedList<OptionsListener> listeners;
-    private AIconBundle                 ib;
+    private AIconBundle ib;
 
-    private final JFrame                parent;
+    private final JFrame parent;
 
     public JOptionsFrame(JFrame parent, String title, JComponent c, AIconBundle ib) {
         this(parent, title, ib);
@@ -50,7 +49,7 @@ public class JOptionsFrame extends JFrame {
         content = null;
         changed = false;
         isOk = true;
-        listeners = new LinkedList<OptionsListener>();
+        listeners = new LinkedList<>();
 
         this.parent = parent;
 
@@ -81,24 +80,15 @@ public class JOptionsFrame extends JFrame {
     }
 
     private void initListeners() {
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setVisible(false);
-                fireApply();
-            }
+        ok.addActionListener(arg0 -> {
+            setVisible(false);
+            fireApply();
         });
-        apply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                fireApply();
-            }
+        apply.addActionListener(arg0 -> {
+            fireApply();
         });
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                fireCancel();
-            }
+        cancel.addActionListener(arg0 -> {
+            fireCancel();
         });
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

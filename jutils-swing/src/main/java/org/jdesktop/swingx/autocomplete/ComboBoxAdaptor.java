@@ -29,7 +29,8 @@ import javax.swing.text.JTextComponent;
 import org.jdesktop.swingx.util.ComboBoxUtil;
 
 /**
- * An implementation of the AbstractAutoCompleteAdaptor that is suitable for JComboBox.
+ * An implementation of the AbstractAutoCompleteAdaptor that is suitable for
+ * JComboBox.
  * 
  * @author Thomas Bierhance
  * @author Karl Schaefer
@@ -42,8 +43,7 @@ class ComboBoxAdaptor<T> extends AbstractAutoCompleteAdaptor implements ActionLi
     /**
      * Creates a new ComobBoxAdaptor for the given combobox.
      * 
-     * @param comboBox
-     *            the combobox that should be adapted
+     * @param comboBox the combobox that should be adapted
      */
     public ComboBoxAdaptor(JComboBox<T> comboBox) {
         this.comboBox = comboBox;
@@ -54,8 +54,7 @@ class ComboBoxAdaptor<T> extends AbstractAutoCompleteAdaptor implements ActionLi
     /**
      * Implementation side effect - do not invoke.
      * 
-     * @param actionEvent
-     *            -
+     * @param actionEvent -
      */
     // ActionListener (listening to comboBox)
     @Override

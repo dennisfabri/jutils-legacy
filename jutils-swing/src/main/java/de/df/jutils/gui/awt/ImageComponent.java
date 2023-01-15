@@ -12,7 +12,7 @@ class ImageComponent extends Component {
 
     private static final long serialVersionUID = -189175844670997641L;
 
-    private Image             image;
+    private Image image;
 
     public ImageComponent(Image i) {
         image = i;

@@ -16,9 +16,6 @@
  */
 package org.jdesktop.swingx.autocomplete;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
@@ -71,11 +68,10 @@ import org.jdesktop.swingx.util.ComboBoxUtil;
  * @author Thomas Bierhance
  * @author Karl Schaefer
  */
-public class AutoCompleteDecorator {
+public final class AutoCompleteDecorator {
     // these keys were pulled from BasicComboBoxUI from Sun JDK 1.6.0_20
-    private static final List<String> COMBO_BOX_ACTIONS = unmodifiableList(
-            asList("selectNext", "selectNext2", "selectPrevious", "selectPrevious2", "pageDownPassThrough",
-                    "pageUpPassThrough", "homePassThrough", "endPassThrough"));
+    private static final List<String> COMBO_BOX_ACTIONS = List.of("selectNext", "selectNext2", "selectPrevious",
+            "selectPrevious2", "pageDownPassThrough", "pageUpPassThrough", "homePassThrough", "endPassThrough");
     /**
      * A TextAction that provides an error feedback for the text component that
      * invoked the action. The error feedback is most likely a "beep".
@@ -179,7 +175,7 @@ public class AutoCompleteDecorator {
 
         // Changing the l&f can change the combobox' editor which in turn
         // would not be autocompletion-enabled. The new editor needs to be set-up.
-        AutoComplete.PropertyChangeListener<T> pcl = new AutoComplete.PropertyChangeListener<T>(comboBox);
+        AutoComplete.PropertyChangeListener<T> pcl = new AutoComplete.PropertyChangeListener<>(comboBox);
         comboBox.addPropertyChangeListener("editor", pcl);
         comboBox.addPropertyChangeListener("enabled", pcl);
 
@@ -367,7 +363,7 @@ public class AutoCompleteDecorator {
         }
     }
 
-    private static class NonStrictBackspaceAction extends TextAction {
+    private static final class NonStrictBackspaceAction extends TextAction {
         private static final long serialVersionUID = -7906597453604445521L;
 
         private final Action backspace;

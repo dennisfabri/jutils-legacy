@@ -16,7 +16,7 @@ import de.df.jutils.print.printables.HeaderFooterPrintable;
 import de.df.jutils.print.printables.JTablePrintable;
 import de.df.jutils.print.printables.MultiplePrintable;
 
-public class PrintUtils {
+public final class PrintUtils {
 
     private PrintUtils() {
     }
@@ -113,7 +113,7 @@ public class PrintUtils {
         return ps;
     }
 
-    private static class GetPrintable implements Runnable {
+    private static final class GetPrintable implements Runnable {
 
         volatile Printable printable;
 
@@ -125,7 +125,7 @@ public class PrintUtils {
 
         private Font font;
 
-        public GetPrintable(JTable t, String ti, int o, boolean s, boolean e, Font font) {
+        private GetPrintable(JTable t, String ti, int o, boolean s, boolean e, Font font) {
             table = t;
             title = ti;
             optimize = o;

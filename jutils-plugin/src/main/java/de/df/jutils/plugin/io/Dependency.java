@@ -2,7 +2,7 @@ package de.df.jutils.plugin.io;
 
 public class Dependency {
 
-    private String  pluginname;
+    private String pluginname;
     private boolean optional;
 
     public Dependency(String pluginname, boolean optional) {

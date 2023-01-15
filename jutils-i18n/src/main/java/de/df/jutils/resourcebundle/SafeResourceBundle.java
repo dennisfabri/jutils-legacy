@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  */
 public final class SafeResourceBundle extends ResourceBundle {
 
-    private ResourceBundle parentBundle = null;
+    private ResourceBundle parentBundle;
 
     public SafeResourceBundle(final ResourceBundle rb) {
         setParent(rb);
@@ -29,6 +29,7 @@ public final class SafeResourceBundle extends ResourceBundle {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
      */
     @Override

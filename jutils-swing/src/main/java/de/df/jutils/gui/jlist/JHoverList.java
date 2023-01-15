@@ -10,7 +10,7 @@ import javax.swing.ListModel;
 
 public class JHoverList<T> extends JList<T> {
 
-    Point point = null;
+    Point point;
 
     public JHoverList() {
         super();
@@ -36,7 +36,7 @@ public class JHoverList<T> extends JList<T> {
         return point != null;
     }
 
-    private boolean calculatingIndex = false;
+    private boolean calculatingIndex;
 
     public int getHoveredIndex() {
         try {

@@ -9,8 +9,8 @@ package de.df.jutils.plugin;
  */
 public abstract class AFeature implements IFeature {
 
-    private IPluginManager controller = null;
-    private String         uid        = null;
+    private IPluginManager controller;
+    private String uid;
 
     @Override
     public void setController(IPluginManager plugincontroller, String pluginuid) {

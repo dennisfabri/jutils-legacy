@@ -1,10 +1,11 @@
 package de.df.jutils.util;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 public class HashedCounter {
 
-    private Hashtable<String, Integer> data = new Hashtable<>();
+    private Map<String, Integer> data = new Hashtable<>();
 
     public HashedCounter() {
     }

@@ -11,9 +11,9 @@ import javax.swing.JMenuItem;
  */
 public class MenuInfo implements Comparable<MenuInfo> {
 
-    private String      menuname;
-    private int         menuPriority;
-    private int         priotity;
+    private String menuname;
+    private int menuPriority;
+    private int priotity;
     private JMenuItem[] menu;
 
     public MenuInfo(String name, int menuPrio, JMenuItem[] m, int prio) {

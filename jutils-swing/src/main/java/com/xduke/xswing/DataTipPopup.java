@@ -35,8 +35,8 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 
 class DataTipPopup {
-    private Popup            popup;
-    private DataTipCell      cell;
+    private Popup popup;
+    private DataTipCell cell;
     private DataTipComponent dataTipComponent;
 
     DataTipPopup(JComponent parent, DataTipCell cell, Point tipPosition, Dimension tipDimension) {
@@ -56,8 +56,10 @@ class DataTipPopup {
         Point tipPositionClipped = new Point();
         tipPositionClipped.x = Math.max(tipScreenPosition.x, screenBounds.x);
         tipPositionClipped.y = Math.max(tipScreenPosition.y, screenBounds.y);
-        tipDimensionClipped.width = Math.min(screenBounds.x + screenBounds.width - tipPositionClipped.x, tipDimensionClipped.width);
-        tipDimensionClipped.height = Math.min(screenBounds.y + screenBounds.height - tipPositionClipped.y, tipDimensionClipped.height);
+        tipDimensionClipped.width = Math.min(screenBounds.x + screenBounds.width - tipPositionClipped.x,
+                tipDimensionClipped.width);
+        tipDimensionClipped.height = Math.min(screenBounds.y + screenBounds.height - tipPositionClipped.y,
+                tipDimensionClipped.height);
         SwingUtilities.convertPointFromScreen(tipPositionClipped, parent);
         dataTipComponent.setPreferredSize(tipDimensionClipped);
         SwingUtilities.convertPointToScreen(tipPosition, parent);

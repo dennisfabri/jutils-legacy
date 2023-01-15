@@ -12,6 +12,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -21,8 +23,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
@@ -41,10 +41,10 @@ public class JPanelContainer extends JComponent {
     public static final boolean SINGLE = true;
     public static final boolean DOUBLE = false;
 
-    private final Hashtable<String, JPanel> topPanels;
-    private final Hashtable<String, JPanel> bottomPanels;
-    private final Hashtable<String, PanelInfo> panelinfos;
-    private final HashSet<String> panelIsEnabled;
+    private final Map<String, JPanel> topPanels;
+    private final Map<String, JPanel> bottomPanels;
+    private final Map<String, PanelInfo> panelinfos;
+    private final Set<String> panelIsEnabled;
 
     private final CardLayout bottomLayout;
     private final CardLayout topLayout;
@@ -54,9 +54,9 @@ public class JPanelContainer extends JComponent {
     private final JHoverList<PanelInfo> bottomElements;
     private final ModifiableListModel<PanelInfo> topModel;
     private final ModifiableListModel<PanelInfo> bottomModel;
-    private JSplitPane sp = null;
+    private JSplitPane sp;
 
-    private boolean single = false;
+    private boolean single;
 
     public JPanelContainer(List<PanelInfo> panels, boolean singleMode) {
         single = singleMode;
@@ -120,7 +120,7 @@ public class JPanelContainer extends JComponent {
         if (topModel.getSize() > 0 && bottomModel.getSize() > 0) {
             panel1.setMinimumSize(new Dimension(panel1.getMinimumSize().width, 150));
             panel2.setMinimumSize(new Dimension(panel2.getMinimumSize().width, 150));
-            
+
             sp = new JInvisibleSplitPane(JSplitPane.VERTICAL_SPLIT);
             sp.setContinuousLayout(true);
             sp.setLeftComponent(panel1);
@@ -135,17 +135,11 @@ public class JPanelContainer extends JComponent {
             }
         }
 
-        topElements.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                selectedListitem(true);
-            }
+        topElements.addListSelectionListener(e -> {
+            selectedListitem(true);
         });
-        bottomElements.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                selectedListitem(false);
-            }
+        bottomElements.addListSelectionListener(e -> {
+            selectedListitem(false);
         });
 
         if (panelinfos.size() > 1) {
@@ -199,7 +193,7 @@ public class JPanelContainer extends JComponent {
     }
 
     private boolean isOnTop(PanelInfo pi) {
-        return (pi.isOnTop() || single);
+        return pi.isOnTop() || single;
     }
 
     public void removePanel(PanelInfo pi) {
@@ -208,7 +202,7 @@ public class JPanelContainer extends JComponent {
 
     private void removePanel(PanelInfo pi, boolean full) {
         JPanel panel = isOnTop(pi) ? topPanel : bottomPanel;
-        ModifiableListModel<PanelInfo> buttons = (pi.isOnTop() ? topModel : bottomModel);
+        ModifiableListModel<PanelInfo> buttons = pi.isOnTop() ? topModel : bottomModel;
 
         if (buttons.contains(pi)) {
             panel.remove(pi.getPanel());

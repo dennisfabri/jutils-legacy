@@ -24,8 +24,8 @@ public class JGlassPane extends JPanel {
 
     private static final long serialVersionUID = 3905246744735462710L;
 
-    protected int             opacity          = 0;
-    private boolean           animate          = false;
+    protected int opacity;
+    private boolean animate;
 
     public JGlassPane() {
         setOpaque(false);

@@ -7,7 +7,7 @@ import de.df.jutils.util.StringTools;
 
 public class Seconds {
 
-    private int seconds = 0;
+    private int seconds;
 
     public Seconds(int s) {
         seconds = s;

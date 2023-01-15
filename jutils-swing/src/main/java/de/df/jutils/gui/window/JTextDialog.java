@@ -33,12 +33,12 @@ public final class JTextDialog extends JDialog {
      */
     private static final long serialVersionUID = 3978985466349237809L;
     /** A return status code - returned if Cancel button has been pressed */
-    public static final int   RET_CANCEL       = 0;
+    public static final int RET_CANCEL = 0;
     /** A return status code - returned if OK button has been pressed */
-    public static final int   RET_OK           = 1;
+    public static final int RET_OK = 1;
 
-    private JTextField        name;
-    private int               returnStatus     = RET_CANCEL;
+    private JTextField name;
+    private int returnStatus = RET_CANCEL;
 
     /** Creates new form JTextDialog */
     public JTextDialog(final Frame parent, final String title, final String angabe, int size) {
@@ -63,7 +63,8 @@ public final class JTextDialog extends JDialog {
     private void initComponents(final String angabe, final int size) {
         addWindowListener(new CancelWindowAdapter());
 
-        FormLayout layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,4dlu,fill:default,4dlu");
+        FormLayout layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu",
+                "4dlu,fill:default,4dlu,fill:default,4dlu");
         getContentPane().setLayout(layout);
 
         JButton okButton = new JButton();

@@ -14,15 +14,15 @@ import org.lisasp.legacy.uistate.handlers.JTableStateHandler;
 import org.lisasp.legacy.uistate.handlers.JTreeStateHandler;
 import org.lisasp.legacy.uistate.handlers.JViewportStateHandler;
 
-public class UIStateUtils {
+public final class UIStateUtils {
 
-    private static class UIStateManageRunnable implements Runnable {
+    private static final class UIStateManageRunnable implements Runnable {
 
         private Window parent;
         private Window window;
         private String name;
 
-        public UIStateManageRunnable(Window parent, Window w, String n) {
+        private UIStateManageRunnable(Window parent, Window w, String n) {
             this.parent = parent;
             window = w;
             name = n;
@@ -42,10 +42,12 @@ public class UIStateUtils {
     }
 
     private static boolean isOnScreen(Window window) {
-        java.awt.Rectangle windowSize = new java.awt.Rectangle(window.getX(), window.getY(), window.getWidth(), window.getHeight());
-        for (java.awt.GraphicsDevice screen : java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+        java.awt.Rectangle windowSize = new java.awt.Rectangle(window.getX(), window.getY(), window.getWidth(),
+                window.getHeight());
+        for (java.awt.GraphicsDevice screen : java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getScreenDevices()) {
             for (java.awt.GraphicsConfiguration configuration : screen.getConfigurations()) {
-                java.awt.Rectangle  screenSize = configuration.getBounds();
+                java.awt.Rectangle screenSize = configuration.getBounds();
                 if (intersect(screenSize, windowSize)) {
                     return true;
                 }
@@ -53,14 +55,16 @@ public class UIStateUtils {
         }
         return false;
     }
-    
-    private static boolean intersect(java.awt.Rectangle  rect1, java.awt.Rectangle  rect2) {
-        return oneDimensionalIntersect(rect1.getX(), rect1.getX()+rect1.getWidth(), rect2.getX(), rect2.getX()+rect2.getWidth())
-                && oneDimensionalIntersect(rect1.getY(), rect1.getY()+rect1.getHeight(), rect2.getY(), rect2.getY()+rect2.getHeight());
+
+    private static boolean intersect(java.awt.Rectangle rect1, java.awt.Rectangle rect2) {
+        return oneDimensionalIntersect(rect1.getX(), rect1.getX() + rect1.getWidth(), rect2.getX(),
+                rect2.getX() + rect2.getWidth())
+                && oneDimensionalIntersect(rect1.getY(), rect1.getY() + rect1.getHeight(), rect2.getY(),
+                        rect2.getY() + rect2.getHeight());
     }
-    
+
     private static boolean oneDimensionalIntersect(double min1, double max1, double min2, double max2) {
-        return min2 <= max1 && min1 <= max2;        
+        return min2 <= max1 && min1 <= max2;
     }
 
     public static void uistatemanage(Window parent, Window w, String name) {
@@ -104,5 +108,8 @@ public class UIStateUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private UIStateUtils() {
     }
 }

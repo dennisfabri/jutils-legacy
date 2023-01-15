@@ -31,7 +31,7 @@ import de.df.jutils.gui.util.EDTUtils;
 public class ComponentPagePrintable implements Printable {
 
     private final Component[] components;
-    private final boolean     scaleDown;
+    private final boolean scaleDown;
 
     public ComponentPagePrintable(Component... components) {
         this(false, components);
@@ -78,7 +78,7 @@ public class ComponentPagePrintable implements Printable {
         if (scale > 1.0) {
             g2d.scale(1.0 / scale, 1.0 / scale);
         }
-        
+
         component.addNotify();
         component.setSize(d);
         // component.doLayout();

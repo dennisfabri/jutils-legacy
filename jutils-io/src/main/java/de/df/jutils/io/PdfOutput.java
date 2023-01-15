@@ -35,12 +35,14 @@ import de.df.jutils.util.Feedback;
  * @author Dennis Fabri
  * @date 16.01.2005
  */
-public class PdfOutput {
+public final class PdfOutput {
 
     private static final String WINDOWS_FONTPATH = "C:/windows/fonts";
-    private PdfOutput() {}
-    
-    private static DefaultFontMapper fontMapper = null;
+
+    private PdfOutput() {
+    }
+
+    private static DefaultFontMapper fontMapper;
 
     private static FontMapper getFontMapper() {
         if (fontMapper == null) {
@@ -70,7 +72,8 @@ public class PdfOutput {
             Rectangle size = document.getPageSize();
             Paper paper = new Paper();
             paper.setSize(size.getWidth(), size.getHeight());
-            paper.setImageableArea(margin.left, margin.top, size.getWidth() - margin.left - margin.right, size.getHeight() - margin.top - margin.bottom);
+            paper.setImageableArea(margin.left, margin.top, size.getWidth() - margin.left - margin.right,
+                    size.getHeight() - margin.top - margin.bottom);
             PageFormat pf = new PageFormat();
             pf.setOrientation(PageFormat.PORTRAIT);
             pf.setPaper(paper);
@@ -92,7 +95,8 @@ public class PdfOutput {
                         document.newPage();
                     }
 
-                    Graphics2D g2 = new PdfGraphics2D(cb, size.getWidth(), size.getHeight(), getFontMapper(), false, false, 0);
+                    Graphics2D g2 = new PdfGraphics2D(cb, size.getWidth(), size.getHeight(), getFontMapper(), false,
+                            false, 0);
 
                     // Print the table to the graphics
                     g2.clipRect(0, 0, (int) size.getWidth(), (int) size.getHeight());

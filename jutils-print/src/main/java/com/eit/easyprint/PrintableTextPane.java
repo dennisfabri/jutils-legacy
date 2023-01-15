@@ -47,12 +47,9 @@ class PrintableTextPane extends JTextPane implements Printable {
      * Since all the work is done in the PageFactory, we just simply print the
      * component.
      * 
-     * @param g
-     *            Preclipped and translated graphics instance
-     * @param format
-     *            Format of the page on which we print
-     * @param page
-     *            Index of the page beeing printed
+     * @param g      Preclipped and translated graphics instance
+     * @param format Format of the page on which we print
+     * @param page   Index of the page beeing printed
      * @return the status code Printable.PAGE_EXISTS
      */
     @Override

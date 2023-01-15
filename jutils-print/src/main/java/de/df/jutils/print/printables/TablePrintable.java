@@ -88,79 +88,75 @@ import de.df.jutils.gui.util.EDTUtils;
 class TablePrintable implements Printable {
 
     /** The table to print. */
-    private JTable             table;
+    private JTable table;
 
     /** For quick reference to the table's header. */
-    private JTableHeader       header;
+    private JTableHeader header;
 
     /** For quick reference to the table's column model. */
-    private TableColumnModel   colModel;
+    private TableColumnModel colModel;
 
     /** To save multiple calculations of total column width. */
-    private int                totalColWidth;
+    private int totalColWidth;
 
     /** The printing mode of this printable. */
-    private JTable.PrintMode   printMode;
+    private JTable.PrintMode printMode;
 
     /** Provides the header text for the table. */
-    private MessageFormat      headerFormat;
+    private MessageFormat headerFormat;
 
     /** Provides the footer text for the table. */
-    private MessageFormat      footerFormat;
+    private MessageFormat footerFormat;
 
     /** The most recent page index asked to print. */
-    private int                last             = -1;
+    private int last = -1;
 
     /** The next row to print. */
-    private int                row              = 0;
+    private int row;
 
     /** The next column to print. */
-    private int                col              = 0;
+    private int col;
 
     /** Used to store an area of the table to be printed. */
-    private final Rectangle    clip             = new Rectangle(0, 0, 0, 0);
+    private final Rectangle clip = new Rectangle(0, 0, 0, 0);
 
     /** Used to store an area of the table's header to be printed. */
-    private final Rectangle    hclip            = new Rectangle(0, 0, 0, 0);
+    private final Rectangle hclip = new Rectangle(0, 0, 0, 0);
 
     /** Saves the creation of multiple rectangles. */
-    private final Rectangle    tempRect         = new Rectangle(0, 0, 0, 0);
+    private final Rectangle tempRect = new Rectangle(0, 0, 0, 0);
 
     /** Vertical space to leave between table and header/footer text. */
-    private static final int   H_F_SPACE        = 8;
+    private static final int H_F_SPACE = 8;
 
     /** Font size for the header text. */
-    private static final float HEADER_FONT_SIZE = 18.0f;
+    private static final float HEADER_FONT_SIZE = 18.0F;
 
     /** Font size for the footer text. */
-    private static final float FOOTER_FONT_SIZE = 12.0f;
+    private static final float FOOTER_FONT_SIZE = 12.0F;
 
     /** The font to use in rendering header text. */
-    private Font               headerFont;
+    private Font headerFont;
 
     /** The font to use in rendering footer text. */
-    private Font               footerFont;
+    private Font footerFont;
 
     /**
-     * Create a new <code>TablePrintable</code> for the given
-     * <code>JTable</code>. Header and footer text can be specified using the
-     * two <code>MessageFormat</code> parameters. When called upon to provide a
-     * String, each format is given the current page number.
+     * Create a new <code>TablePrintable</code> for the given <code>JTable</code>.
+     * Header and footer text can be specified using the two
+     * <code>MessageFormat</code> parameters. When called upon to provide a String,
+     * each format is given the current page number.
      * 
-     * @param table
-     *            the table to print
-     * @param printMode
-     *            the printing mode for this printable
-     * @param headerFormat
-     *            a <code>MessageFormat</code> specifying the text to be used in
-     *            printing a header, or null for none
-     * @param footerFormat
-     *            a <code>MessageFormat</code> specifying the text to be used in
-     *            printing a footer, or null for none
-     * @throws IllegalArgumentException
-     *             if passed an invalid print mode
+     * @param table        the table to print
+     * @param printMode    the printing mode for this printable
+     * @param headerFormat a <code>MessageFormat</code> specifying the text to be
+     *                     used in printing a header, or null for none
+     * @param footerFormat a <code>MessageFormat</code> specifying the text to be
+     *                     used in printing a footer, or null for none
+     * @throws IllegalArgumentException if passed an invalid print mode
      */
-    public TablePrintable(JTable table, JTable.PrintMode printMode, MessageFormat headerFormat, MessageFormat footerFormat) {
+    public TablePrintable(JTable table, JTable.PrintMode printMode, MessageFormat headerFormat,
+            MessageFormat footerFormat) {
 
         this.table = table;
 
@@ -187,16 +183,12 @@ class TablePrintable implements Printable {
      * Prints the specified page of the table into the given {@link Graphics}
      * context, in the specified format.
      * 
-     * @param graphics
-     *            the context into which the page is drawn
-     * @param pageFormat
-     *            the size and orientation of the page being drawn
-     * @param pageIndex
-     *            the zero based index of the page to be drawn
-     * @return PAGE_EXISTS if the page is rendered successfully, or NO_SUCH_PAGE
-     *         if a non-existent page index is specified
-     * @throws PrinterException
-     *             if an error causes printing to be aborted
+     * @param graphics   the context into which the page is drawn
+     * @param pageFormat the size and orientation of the page being drawn
+     * @param pageIndex  the zero based index of the page to be drawn
+     * @return PAGE_EXISTS if the page is rendered successfully, or NO_SUCH_PAGE if
+     *         a non-existent page index is specified
+     * @throws PrinterException if an error causes printing to be aborted
      */
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
@@ -388,20 +380,15 @@ class TablePrintable implements Printable {
     }
 
     /**
-     * A helper method that encapsulates common code for rendering the header
-     * and footer text.
+     * A helper method that encapsulates common code for rendering the header and
+     * footer text.
      * 
-     * @param g2d
-     *            the graphics to draw into
-     * @param text
-     *            the text to draw, non null
-     * @param rect
-     *            the bounding rectangle for this text, as calculated at the
-     *            given font, non null
-     * @param font
-     *            the font to draw the text in, non null
-     * @param imgWidth
-     *            the width of the area to draw into
+     * @param g2d      the graphics to draw into
+     * @param text     the text to draw, non null
+     * @param rect     the bounding rectangle for this text, as calculated at the
+     *                 given font, non null
+     * @param font     the font to draw the text in, non null
+     * @param imgWidth the width of the area to draw into
      */
     private void printText(Graphics2D g2d, String text, Rectangle2D rect, Font font, int imgWidth) {
 
@@ -428,15 +415,13 @@ class TablePrintable implements Printable {
     }
 
     /**
-     * Calculate the area of the table to be printed for the next page. This
-     * should only be called if there are rows and columns left to print.
-     * To avoid an infinite loop in printing, this will always put at least one
-     * cell on each page.
+     * Calculate the area of the table to be printed for the next page. This should
+     * only be called if there are rows and columns left to print. To avoid an
+     * infinite loop in printing, this will always put at least one cell on each
+     * page.
      * 
-     * @param pw
-     *            the width of the area to print in
-     * @param ph
-     *            the height of the area to print in
+     * @param pw the width of the area to print in
+     * @param ph the height of the area to print in
      */
     private void findNextClip(int pw, int ph) {
         final boolean ltr = table.getComponentOrientation().isLeftToRight();

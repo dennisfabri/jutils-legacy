@@ -13,11 +13,11 @@ public class ExtendedTableModel extends DefaultTableModel {
 
     private static final long serialVersionUID = -7569962895997629378L;
 
-    private int[]             alignments;
-    private String[]          formats;
-    private String            name;
-    private boolean           landscape;
-    private TitleRow[]        extendedTitleRows;
+    private int[] alignments;
+    private String[] formats;
+    private String name;
+    private boolean landscape;
+    private TitleRow[] extendedTitleRows;
 
     public ExtendedTableModel(Object[][] data, Object[] titles) {
         super(data, titles);
@@ -122,7 +122,7 @@ public class ExtendedTableModel extends DefaultTableModel {
 
     public static class TitleCell {
         public Dimension span;
-        public String    title;
+        public String title;
 
         public TitleCell(String title, int width, int height) {
             span = new Dimension(width, height);

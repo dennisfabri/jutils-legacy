@@ -17,7 +17,7 @@ public class PrintHeaderRenderer extends DefaultTableCellRenderer {
      */
     private static final long serialVersionUID = 3978993167141778745L;
 
-    private final Color       background;
+    private final Color background;
 
     public PrintHeaderRenderer(Color background) {
         if (background == null) {
@@ -44,8 +44,9 @@ public class PrintHeaderRenderer extends DefaultTableCellRenderer {
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-        JTableHeader h = (table != null ? table.getTableHeader() : null);
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
+            int row, int column) {
+        JTableHeader h = table != null ? table.getTableHeader() : null;
 
         if (table != null && h != null) {
             setEnabled(h.isEnabled());
@@ -56,8 +57,7 @@ public class PrintHeaderRenderer extends DefaultTableCellRenderer {
             setFont(h.getFont());
         } else {
             /*
-             * Use sensible values instead of random leftover values from the
-             * last call
+             * Use sensible values instead of random leftover values from the last call
              */
             setEnabled(true);
             setComponentOrientation(ComponentOrientation.UNKNOWN);

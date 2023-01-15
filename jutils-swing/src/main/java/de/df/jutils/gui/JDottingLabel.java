@@ -13,11 +13,11 @@ public class JDottingLabel extends JLabel {
 
     private static final long serialVersionUID = 3258411742123013683L;
 
-    private JLabel            full;
-    private JLabel            min;
-    private JLabel            draw;
+    private JLabel full;
+    private JLabel min;
+    private JLabel draw;
 
-    private boolean           disabled         = false;
+    private boolean disabled;
 
     public JDottingLabel() {
         this("");

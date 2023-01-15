@@ -8,9 +8,9 @@ import java.util.LinkedList;
 
 import de.df.jutils.i18n.util.JUtilsI18n;
 
-public class PrintQueue {
+public final class PrintQueue {
 
-    private static PrintQueue instance = null;
+    private static PrintQueue instance;
 
     public static PrintQueue getInstance() {
         synchronized (PrintQueue.class) {
@@ -21,9 +21,9 @@ public class PrintQueue {
         return instance;
     }
 
-    private LinkedList<PrintQueueElement> jobs = new LinkedList<PrintQueueElement>();
-    private JobPrinter                    printer;
-    private LinkedList<IPrintCallback>    ipcs = new LinkedList<IPrintCallback>();
+    private LinkedList<PrintQueueElement> jobs = new LinkedList<>();
+    private JobPrinter printer;
+    private LinkedList<IPrintCallback> ipcs = new LinkedList<>();
 
     private void runPrinter(JobPrinter parent) {
         while (true) {
@@ -51,7 +51,7 @@ public class PrintQueue {
 
     private final class JobPrinter extends Thread {
 
-        private PrinterJob current = null;
+        private PrinterJob current;
 
         public JobPrinter() {
             setName("PrintQueue.JobPrinter");
@@ -89,7 +89,7 @@ public class PrintQueue {
         return jobs.isEmpty();
     }
 
-    public static abstract class APrintCallback implements IPrintCallback {
+    public abstract static class APrintCallback implements IPrintCallback {
         @Override
         public void jobStarted(String job, int jobs) {
             // Nothing to do
@@ -223,7 +223,7 @@ public class PrintQueue {
         }
     }
 
-    private class PrintQueueElement {
+    private final class PrintQueueElement {
 
         private final PrinterJob job;
 
@@ -235,16 +235,19 @@ public class PrintQueue {
             try {
                 PageSetup.print(job);
             } catch (PrinterIOException e) {
-                notifyJobError(job.getJobName(), JUtilsI18n.get("de.dm.print.error.io.title"), JUtilsI18n.get("de.dm.print.error.io.text", e.getMessage()),
+                notifyJobError(job.getJobName(), JUtilsI18n.get("de.dm.print.error.io.title"),
+                        JUtilsI18n.get("de.dm.print.error.io.text", e.getMessage()),
                         JUtilsI18n.get("de.dm.print.error.io.note", e.getMessage()));
                 e.printStackTrace();
             } catch (PrinterAbortException e) {
                 notifyJobError(job.getJobName(), JUtilsI18n.get("de.dm.print.error.abort.title"),
-                        JUtilsI18n.get("de.dm.print.error.abort.text", e.getMessage()), JUtilsI18n.get("de.dm.print.error.abort.note", e.getMessage()));
+                        JUtilsI18n.get("de.dm.print.error.abort.text", e.getMessage()),
+                        JUtilsI18n.get("de.dm.print.error.abort.note", e.getMessage()));
                 e.printStackTrace();
             } catch (PrinterException e) {
                 notifyJobError(job.getJobName(), JUtilsI18n.get("de.dm.print.error.general.title"),
-                        JUtilsI18n.get("de.dm.print.error.general.text", e.getMessage()), JUtilsI18n.get("de.dm.print.error.general.note", e.getMessage()));
+                        JUtilsI18n.get("de.dm.print.error.general.text", e.getMessage()),
+                        JUtilsI18n.get("de.dm.print.error.general.note", e.getMessage()));
                 e.printStackTrace();
             }
         }

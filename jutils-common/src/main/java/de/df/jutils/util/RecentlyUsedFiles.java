@@ -8,8 +8,8 @@ import java.util.prefs.Preferences;
 
 public class RecentlyUsedFiles {
 
-    private String                     key;
-    private String[]                   names;
+    private String key;
+    private String[] names;
     private LinkedList<ChangeListener> listeners;
 
     public RecentlyUsedFiles() {
@@ -32,7 +32,7 @@ public class RecentlyUsedFiles {
             size1 = size2;
         }
         names = new String[size1];
-        listeners = new LinkedList<ChangeListener>();
+        listeners = new LinkedList<>();
 
         if (pref != null) {
             for (int x = size2 - 1; x >= 0; x--) {

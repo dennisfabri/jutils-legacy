@@ -15,6 +15,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.swing.CellRendererPane;
 import javax.swing.JComponent;
@@ -67,9 +68,9 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
 
     private TableHeaderUI ui;
     @SuppressWarnings("hiding")
-    private GroupableTableHeader header = null;
+    private GroupableTableHeader header;
     @SuppressWarnings("hiding")
-    private CellRendererPane rendererPane = null;
+    private CellRendererPane rendererPane;
 
     public GroupableTableHeaderUI(TableHeaderUI ui) {
         this.ui = ui;
@@ -129,7 +130,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         int column = 0;
         Dimension size = header.getSize();
         Rectangle cellRect = new Rectangle(0, 0, size.width, size.height);
-        Hashtable<ColumnGroup, Rectangle> hashtable;
+        Map<ColumnGroup, Rectangle> hashtable;
         hashtable = new Hashtable<>();
         Enumeration<TableColumn> enumeration = header.getColumnModel().getColumns();
         while (enumeration.hasMoreElements()) {

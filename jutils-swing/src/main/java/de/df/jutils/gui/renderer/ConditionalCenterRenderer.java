@@ -7,7 +7,7 @@ import javax.swing.SwingConstants;
 
 public class ConditionalCenterRenderer extends AlignmentCellRenderer {
 
-    protected int index = 0;
+    protected int index;
 
     private static int[] leftArray(int i) {
         int[] result = new int[i];

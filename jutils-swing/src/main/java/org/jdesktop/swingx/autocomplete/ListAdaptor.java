@@ -29,21 +29,19 @@ import javax.swing.text.JTextComponent;
 class ListAdaptor<T> extends AbstractAutoCompleteAdaptor implements ListSelectionListener {
 
     /** the list containing the items */
-    JList<T>                list;
+    JList<T> list;
     /** the text component that is used for automatic completion */
-    JTextComponent          textComponent;
+    JTextComponent textComponent;
     /** the converter used to transform items to strings */
     ObjectToStringConverter stringConverter;
 
     /**
      * Creates a new JListAdaptor for the given list and text component.
      * 
-     * @param list
-     *            the list that contains the items that are used for automatic
-     *            completion
-     * @param textComponent
-     *            the text component that will be used automatic
-     *            completion
+     * @param list          the list that contains the items that are used for
+     *                      automatic completion
+     * @param textComponent the text component that will be used automatic
+     *                      completion
      */
     public ListAdaptor(JList<T> list, JTextComponent textComponent) {
         this(list, textComponent, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
@@ -52,14 +50,11 @@ class ListAdaptor<T> extends AbstractAutoCompleteAdaptor implements ListSelectio
     /**
      * Creates a new JListAdaptor for the given list and text component.
      * 
-     * @param list
-     *            the list that contains the items that are used for automatic
-     *            completion
-     * @param textComponent
-     *            the text component that will be used automatic
-     *            completion
-     * @param stringConverter
-     *            the converter used to transform items to strings
+     * @param list            the list that contains the items that are used for
+     *                        automatic completion
+     * @param textComponent   the text component that will be used automatic
+     *                        completion
+     * @param stringConverter the converter used to transform items to strings
      */
     public ListAdaptor(JList<T> list, JTextComponent textComponent, ObjectToStringConverter stringConverter) {
         this.list = list;
@@ -72,8 +67,7 @@ class ListAdaptor<T> extends AbstractAutoCompleteAdaptor implements ListSelectio
     /**
      * Implementation side effect - do not invoke.
      * 
-     * @param listSelectionEvent
-     *            -
+     * @param listSelectionEvent -
      */
     // ListSelectionListener (listening to list)
     @Override

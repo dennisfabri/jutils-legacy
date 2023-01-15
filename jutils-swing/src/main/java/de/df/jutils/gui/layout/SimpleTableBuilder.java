@@ -15,14 +15,14 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class SimpleTableBuilder {
 
-    private final FormLayout          layout;
-    private final JPanel              panel;
-    private final LinkedList<Integer> fills          = new LinkedList<Integer>();
-    private int                       columns        = 0;
-    private int                       currentColumn  = 1;
-    private String                    emptyContraint = "4dlu";
+    private final FormLayout layout;
+    private final JPanel panel;
+    private final LinkedList<Integer> fills = new LinkedList<>();
+    private int columns;
+    private int currentColumn = 1;
+    private String emptyContraint = "4dlu";
 
-    private int[][]                   groups;
+    private int[][] groups;
 
     public SimpleTableBuilder(JPanel panel, int doubleColumns, boolean emptygrow) {
         if (emptygrow) {
@@ -173,7 +173,8 @@ public class SimpleTableBuilder {
         }
         currentColumn += cols;
         if (currentColumn > columns + 1) {
-            throw new IndexOutOfBoundsException("Current double column is " + (currentColumn - 1) + " but should be " + columns + " at max.");
+            throw new IndexOutOfBoundsException(
+                    "Current double column is " + (currentColumn - 1) + " but should be " + columns + " at max.");
         }
     }
 

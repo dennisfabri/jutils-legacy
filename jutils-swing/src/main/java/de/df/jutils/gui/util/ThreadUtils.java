@@ -12,7 +12,8 @@ public final class ThreadUtils {
     public static boolean isRecursion() {
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         int x = 0;
-        while ((!elements[x].getClassName().equals(ThreadUtils.class.getName())) || (!elements[x].getMethodName().equals("isRecursion"))) {
+        while ((!elements[x].getClassName().equals(ThreadUtils.class.getName()))
+                || (!"isRecursion".equals(elements[x].getMethodName()))) {
             x++;
         }
         x++;

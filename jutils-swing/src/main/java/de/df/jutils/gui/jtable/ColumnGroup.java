@@ -30,9 +30,9 @@ import javax.swing.table.TableColumn;
 public class ColumnGroup {
 
     private TableCellRenderer renderer;
-    private Vector<Object>    v;
-    private String            text;
-    private int               margin = 0;
+    private Vector<Object> v;
+    private String text;
+    private int margin;
 
     public ColumnGroup(String newText) {
         this(null, newText);
@@ -45,14 +45,13 @@ public class ColumnGroup {
             this.renderer = newRenderer;
         }
         this.text = newText;
-        v = new Vector<Object>();
+        v = new Vector<>();
     }
 
     /**
      * *
      * 
-     * @param obj
-     *            TableColumn or ColumnGroup
+     * @param obj TableColumn or ColumnGroup
      */
     public void add(Object obj) {
         if (obj == null) {
@@ -68,10 +67,8 @@ public class ColumnGroup {
     /**
      * *
      * 
-     * @param c
-     *            TableColumn *
-     * @param v
-     *            ColumnGroups
+     * @param c TableColumn *
+     * @param v ColumnGroups
      */
     public Vector<Object> getColumnGroups(TableColumn c, Vector<Object> g) {
         g.addElement(this);
@@ -82,7 +79,7 @@ public class ColumnGroup {
         while (e.hasMoreElements()) {
             Object obj = e.nextElement();
             if (obj instanceof ColumnGroup) {
-                Vector<Object> groups = ((ColumnGroup) obj).getColumnGroups(c, new Vector<Object>(g));
+                Vector<Object> groups = ((ColumnGroup) obj).getColumnGroups(c, new Vector<>(g));
                 if (groups != null) {
                     return groups;
                 }
@@ -145,7 +142,7 @@ public class ColumnGroup {
                 width += margin - 1;
             } else {
                 ColumnGroup cg = (ColumnGroup) obj;
-                width += (cg).getSize(table).width + margin - 1;
+                width += cg.getSize(table).width + margin - 1;
             }
         }
         return new Dimension(width + 1, height);
@@ -162,7 +159,7 @@ public class ColumnGroup {
         }
     }
 
-    final static class ColumnGroupCellRenderer extends DefaultTableCellRenderer {
+    static final class ColumnGroupCellRenderer extends DefaultTableCellRenderer {
 
         /**
          * Comment for <code>serialVersionUID</code>
@@ -170,7 +167,8 @@ public class ColumnGroup {
         private static final long serialVersionUID = 3258133561352400945L;
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
             JTableHeader header = table.getTableHeader();
             if (header != null) {
                 setForeground(header.getForeground());

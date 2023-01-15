@@ -35,8 +35,9 @@ import javax.swing.text.Position;
 import javax.swing.text.Segment;
 
 /**
- * A document that can be plugged into any JTextComponent to enable automatic completion.
- * It finds and selects matching items using any implementation of the AbstractAutoCompleteAdaptor.
+ * A document that can be plugged into any JTextComponent to enable automatic
+ * completion. It finds and selects matching items using any implementation of
+ * the AbstractAutoCompleteAdaptor.
  */
 @SuppressWarnings("nls")
 class AutoCompleteDocument implements Document {
@@ -151,76 +152,75 @@ class AutoCompleteDocument implements Document {
     }
 
     /**
-     * true, if only items from the adaptors's list can be entered
-     * false, otherwise (selected item might not be in the adaptors's list)
+     * true, if only items from the adaptors's list can be entered false, otherwise
+     * (selected item might not be in the adaptors's list)
      */
-    protected boolean                       strictMatching;
+    protected boolean strictMatching;
 
-    protected final Document                delegate;
+    protected final Document delegate;
 
     /**
-     * Flag to indicate if adaptor.setSelectedItem has been called.
-     * Subsequent calls to remove/insertString should be ignored
-     * as they are likely have been caused by the adapted Component that
-     * is trying to set the text for the selected component.
+     * Flag to indicate if adaptor.setSelectedItem has been called. Subsequent calls
+     * to remove/insertString should be ignored as they are likely have been caused
+     * by the adapted Component that is trying to set the text for the selected
+     * component.
      */
-    boolean                                 selecting               = false;
+    boolean selecting;
 
     /**
      * The adaptor that is used to find and select items.
      */
-    AbstractAutoCompleteAdaptor             adaptor;
+    AbstractAutoCompleteAdaptor adaptor;
 
-    ObjectToStringConverter                 stringConverter;
+    ObjectToStringConverter stringConverter;
 
-    private final Handler                   handler;
+    private final Handler handler;
 
-    // Note: these comparators do not impose any ordering - e.g. they do not ensure that sgn(compare(x, y)) == -sgn(compare(y, x))
-    private static final Comparator<String> EQUALS_IGNORE_CASE      = new Comparator<String>() {
-                                                                        @Override
-                                                                        public int compare(String o1, String o2) {
-                                                                            return o1.equalsIgnoreCase(o2) ? 0 : -1;
-                                                                        }
-                                                                    };
+    // Note: these comparators do not impose any ordering - e.g. they do not ensure
+    // that sgn(compare(x, y)) == -sgn(compare(y, x))
+    private static final Comparator<String> EQUALS_IGNORE_CASE = new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.equalsIgnoreCase(o2) ? 0 : -1;
+        }
+    };
 
     private static final Comparator<String> STARTS_WITH_IGNORE_CASE = new Comparator<String>() {
-                                                                        @Override
-                                                                        public int compare(String o1, String o2) {
-                                                                            if (o1.length() < o2.length())
-                                                                                return -1;
-                                                                            return o1.regionMatches(true, 0, o2, 0, o2.length()) ? 0 : -1;
-                                                                        }
-                                                                    };
+        @Override
+        public int compare(String o1, String o2) {
+            if (o1.length() < o2.length()) {
+                return -1;
+            }
+            return o1.regionMatches(true, 0, o2, 0, o2.length()) ? 0 : -1;
+        }
+    };
 
-    private static final Comparator<String> EQUALS                  = new Comparator<String>() {
-                                                                        @Override
-                                                                        public int compare(String o1, String o2) {
-                                                                            return o1.equals(o2) ? 0 : -1;
-                                                                        }
-                                                                    };
+    private static final Comparator<String> EQUALS = new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.equals(o2) ? 0 : -1;
+        }
+    };
 
-    private static final Comparator<String> STARTS_WITH             = new Comparator<String>() {
-                                                                        @Override
-                                                                        public int compare(String o1, String o2) {
-                                                                            return o1.startsWith(o2) ? 0 : -1;
-                                                                        }
-                                                                    };
+    private static final Comparator<String> STARTS_WITH = new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.startsWith(o2) ? 0 : -1;
+        }
+    };
 
     /**
      * Creates a new AutoCompleteDocument for the given AbstractAutoCompleteAdaptor.
      * 
-     * @param adaptor
-     *            The adaptor that will be used to find and select matching
-     *            items.
-     * @param strictMatching
-     *            true, if only items from the adaptor's list should
-     *            be allowed to be entered
-     * @param stringConverter
-     *            the converter used to transform items to strings
-     * @param delegate
-     *            the {@code Document} delegate backing this document
+     * @param adaptor         The adaptor that will be used to find and select
+     *                        matching items.
+     * @param strictMatching  true, if only items from the adaptor's list should be
+     *                        allowed to be entered
+     * @param stringConverter the converter used to transform items to strings
+     * @param delegate        the {@code Document} delegate backing this document
      */
-    public AutoCompleteDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching, ObjectToStringConverter stringConverter, Document delegate) {
+    public AutoCompleteDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching,
+            ObjectToStringConverter stringConverter, Document delegate) {
         this.adaptor = Contract.asNotNull(adaptor, "adaptor cannot be null");
         this.strictMatching = strictMatching;
         this.stringConverter = stringConverter == null ? DEFAULT_IMPLEMENTATION : stringConverter;
@@ -242,28 +242,24 @@ class AutoCompleteDocument implements Document {
     /**
      * Creates a new AutoCompleteDocument for the given AbstractAutoCompleteAdaptor.
      * 
-     * @param adaptor
-     *            The adaptor that will be used to find and select matching
-     *            items.
-     * @param strictMatching
-     *            true, if only items from the adaptor's list should
-     *            be allowed to be entered
-     * @param stringConverter
-     *            the converter used to transform items to strings
+     * @param adaptor         The adaptor that will be used to find and select
+     *                        matching items.
+     * @param strictMatching  true, if only items from the adaptor's list should be
+     *                        allowed to be entered
+     * @param stringConverter the converter used to transform items to strings
      */
-    public AutoCompleteDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching, ObjectToStringConverter stringConverter) {
+    public AutoCompleteDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching,
+            ObjectToStringConverter stringConverter) {
         this(adaptor, strictMatching, stringConverter, null);
     }
 
     /**
      * Creates a new AutoCompleteDocument for the given AbstractAutoCompleteAdaptor.
      * 
-     * @param strictMatching
-     *            true, if only items from the adaptor's list should
-     *            be allowed to be entered
-     * @param adaptor
-     *            The adaptor that will be used to find and select matching
-     *            items.
+     * @param strictMatching true, if only items from the adaptor's list should be
+     *                       allowed to be entered
+     * @param adaptor        The adaptor that will be used to find and select
+     *                       matching items.
      */
     public AutoCompleteDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching) {
         this(adaptor, strictMatching, null);
@@ -282,8 +278,9 @@ class AutoCompleteDocument implements Document {
     @Override
     public void remove(int offs, int len) throws BadLocationException {
         // return immediately when selecting an item
-        if (selecting)
+        if (selecting) {
             return;
+        }
         delegate.remove(offs, len);
         if (!strictMatching) {
             setSelectedItem(getText(0, getLength()), getText(0, getLength()));
@@ -294,8 +291,9 @@ class AutoCompleteDocument implements Document {
     @Override
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         // return immediately when selecting an item
-        if (selecting)
+        if (selecting) {
             return;
+        }
         // insert the string into the document
         delegate.insertString(offs, str, a);
         // lookup and select a matching item
@@ -321,7 +319,8 @@ class AutoCompleteDocument implements Document {
                 offs = str == null ? offs : offs - str.length();
 
                 if (str != null && !str.isEmpty()) {
-                    // provide feedback to the user that his input has been received but can not be accepted
+                    // provide feedback to the user that his input has been received but can not be
+                    // accepted
                     UIManager.getLookAndFeel().provideErrorFeedback(adaptor.getTextComponent());
                 }
             } else {
@@ -343,8 +342,7 @@ class AutoCompleteDocument implements Document {
     /**
      * Sets the text of this AutoCompleteDocument to the given text.
      *
-     * @param text
-     *            the text that will be set for this document
+     * @param text the text that will be set for this document
      */
     private void setText(String text) {
         try {
@@ -359,10 +357,8 @@ class AutoCompleteDocument implements Document {
     /**
      * Selects the given item using the AbstractAutoCompleteAdaptor.
      * 
-     * @param itemAsString
-     *            string representation of the item to be selected
-     * @param item
-     *            the item that is to be selected
+     * @param itemAsString string representation of the item to be selected
+     * @param item         the item that is to be selected
      */
     private void setSelectedItem(Object item, String itemAsString) {
         selecting = true;
@@ -372,13 +368,14 @@ class AutoCompleteDocument implements Document {
     }
 
     /**
-     * Searches for an item that matches the given pattern. The AbstractAutoCompleteAdaptor
-     * is used to access the candidate items. The match is not case-sensitive
-     * and will only match at the beginning of each item's string representation.
+     * Searches for an item that matches the given pattern. The
+     * AbstractAutoCompleteAdaptor is used to access the candidate items. The match
+     * is not case-sensitive and will only match at the beginning of each item's
+     * string representation.
      *
-     * @param pattern
-     *            the pattern that should be matched
-     * @return the first item that matches the pattern or <code>null</code> if no item matches
+     * @param pattern the pattern that should be matched
+     * @return the first item that matches the pattern or <code>null</code> if no
+     *         item matches
      */
     private LookupResult lookupItem(String pattern) {
         Object selectedItem = adaptor.getSelectedItem();
@@ -388,30 +385,36 @@ class AutoCompleteDocument implements Document {
         // first try: case sensitive
 
         lookupResult = lookupItem(pattern, EQUALS);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         lookupResult = lookupOneItem(selectedItem, pattern, STARTS_WITH);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         lookupResult = lookupItem(pattern, STARTS_WITH);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         // second try: ignore case
 
         lookupResult = lookupItem(pattern, EQUALS_IGNORE_CASE);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         lookupResult = lookupOneItem(selectedItem, pattern, STARTS_WITH_IGNORE_CASE);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         lookupResult = lookupItem(pattern, STARTS_WITH_IGNORE_CASE);
-        if (lookupResult != null)
+        if (lookupResult != null) {
             return lookupResult;
+        }
 
         // no item starts with the pattern => return null
         return new LookupResult(null, "");
@@ -434,8 +437,9 @@ class AutoCompleteDocument implements Document {
         for (int i = 0, n = adaptor.getItemCount(); i < n; i++) {
             Object currentItem = adaptor.getItem(i);
             LookupResult result = lookupOneItem(currentItem, pattern, comparator);
-            if (result != null)
+            if (result != null) {
                 return result;
+            }
         }
         return null;
     }
@@ -571,7 +575,8 @@ class AutoCompleteDocument implements Document {
     }
 
     /**
-     * Returns if only items from the adaptor's list should be allowed to be entered.
+     * Returns if only items from the adaptor's list should be allowed to be
+     * entered.
      * 
      * @return if only items from the adaptor's list should be allowed to be entered
      */

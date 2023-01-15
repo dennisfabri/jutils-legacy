@@ -23,14 +23,14 @@ import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
 
 public final class DesignInit {
 
-    private static boolean initialized = false;
+    private static boolean initialized;
 
     public static final boolean ANTIALISED_TEXT;
 
     static {
         boolean result = false;
         String s = System.getProperty("swing.aatext", "false");
-        if ((s != null) && s.equals("true")) {
+        if ((s != null) && "true".equals(s)) {
             result = true;
         }
         ANTIALISED_TEXT = result;
@@ -101,9 +101,9 @@ public final class DesignInit {
     private static void initializeLaF(boolean enableSystemLookAndFeel) {
         Commands commands = new Commands();
         if (enableSystemLookAndFeel) {
-            commands.add(() -> initSystemLaF());
+            commands.add(DesignInit::initSystemLaF);
         }
-        commands.add(() -> setDefaultLaF());
+        commands.add(DesignInit::setDefaultLaF);
 
         commands.executeUntilFirstSuccess();
     }
@@ -116,11 +116,11 @@ public final class DesignInit {
         public boolean execute() throws Exception;
     }
 
-    private static class ConditionalCommand implements Command {
+    private static final class ConditionalCommand implements Command {
         private final Condition condition;
         private final Command command;
 
-        public ConditionalCommand(Command command, Condition condition) {
+        private ConditionalCommand(Command command, Condition condition) {
             this.command = command;
             this.condition = condition;
         }
@@ -134,7 +134,7 @@ public final class DesignInit {
         }
     }
 
-    private static class Commands {
+    private static final class Commands {
         private final List<Command> commands = new ArrayList<>();
 
         public Commands add(Command command) {
@@ -158,6 +158,9 @@ public final class DesignInit {
             commands.add(new ConditionalCommand(command, condition));
             return this;
         }
+
+        private Commands() {
+        }
     }
 
     private static boolean setDefaultLaF() throws UnsupportedLookAndFeelException {
@@ -173,7 +176,7 @@ public final class DesignInit {
             String laf = UIManager.getSystemLookAndFeelClassName();
             System.out.println(" with class " + laf);
             UIManager.setLookAndFeel(laf);
-            SwingUtilities.invokeLater(() -> patchWindowsLaF());
+            SwingUtilities.invokeLater(DesignInit::patchWindowsLaF);
             return true;
         }
         return false;

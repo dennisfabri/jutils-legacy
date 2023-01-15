@@ -11,8 +11,8 @@ import java.util.LinkedList;
 
 class NotifyingPrintable implements Printable {
 
-    private Printable                 printable;
-    private LinkedList<PrintListener> listeners = new LinkedList<PrintListener>();
+    private Printable printable;
+    private LinkedList<PrintListener> listeners = new LinkedList<>();
 
     NotifyingPrintable(Printable p, PrintListener pl) {
         printable = p;

@@ -21,13 +21,13 @@ import de.df.jutils.gui.JLabelSeparator;
 
 public class SimpleListBuilder {
 
-    private static final String       HORIZONTAL = "4dlu,fill:default:grow,4dlu";
+    private static final String HORIZONTAL = "4dlu,fill:default:grow,4dlu";
 
-    private final FormLayout          layout;
-    private final JPanel              panel;
-    private final LinkedList<Integer> fills      = new LinkedList<Integer>();
+    private final FormLayout layout;
+    private final JPanel panel;
+    private final LinkedList<Integer> fills = new LinkedList<>();
 
-    private final String              spacer;
+    private final String spacer;
 
     public SimpleListBuilder(JPanel panel, FormLayout layout, int spacing) {
         spacer = "" + spacing + "dlu";

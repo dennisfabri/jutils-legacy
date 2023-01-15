@@ -13,7 +13,7 @@ public class ComfortListCellRenderer<T> extends DefaultListCellRenderer {
 
     private static final long serialVersionUID = -8759120492404434813L;
 
-    private ListCellRenderer<T>  parent           = null;
+    private ListCellRenderer<T> parent;
 
     public ComfortListCellRenderer() {
         this(null);
@@ -25,12 +25,13 @@ public class ComfortListCellRenderer<T> extends DefaultListCellRenderer {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+            boolean cellHasFocus) {
         Component orig = null;
         if (parent == null) {
             orig = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         } else {
-            orig = parent.getListCellRendererComponent((JList<T>)list, (T)value, index, isSelected, cellHasFocus);
+            orig = parent.getListCellRendererComponent((JList<T>) list, (T) value, index, isSelected, cellHasFocus);
         }
         if ((value != null) && (value instanceof ListRenderDataProvider)) {
             orig = ((ListRenderDataProvider) value).getListRenderData(orig.getForeground(), orig.getBackground());

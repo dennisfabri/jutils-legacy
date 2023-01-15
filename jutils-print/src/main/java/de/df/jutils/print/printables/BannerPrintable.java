@@ -15,17 +15,18 @@ import de.df.jutils.print.PrintManager;
 
 public class BannerPrintable implements Printable {
 
-    private BufferedImage              iptop      = null;
-    private BufferedImage              ipbottom   = null;
-    private BufferedImage              iltop      = null;
-    private BufferedImage              ilbottom   = null;
+    private BufferedImage iptop;
+    private BufferedImage ipbottom;
+    private BufferedImage iltop;
+    private BufferedImage ilbottom;
 
-    private ImageHeaderFooterPrintable ehfp       = null;
-    private PageFormat                 pageformat = null;
+    private ImageHeaderFooterPrintable ehfp;
+    private PageFormat pageformat;
 
-    private Printable                  inner;
+    private Printable inner;
 
-    public BannerPrintable(Printable p, BufferedImage iptop, BufferedImage ipbottom, BufferedImage iltop, BufferedImage ilbottom) {
+    public BannerPrintable(Printable p, BufferedImage iptop, BufferedImage ipbottom, BufferedImage iltop,
+            BufferedImage ilbottom) {
         if (p != null) {
             inner = p;
         } else {
@@ -53,7 +54,8 @@ public class BannerPrintable implements Printable {
         }
 
         if ((ehfp == null) || (!pageformat.equals(pf))) {
-            ehfp = new ImageHeaderFooterPrintable(inner, top, bottom, SwingConstants.CENTER, SwingConstants.CENTER, PrintManager.getFont());
+            ehfp = new ImageHeaderFooterPrintable(inner, top, bottom, SwingConstants.CENTER, SwingConstants.CENTER,
+                    PrintManager.getFont());
             pageformat = pf;
         }
 

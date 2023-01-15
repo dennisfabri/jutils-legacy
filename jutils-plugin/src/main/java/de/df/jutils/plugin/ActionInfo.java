@@ -10,8 +10,8 @@ package de.df.jutils.plugin;
 public class ActionInfo {
 
     private final Runnable action;
-    private final int      key;
-    private final int      modifiers;
+    private final int key;
+    private final int modifiers;
 
     public ActionInfo(int key, int modifiers, Runnable action) {
         this.key = key;

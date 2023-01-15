@@ -21,9 +21,9 @@ public class JGradientLabel extends JPanel {
 
     private static final long serialVersionUID = 5455429979750091697L;
 
-    private Color             left             = null;
-    private Color             right            = null;
-    private JLabel            label            = null;
+    private Color left;
+    private Color right;
+    private JLabel label;
 
     public JGradientLabel() {
         label = new JLabel();

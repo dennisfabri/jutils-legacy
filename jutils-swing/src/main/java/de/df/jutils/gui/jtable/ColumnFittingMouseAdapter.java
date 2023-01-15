@@ -33,11 +33,13 @@ public class ColumnFittingMouseAdapter extends MouseAdapter {
             int col = header.getColumnModel().getColumnIndex(tableColumn.getIdentifier());
             JTable table = header.getTable();
             int rowCount = table.getRowCount();
-            int width = (int) header.getDefaultRenderer().getTableCellRendererComponent(table, tableColumn.getIdentifier(), false, false, -1, col)
+            int width = (int) header.getDefaultRenderer()
+                    .getTableCellRendererComponent(table, tableColumn.getIdentifier(), false, false, -1, col)
                     .getPreferredSize().getWidth();
             for (int row = 0; row < rowCount; row++) {
                 int preferedWidth = (int) table.getCellRenderer(row, col)
-                        .getTableCellRendererComponent(table, table.getValueAt(row, col), false, false, row, col).getPreferredSize().getWidth();
+                        .getTableCellRendererComponent(table, table.getValueAt(row, col), false, false, row, col)
+                        .getPreferredSize().getWidth();
                 width = Math.max(width, preferedWidth);
             }
             // this line is very important

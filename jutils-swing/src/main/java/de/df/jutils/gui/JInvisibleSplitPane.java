@@ -33,7 +33,8 @@ public class JInvisibleSplitPane extends JSplitPane {
         makeSplitPaneInvisible(this);
     }
 
-    public JInvisibleSplitPane(int newOrientation, boolean newContinuousLayout, Component newLeftComponent, Component newRightComponent) {
+    public JInvisibleSplitPane(int newOrientation, boolean newContinuousLayout, Component newLeftComponent,
+            Component newRightComponent) {
         super(newOrientation, newContinuousLayout, newLeftComponent, newRightComponent);
         makeSplitPaneInvisible(this);
     }

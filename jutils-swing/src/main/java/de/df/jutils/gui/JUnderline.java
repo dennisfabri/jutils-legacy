@@ -12,7 +12,7 @@ public final class JUnderline extends JComponent {
 
     private static final long serialVersionUID = 781435188766680950L;
 
-    private boolean           horizontal       = true;
+    private boolean horizontal = true;
 
     public JUnderline() {
         this(true);

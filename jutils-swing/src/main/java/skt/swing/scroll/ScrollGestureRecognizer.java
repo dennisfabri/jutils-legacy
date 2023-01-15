@@ -75,6 +75,6 @@ public final class ScrollGestureRecognizer implements AWTEventListener {
     }
 
     private static boolean canScroll(JViewport viewport) {
-        return (ScrollUtils.getDirections(viewport) != 0);
+        return ScrollUtils.getDirections(viewport) != 0;
     }
 }

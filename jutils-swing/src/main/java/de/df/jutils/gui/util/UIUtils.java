@@ -17,9 +17,9 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import de.df.jutils.gui.border.ExtendedLineBorder;
 
-public class UIUtils {
+public final class UIUtils {
 
-    public static final Font  HEADER_FONT;
+    public static final Font HEADER_FONT;
     public static final Color HEADER_BACKGROUND;
     public static final Color HEADER_FOREGROUND;
     public static final Color HEADER_BORDERCOLOR;
@@ -48,7 +48,8 @@ public class UIUtils {
         return surroundWithScroller(c, 10, horizontal, vertical);
     }
 
-    private static JScrollPane surroundWithScroller(JComponent c, int unitIncrement, boolean horizontal, boolean vertical) {
+    private static JScrollPane surroundWithScroller(JComponent c, int unitIncrement, boolean horizontal,
+            boolean vertical) {
         JScrollPane scroller = new JScrollPane(c);
         if (unitIncrement > 0) {
             scroller.getHorizontalScrollBar().setUnitIncrement(unitIncrement);
@@ -90,7 +91,8 @@ public class UIUtils {
             note = null;
             layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,12dlu");
         } else {
-            layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,4dlu,fill:default:grow,12dlu");
+            layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu",
+                    "4dlu,fill:default,4dlu,fill:default:grow,12dlu");
 
         }
         JPanel info = new JPanel(layout);
@@ -111,7 +113,8 @@ public class UIUtils {
             note = null;
             layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,12dlu");
         } else {
-            layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu", "4dlu,fill:default,4dlu,fill:default:grow,12dlu");
+            layout = new FormLayout("4dlu,fill:default,4dlu,fill:default:grow,4dlu",
+                    "4dlu,fill:default,4dlu,fill:default:grow,12dlu");
 
         }
         JPanel info = new JPanel(layout);
@@ -147,5 +150,8 @@ public class UIUtils {
             return (ImageIcon) o;
         }
         return null;
+    }
+
+    private UIUtils() {
     }
 }

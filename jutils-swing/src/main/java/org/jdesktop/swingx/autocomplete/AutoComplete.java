@@ -71,11 +71,13 @@ final class AutoComplete {
             if (comboBox.isDisplayable() && !comboBox.isPopupVisible()) {
                 int keyCode = keyEvent.getKeyCode();
                 // don't popup when the user hits shift,ctrl or alt
-                if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT)
+                if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT) {
                     return;
+                }
                 // don't popup when the user hits escape (see issue #311)
-                if (keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_ESCAPE)
+                if (keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_ESCAPE) {
                     return;
+                }
                 comboBox.setPopupVisible(true);
             }
         }
@@ -136,7 +138,8 @@ final class AutoComplete {
 
             JTextComponent editorComponent = ComboBoxUtil.getEditorComponent(comboBox);
             AbstractAutoCompleteAdaptor adaptor = new ComboBoxAdaptor<T>(comboBox);
-            AutoCompleteDocument document = createAutoCompleteDocument(adaptor, strictMatching, acEditor.stringConverter, editorComponent.getDocument());
+            AutoCompleteDocument document = createAutoCompleteDocument(adaptor, strictMatching,
+                    acEditor.stringConverter, editorComponent.getDocument());
             decorate(editorComponent, document, adaptor);
 
             editorComponent.addKeyListener(new AutoComplete.KeyAdapter(comboBox));
@@ -162,7 +165,8 @@ final class AutoComplete {
             JTextComponent textComponent = ComboBoxUtil.getEditorComponent(comboBox);
             AutoCompleteDocument doc = (AutoCompleteDocument) textComponent.getDocument();
 
-            // doing this prevents the updating of the selected item to "" during the remove prior
+            // doing this prevents the updating of the selected item to "" during the remove
+            // prior
             // to the insert in JTextComponent.setText
             doc.strictMatching = true;
             try {

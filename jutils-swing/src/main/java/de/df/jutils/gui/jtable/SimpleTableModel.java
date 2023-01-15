@@ -20,6 +20,7 @@ public class SimpleTableModel extends DefaultTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#isCellEditable(int, int)
      */
     @Override
@@ -28,7 +29,7 @@ public class SimpleTableModel extends DefaultTableModel {
     }
 
     public void removeColumn(int i) {
-        Vector<String> header = new Vector<String>();
+        Vector<String> header = new Vector<>();
         for (int x = 0; x < getColumnCount(); x++) {
             if (x != i) {
                 header.add(getColumnName(x));

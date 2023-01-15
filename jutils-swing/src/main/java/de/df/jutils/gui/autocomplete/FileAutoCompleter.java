@@ -1,7 +1,6 @@
 package de.df.jutils.gui.autocomplete;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
@@ -28,12 +27,8 @@ public class FileAutoCompleter extends AutoCompleter {
         }
         String dir = value.substring(0, index + 1);
         final String prefix = index == value.length() - 1 ? null : value.substring(index + 1).toLowerCase();
-        String[] files = new File(dir).list(new FilenameFilter() {
-            @Override
-            public boolean accept(File directory, String name) {
-                return (prefix == null) || name.toLowerCase().startsWith(prefix);
-            }
-        });
+        String[] files = new File(dir)
+                .list((directory, name) -> (prefix == null) || name.toLowerCase().startsWith(prefix));
         if (files == null) {
             list.setListData(new String[0]);
             return true;

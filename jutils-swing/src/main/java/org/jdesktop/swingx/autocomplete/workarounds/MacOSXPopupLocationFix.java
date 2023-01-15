@@ -40,22 +40,25 @@ import javax.swing.event.PopupMenuListener;
  * side-effects for other look-and-feels. It also supports dynamically changed
  * look and feels.
  *
- * @see <a href="https://glazedlists.dev.java.net/issues/show_bug.cgi?id=332">Glazed Lists bug entry</a>
- * @see <a href="https://swingx.dev.java.net/issues/show_bug.cgi?id=360">SwingX bug entry</a>
+ * @see <a href=
+ *      "https://glazedlists.dev.java.net/issues/show_bug.cgi?id=332">Glazed
+ *      Lists bug entry</a>
+ * @see <a href="https://swingx.dev.java.net/issues/show_bug.cgi?id=360">SwingX
+ *      bug entry</a>
  * @author <a href="mailto:jesse@swank.ca">Jesse Wilson</a>
  */
 public final class MacOSXPopupLocationFix {
 
     /** the components being fixed */
     private final JComboBox<?> comboBox;
-    private final JPopupMenu   popupMenu;
+    private final JPopupMenu popupMenu;
 
     /** the listener provides callbacks as necessary */
-    private final Listener     listener = new Listener();
+    private final Listener listener = new Listener();
 
     /**
-     * Private constructor so users use the more action-oriented
-     * {@link #install} method.
+     * Private constructor so users use the more action-oriented {@link #install}
+     * method.
      */
     private MacOSXPopupLocationFix(JComboBox<?> comboBox) {
         this.comboBox = comboBox;
@@ -68,8 +71,9 @@ public final class MacOSXPopupLocationFix {
      * Install the fix for the specified combo box.
      */
     public static MacOSXPopupLocationFix install(JComboBox<?> comboBox) {
-        if (comboBox == null)
+        if (comboBox == null) {
             throw new IllegalArgumentException();
+        }
         return new MacOSXPopupLocationFix(comboBox);
     }
 
@@ -95,8 +99,8 @@ public final class MacOSXPopupLocationFix {
     }
 
     /**
-     * Do the adjustment on the specified popupComponent immediately before
-     * it is displayed.
+     * Do the adjustment on the specified popupComponent immediately before it is
+     * displayed.
      */
     private void fixPopupLocation(JComponent popupComponent) {
         // we only need to fix Apple's aqua look and feel
@@ -129,10 +133,10 @@ public final class MacOSXPopupLocationFix {
      *
      * @author <a href="mailto:jesse@swank.ca">Jesse Wilson</a>
      */
-    private final static class ScreenGeometry {
+    private static final class ScreenGeometry {
 
         final GraphicsConfiguration graphicsConfiguration;
-        final boolean               aqua;
+        final boolean aqua;
 
         public ScreenGeometry(JComponent component) {
             this.aqua = UIManager.getLookAndFeel().getName().indexOf("Aqua") != -1;
@@ -149,11 +153,13 @@ public final class MacOSXPopupLocationFix {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice[] gd = ge.getScreenDevices();
             for (int i = 0; i < gd.length; i++) {
-                if (gd[i].getType() != GraphicsDevice.TYPE_RASTER_SCREEN)
+                if (gd[i].getType() != GraphicsDevice.TYPE_RASTER_SCREEN) {
                     continue;
+                }
                 GraphicsConfiguration defaultGraphicsConfiguration = gd[i].getDefaultConfiguration();
-                if (!defaultGraphicsConfiguration.getBounds().contains(point))
+                if (!defaultGraphicsConfiguration.getBounds().contains(point)) {
                     continue;
+                }
                 return defaultGraphicsConfiguration;
             }
 
@@ -168,7 +174,8 @@ public final class MacOSXPopupLocationFix {
             Rectangle screenSize = getScreenSize();
             Insets screenInsets = getScreenInsets();
 
-            return new Rectangle(screenSize.x + screenInsets.left, screenSize.y + screenInsets.top, screenSize.width - screenInsets.left - screenInsets.right,
+            return new Rectangle(screenSize.x + screenInsets.left, screenSize.y + screenInsets.top,
+                    screenSize.width - screenInsets.left - screenInsets.right,
                     screenSize.height - screenInsets.top - screenInsets.bottom);
         }
 
@@ -186,8 +193,8 @@ public final class MacOSXPopupLocationFix {
         }
 
         /**
-         * Fetch the screen insets, the off limits areas around the screen such
-         * as menu bar, dock or start bar.
+         * Fetch the screen insets, the off limits areas around the screen such as menu
+         * bar, dock or start bar.
          */
         public Insets getScreenInsets() {
             Insets screenInsets;
@@ -199,7 +206,8 @@ public final class MacOSXPopupLocationFix {
 
             // tweak the insets for aqua, they're reported incorrectly there
             if (aqua) {
-                int aquaBottomInsets = 21; // unreported insets, shown in screenshot, https://glazedlists.dev.java.net/issues/show_bug.cgi?id=332
+                int aquaBottomInsets = 21; // unreported insets, shown in screenshot,
+                                           // https://glazedlists.dev.java.net/issues/show_bug.cgi?id=332
                 int aquaTopInsets = 22; // for Apple menu bar, found via debugger
 
                 screenInsets.bottom = Math.max(screenInsets.bottom, aquaBottomInsets);

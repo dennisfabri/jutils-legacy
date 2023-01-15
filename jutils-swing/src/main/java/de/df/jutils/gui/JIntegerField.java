@@ -11,7 +11,7 @@ public class JIntegerField extends JWarningTextField {
 
     public static final int EMPTY_FIELD = -1;
     public static final int NO_MAXVALUE = 0;
-    private NumberFormatter nf = null;
+    private NumberFormatter nf;
 
     public JIntegerField(int value, int min, int max, boolean required, boolean force) {
         super(required, force);

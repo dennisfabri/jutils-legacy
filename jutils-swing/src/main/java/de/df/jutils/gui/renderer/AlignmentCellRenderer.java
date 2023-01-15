@@ -33,7 +33,7 @@ import de.df.jutils.io.csv.FixedDecimal;
 
 public class AlignmentCellRenderer<T> implements TableCellRenderer {
 
-    public static enum BorderPositions {
+    public enum BorderPositions {
         NONE, LEFT, RIGHT, BOTH
     }
 
@@ -96,7 +96,7 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
 
         borders = new BorderPositions[col.length];
         for (int x = 0; x < colors.length; x++) {
-            borders[x] = (col[x] == null ? BorderPositions.NONE : col[x]);
+            borders[x] = col[x] == null ? BorderPositions.NONE : col[x];
         }
     }
 
@@ -184,7 +184,7 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
                 value = s[0];
             } else {
                 for (int x = 0; x < s.length; x++) {
-                     s[x] = s[x].replace(' ', '\u00A0');
+                    s[x] = s[x].replace(' ', '\u00A0');
                 }
             }
         }

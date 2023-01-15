@@ -36,7 +36,8 @@ class AutoCompleteStyledDocument extends AutoCompleteDocument implements StyledD
      * @param stringConverter
      * @param delegate
      */
-    public AutoCompleteStyledDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching, ObjectToStringConverter stringConverter,
+    public AutoCompleteStyledDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching,
+            ObjectToStringConverter stringConverter,
             StyledDocument delegate) {
         super(adaptor, strictMatching, stringConverter, delegate);
     }
@@ -46,7 +47,8 @@ class AutoCompleteStyledDocument extends AutoCompleteDocument implements StyledD
      * @param strictMatching
      * @param stringConverter
      */
-    public AutoCompleteStyledDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching, ObjectToStringConverter stringConverter) {
+    public AutoCompleteStyledDocument(AbstractAutoCompleteAdaptor adaptor, boolean strictMatching,
+            ObjectToStringConverter stringConverter) {
         super(adaptor, strictMatching, stringConverter);
     }
 

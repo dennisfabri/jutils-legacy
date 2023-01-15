@@ -13,11 +13,11 @@ import de.df.jutils.gui.jtable.ExtendedTableModel;
 
 public class CsvWriter {
 
-    private char                      separator;
+    private char separator;
     private LinkedList<CsvDataWriter> converters;
 
     CsvWriter(CsvDataWriter[] cdc, char separator) {
-        converters = new LinkedList<CsvDataWriter>();
+        converters = new LinkedList<>();
         for (CsvDataWriter aCdc : cdc) {
             converters.addLast(aCdc);
         }

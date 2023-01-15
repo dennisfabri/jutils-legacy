@@ -3,7 +3,6 @@
  */
 package de.df.jutils.plugin.topsort;
 
-import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -37,9 +36,7 @@ public final class TopSort {
         while (!queue.isEmpty()) {
             Node<T> node = queue.removeFirst();
             result.addFirst(node);
-            Enumeration<Node<T>> e = node.getNodes();
-            while (e.hasMoreElements()) {
-                Node<T> n = e.nextElement();
+            for (Node<T> n : node.getNodes()) {
                 node.removeEdge(n);
                 if (n.getIndegree() == 0) {
                     queue.addLast(n);

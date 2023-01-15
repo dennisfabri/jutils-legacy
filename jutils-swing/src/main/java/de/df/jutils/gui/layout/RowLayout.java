@@ -28,8 +28,8 @@ public class RowLayout implements LayoutManager, Serializable {
      * @see getVgap
      * @see setVgap
      */
-    private int               vgap;
-    private int               hgap;
+    private int vgap;
+    private int hgap;
 
     public RowLayout() {
         this(5, 5);
@@ -57,8 +57,7 @@ public class RowLayout implements LayoutManager, Serializable {
     /**
      * Sets the vertical gap between components.
      * 
-     * @param vgap
-     *            the vertical gap between components
+     * @param vgap the vertical gap between components
      * @see java.awt.LineLayout#getVgap
      */
     public void setVgap(int vegap) {
@@ -68,10 +67,8 @@ public class RowLayout implements LayoutManager, Serializable {
     /**
      * Adds the specified component to the layout. Not used by this class.
      * 
-     * @param name
-     *            the name of the component
-     * @param comp
-     *            the component to be added
+     * @param name the name of the component
+     * @param comp the component to be added
      */
     @Override
     public void addLayoutComponent(String name, Component comp) {
@@ -81,8 +78,7 @@ public class RowLayout implements LayoutManager, Serializable {
     /**
      * Removes the specified component from the layout. Not used by this class.
      * 
-     * @param comp
-     *            the component to remove
+     * @param comp the component to remove
      * @see java.awt.Container#removeAll
      */
     @Override
@@ -91,11 +87,10 @@ public class RowLayout implements LayoutManager, Serializable {
     }
 
     /**
-     * Returns the preferred dimensions for this layout given the <i>visible
-     * </i> components in the specified target container.
+     * Returns the preferred dimensions for this layout given the <i>visible </i>
+     * components in the specified target container.
      * 
-     * @param target
-     *            the component which needs to be laid out
+     * @param target the component which needs to be laid out
      * @return the preferred dimensions to lay out the subcomponents of the
      *         specified container
      * @see Container
@@ -123,10 +118,9 @@ public class RowLayout implements LayoutManager, Serializable {
      * Returns the minimum dimensions needed to layout the <i>visible </i>
      * components contained in the specified target container.
      * 
-     * @param target
-     *            the component which needs to be laid out
-     * @return the minimum dimensions to lay out the subcomponents of the
-     *         specified container
+     * @param target the component which needs to be laid out
+     * @return the minimum dimensions to lay out the subcomponents of the specified
+     *         container
      * @see #preferredLayoutSize
      * @see java.awt.Container
      * @see java.awt.Container#doLayout
@@ -137,12 +131,11 @@ public class RowLayout implements LayoutManager, Serializable {
     }
 
     /**
-     * Lays out the container. This method lets each component take its
-     * preferred size by reshaping the components in the target container in
-     * order to satisfy the alignment of this <code>LineLayout</code> object.
+     * Lays out the container. This method lets each component take its preferred
+     * size by reshaping the components in the target container in order to satisfy
+     * the alignment of this <code>LineLayout</code> object.
      * 
-     * @param target
-     *            the specified component being laid out
+     * @param target the specified component being laid out
      * @see Container
      * @see java.awt.Container#doLayout
      */
@@ -186,8 +179,8 @@ public class RowLayout implements LayoutManager, Serializable {
     }
 
     /**
-     * Returns a string representation of this <code>LineLayout</code> object
-     * and its values.
+     * Returns a string representation of this <code>LineLayout</code> object and
+     * its values.
      * 
      * @return a string representation of this layout
      */

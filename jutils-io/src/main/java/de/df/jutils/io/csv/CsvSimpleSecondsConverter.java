@@ -17,7 +17,7 @@ public class CsvSimpleSecondsConverter implements CsvDataWriter {
 
     @Override
     public boolean canConvert(Object o) {
-        return (o instanceof Seconds);
+        return o instanceof Seconds;
     }
 
     @Override

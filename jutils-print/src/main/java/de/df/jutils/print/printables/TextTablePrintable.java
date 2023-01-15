@@ -31,12 +31,12 @@ import de.df.jutils.print.PrintManager;
 
 public class TextTablePrintable implements Printable {
 
-    private JTable    table     = null;
-    private Printable printable = null;
+    private JTable table;
+    private Printable printable;
 
     public TextTablePrintable(JTable table) {
         this.table = table;
-        EDTUtils.executeOnEDT(() -> init());
+        EDTUtils.executeOnEDT(this::init);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TextTablePrintable implements Printable {
         static class Renderer implements TableCellRenderer {
 
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-            JTextArea                area = new JTextArea();
+            JTextArea area = new JTextArea();
 
             public Renderer() {
                 if (PrintManager.getFont() != null) {
@@ -114,12 +114,12 @@ public class TextTablePrintable implements Printable {
             }
 
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
                 if (value == null) {
                     value = "";
                 }
-                switch (column) {
-                case 0:
+                if (column == 0) {
                     String s = value.toString();
                     JLabel label = (JLabel) dtcr.getTableCellRendererComponent(table, s, false, false, row, column);
                     label.setVerticalAlignment(SwingConstants.TOP);
@@ -129,7 +129,7 @@ public class TextTablePrintable implements Printable {
                         label.setFont(label.getFont().deriveFont(Font.BOLD));
                     }
                     return label;
-                default:
+                } else {
                     int width = table.getColumnModel().getColumn(column).getWidth();
                     area.setMinimumSize(new Dimension(width, 1));
                     area.setMaximumSize(new Dimension(width, Integer.MAX_VALUE));

@@ -29,7 +29,7 @@ public class JSignal extends JComponent {
     private static final long serialVersionUID = -3054469719654737514L;
 
     private String text = "";
-    private Color basecolor = null;
+    private Color basecolor;
 
     private static JLabel label = new JLabel("", SwingConstants.CENTER);
 

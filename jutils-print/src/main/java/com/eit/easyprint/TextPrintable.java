@@ -18,8 +18,8 @@ import javax.swing.text.StyledEditorKit;
 public class TextPrintable implements Printable {
 
     private final String text;
-    private final Font   font;
-    private Book         pages = null;
+    private final Font font;
+    private Book pages;
 
     public TextPrintable(String text, Font f) {
         this.text = text;
@@ -37,14 +37,12 @@ public class TextPrintable implements Printable {
             return NO_SUCH_PAGE;
         }
     }
-    
+
     /**
      * Print the plain text given as String parameter.
      * 
-     * @param content
-     *            html code that should be printed
-     * @param pf
-     *            format of the page
+     * @param content html code that should be printed
+     * @param pf      format of the page
      */
     private static Book createPlainPageable(String content, PageFormat pf, Font font) {
         // create the TextPane and install the printable editor kit
@@ -67,5 +65,5 @@ public class TextPrintable implements Printable {
         // now perform the printing
         return new PageFactory(component, pf).getPages();
     }
-    
+
 }

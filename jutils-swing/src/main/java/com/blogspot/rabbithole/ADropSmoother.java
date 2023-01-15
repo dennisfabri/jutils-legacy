@@ -16,23 +16,23 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 /**
- * This decorator completely over-paints the target JList, optionally
- * painting a dragged item and animating creation of a space for the dragged
- * item to be dropped.
+ * This decorator completely over-paints the target JList, optionally painting a
+ * dragged item and animating creation of a space for the dragged item to be
+ * dropped.
  */
 abstract class ADropSmoother<T> extends AbstractComponentDecorator {
     private static final String PLACEHOLDER = "";
     /**
-     * Animation repaint interval. Make this larger to slow down the
-     * animation. Changed by Dennis Fabri: Rate doubled
+     * Animation repaint interval. Make this larger to slow down the animation.
+     * Changed by Dennis Fabri: Rate doubled
      */
     private static final int INTERVAL = 1000 / 24 / 2;
-    private Timer            timer    = new Timer(true);
+    private Timer timer = new Timer(true);
 
     /** Simple decorator to provide the ghosted drag image. */
     private final class GhostedDragImage extends AbstractComponentDecorator {
-        private int   index1;
-        private int   index2;
+        private int index1;
+        private int index2;
         private Point location;
         private Point offset;
 
@@ -86,16 +86,16 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
         }
     }
 
-    private Counter                 counter;
+    private Counter counter;
     /** Index of insertion point. */
-    private int                     insertionIndex = -1;
+    private int insertionIndex = -1;
     /** Index of object being dragged, if any. */
-    private int                     draggedIndex1  = -1;
-    private int                     draggedIndex2  = -1;
-    JList<T>                        list;
-    private Map<Integer, Rectangle> bounds         = new TreeMap<>();
-    private GhostedDragImage        dragImage;
-    private Point                   origin;
+    private int draggedIndex1 = -1;
+    private int draggedIndex2 = -1;
+    JList<T> list;
+    private Map<Integer, Rectangle> bounds = new TreeMap<>();
+    private GhostedDragImage dragImage;
+    private Point origin;
 
     protected ADropSmoother(final JList<T> list) {
         super(list);

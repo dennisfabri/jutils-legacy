@@ -44,7 +44,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.lisasp.swing.filechooser.FileChooserUtils;
 import org.lisasp.swing.filechooser.filefilter.FileFilterPDF;
@@ -101,8 +100,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
     JLabel maxpage;
 
     JLabel status;
-    int statuspos = 0;
-    Icon[] statusicons = null;
+    int statuspos;
+    Icon[] statusicons;
 
     PrintCallback printcallback;
 
@@ -138,7 +137,7 @@ class JPrintPreview extends JInfiniteProgressFrame {
         next.setEnabled(false);
         previous = new JButton(icons.getSmallIcon("previous"));
         previous.setEnabled(false);
-        pageNumber = new JComboBox<String>();
+        pageNumber = new JComboBox<>();
         pageNumber.setMaximumRowCount(20);
         pageNumber.setEnabled(false);
         // size = new JComboBox(getSizes());
@@ -229,43 +228,28 @@ class JPrintPreview extends JInfiniteProgressFrame {
                 }).start();
             }
         });
-        setup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                doSetup();
-            }
+        setup.addActionListener(arg0 -> {
+            doSetup();
         });
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                doSave();
-            }
+        save.addActionListener(arg0 -> {
+            doSave();
         });
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                nextImage();
-            }
+        next.addActionListener(arg0 -> {
+            nextImage();
         });
-        previous.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                previousImage();
-            }
+        previous.addActionListener(arg0 -> {
+            previousImage();
         });
         pageNumber.addActionListener(new PageActionListener());
 
         maxpage.setText(JUtilsI18n.get("de.dm.print.ofpages", "?"));
 
         size.setMinimumSize(new Dimension(100, 10));
-        size.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int p = size.getInt();
-                if (p != percent) {
-                    percent = p;
-                    updateImage();
-                }
+        size.addChangeListener(e -> {
+            int p = size.getInt();
+            if (p != percent) {
+                percent = p;
+                updateImage();
             }
         });
 

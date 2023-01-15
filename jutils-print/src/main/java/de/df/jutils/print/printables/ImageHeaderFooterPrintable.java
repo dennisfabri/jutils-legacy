@@ -25,26 +25,27 @@ import de.df.jutils.gui.util.EDTUtils;
  */
 public class ImageHeaderFooterPrintable implements Printable {
 
-    private Font            font   = null;
-    private BufferedImage   header = null;
-    private JIcon           hicon  = null;
-    private BufferedImage   footer = null;
-    private JIcon           ficon  = null;
-    private Printable       source = null;
+    private Font font;
+    private BufferedImage header;
+    private JIcon hicon;
+    private BufferedImage footer;
+    private JIcon ficon;
+    private Printable source;
 
-    private int             halign = 1;
-    private int             falign = 1;
+    private int halign = 1;
+    private int falign = 1;
 
-    public static final int LEFT   = 0;
+    public static final int LEFT = 0;
     public static final int CENTER = 1;
-    public static final int RIGHT  = 2;
-    public static final int FILL   = 3;
+    public static final int RIGHT = 2;
+    public static final int FILL = 3;
 
     public ImageHeaderFooterPrintable(Printable main, BufferedImage header, BufferedImage footer, Font f) {
         this(main, header, footer, FILL, FILL, f);
     }
 
-    public ImageHeaderFooterPrintable(Printable main, BufferedImage header, BufferedImage footer, int alignh, int alignf, Font font) {
+    public ImageHeaderFooterPrintable(Printable main, BufferedImage header, BufferedImage footer, int alignh,
+            int alignf, Font font) {
         if (main == null) {
             throw new NullPointerException();
         }
@@ -117,9 +118,9 @@ public class ImageHeaderFooterPrintable implements Printable {
 
     private static class Initializer implements Runnable {
 
-        private Component     header;
+        private Component header;
         private BufferedImage image;
-        private PageFormat    pf;
+        private PageFormat pf;
 
         public Initializer(JIcon icon, BufferedImage h, PageFormat p) {
             header = icon;
@@ -135,7 +136,8 @@ public class ImageHeaderFooterPrintable implements Printable {
             f.add(header);
             f.pack();
             int diffx = (int) pf.getImageableWidth() - header.getWidth();
-            int diffy = (int) Math.round(pf.getImageableWidth() / image.getWidth() * image.getHeight()) - header.getHeight();
+            int diffy = (int) Math.round(pf.getImageableWidth() / image.getWidth() * image.getHeight())
+                    - header.getHeight();
             f.setSize(f.getWidth() + diffx, f.getHeight() + diffy);
             f.validate();
         }
@@ -143,6 +145,7 @@ public class ImageHeaderFooterPrintable implements Printable {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.print.Printable#print(java.awt.Graphics,
      * java.awt.print.PageFormat, int)
      */
@@ -159,14 +162,15 @@ public class ImageHeaderFooterPrintable implements Printable {
         }
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.WHITE);
-        g2d.fillRect((int) pf.getImageableX(), (int) pf.getImageableY(), (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
+        g2d.fillRect((int) pf.getImageableX(), (int) pf.getImageableY(), (int) pf.getImageableWidth(),
+                (int) pf.getImageableHeight());
 
         // Draw Headers and Footers
         if (font != null) {
             g2d.setFont(font);
         }
-        int height1 = (header == null ? 0 : hicon.getHeight());
-        int height2 = (footer == null ? 0 : ficon.getHeight());
+        int height1 = header == null ? 0 : hicon.getHeight();
+        int height2 = footer == null ? 0 : ficon.getHeight();
 
         Paper page = pf.getPaper();
 
@@ -197,7 +201,8 @@ public class ImageHeaderFooterPrintable implements Printable {
                 break;
             case PageFormat.LANDSCAPE:
             case PageFormat.REVERSE_LANDSCAPE:
-                p.setImageableArea(page.getImageableX() + height1, page.getImageableY(), page.getImageableWidth() - height1 - height2,
+                p.setImageableArea(page.getImageableX() + height1, page.getImageableY(),
+                        page.getImageableWidth() - height1 - height2,
                         page.getImageableHeight());
                 break;
             default:
@@ -211,7 +216,8 @@ public class ImageHeaderFooterPrintable implements Printable {
             return NO_SUCH_PAGE;
         }
 
-        g2d.setClip((int) ranged.getImageableX(), (int) ranged.getImageableY(), (int) ranged.getImageableWidth() + 1, (int) ranged.getImageableHeight() + 1);
+        g2d.setClip((int) ranged.getImageableX(), (int) ranged.getImageableY(), (int) ranged.getImageableWidth() + 1,
+                (int) ranged.getImageableHeight() + 1);
 
         // Print central aread
         return source.print(g2d, ranged, index);

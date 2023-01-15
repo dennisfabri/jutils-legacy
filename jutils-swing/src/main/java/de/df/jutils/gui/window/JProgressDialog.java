@@ -22,9 +22,9 @@ public class JProgressDialog extends JDialog {
      */
     private static final long serialVersionUID = 3256719593694181424L;
 
-    private long              delay            = 500;
-    private boolean           finished         = true;
-    private JProgressBar      progress         = new JProgressBar();
+    private long delay = 500;
+    private boolean finished = true;
+    private JProgressBar progress = new JProgressBar();
 
     public JProgressDialog(final JFrame parent, final String title) {
         super(parent, title, false);
@@ -82,7 +82,7 @@ public class JProgressDialog extends JDialog {
 
     private static class Runner extends Thread {
 
-        private JProgressDialog parent = null;
+        private JProgressDialog parent;
 
         public Runner(JProgressDialog parent) {
             super(Runner.class.getName());

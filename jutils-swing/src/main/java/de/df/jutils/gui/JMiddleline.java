@@ -12,8 +12,8 @@ public final class JMiddleline extends JComponent {
 
     private static final long serialVersionUID = 781435188766680950L;
 
-    private boolean           horizontal       = true;
-    private int               thickness        = 1;
+    private boolean horizontal = true;
+    private int thickness = 1;
 
     public JMiddleline() {
         this(true, 1);

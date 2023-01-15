@@ -16,15 +16,15 @@ import de.df.jutils.exception.ParserException;
 abstract class ATextProcessor {
 
     private static MessageFormat formatter = new MessageFormat("");
-    private static Object[]      none      = new Object[0];
+    private static Object[] none = new Object[0];
 
-    private ResourceBundle       bundle    = null;
+    private ResourceBundle bundle;
 
     public ATextProcessor() {
         this(null);
     }
 
-     ATextProcessor(final ResourceBundle rb) {
+    ATextProcessor(final ResourceBundle rb) {
         setResourceBundle(rb);
     }
 
@@ -36,7 +36,7 @@ abstract class ATextProcessor {
         return bundle;
     }
 
-     final String getString(final String key) {
+    final String getString(final String key) {
         if (bundle == null) {
             return null;
         }
@@ -48,7 +48,7 @@ abstract class ATextProcessor {
     }
 
     protected static Object[] hashtableToArray(final Hashtable<String, Object> dynamicValues) {
-        LinkedList<Object> arguments = new LinkedList<Object>();
+        LinkedList<Object> arguments = new LinkedList<>();
         if (dynamicValues != null) {
             int x = 0;
             while (dynamicValues.get("" + x) != null) {
@@ -59,7 +59,8 @@ abstract class ATextProcessor {
         return arguments.toArray();
     }
 
-    protected static String simpleProcess(final String original, final Hashtable<String, Object> dynamicValues) throws ParserException {
+    protected static String simpleProcess(final String original, final Hashtable<String, Object> dynamicValues)
+            throws ParserException {
         if (original == null) {
             throw new NullPointerException();
         }

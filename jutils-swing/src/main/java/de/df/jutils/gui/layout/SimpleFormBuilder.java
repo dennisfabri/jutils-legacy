@@ -26,15 +26,15 @@ public class SimpleFormBuilder {
         Resize, DoubleSize, TrippleSize, None
     }
 
-    private final FormLayout          layout;
-    private final JPanel              panel;
-    private final LinkedList<Integer> fills = new LinkedList<Integer>();
-    private final LinkedList<Integer> grows = new LinkedList<Integer>();
+    private final FormLayout layout;
+    private final JPanel panel;
+    private final LinkedList<Integer> fills = new LinkedList<>();
+    private final LinkedList<Integer> grows = new LinkedList<>();
 
-    private Font                      font  = null;
-    private boolean                   group = true;
+    private Font font;
+    private boolean group = true;
 
-    private final String              spacer;
+    private final String spacer;
 
     public SimpleFormBuilder(JPanel panel, FormLayout layout, int space, boolean outerSpace) {
         if (space < 0) {
@@ -47,7 +47,8 @@ public class SimpleFormBuilder {
                 intend = space * 4;
             }
             layout = new FormLayout(
-                    (outerSpace ? spacer : "0dlu") + ",fill:default," + spacer + "," + intend + "dlu," + "fill:0px:grow," + (outerSpace ? spacer : "0dlu"),
+                    (outerSpace ? spacer : "0dlu") + ",fill:default," + spacer + "," + intend + "dlu,"
+                            + "fill:0px:grow," + (outerSpace ? spacer : "0dlu"),
                     (outerSpace ? spacer : "0dlu"));
         }
         if (panel == null) {
@@ -258,10 +259,6 @@ public class SimpleFormBuilder {
         int height = 2;
         String contraint = "fill,default";
         switch (grow) {
-        default:
-        case Resize:
-            addRow(true);
-            break;
         case TrippleSize:
             height = 3;
             addRow(false);
@@ -274,6 +271,9 @@ public class SimpleFormBuilder {
             // addRow(false, false);
             contraint = "fill,top";
             break;
+        case Resize:
+        default:
+            addRow(true);
         }
         addEmptyRow();
 

@@ -5,7 +5,6 @@ package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
@@ -50,9 +48,9 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
         }
     }
 
-    private ButtonGroup   group   = new ButtonGroup();
-    private JRadioButton[]        buttons = null;
-    private JPanel        panel   = new JWizardPanel();
+    private ButtonGroup group = new ButtonGroup();
+    private JRadioButton[] buttons;
+    private JPanel panel = new JWizardPanel();
     private final JWizard wizard;
 
     public WizardOptionPage(JWizard w, String title, String note, String[] options) {
@@ -63,17 +61,20 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
         this(w, title, note, options, null, selectedIndex, null, SwingConstants.CENTER);
     }
 
-    public WizardOptionPage(JWizard w, String title, String note, String[] options, boolean[] enabled, int selectedIndex, String explanation, int align) {
+    public WizardOptionPage(JWizard w, String title, String note, String[] options, boolean[] enabled,
+            int selectedIndex, String explanation, int align) {
         super(title, note);
         wizard = w;
         if (options == null) {
             throw new NullPointerException("String[] options must " + "not be null!");
         }
         if ((enabled != null) && (enabled.length != options.length)) {
-            throw new IllegalArgumentException("boolean[] enabled must be null" + " or have the same length as String[] options!");
+            throw new IllegalArgumentException(
+                    "boolean[] enabled must be null" + " or have the same length as String[] options!");
         }
         if ((selectedIndex < 0) || (selectedIndex >= options.length)) {
-            throw new IndexOutOfBoundsException("selectedIndex must be at least zero and lower " + "than the length of String[] options");
+            throw new IndexOutOfBoundsException(
+                    "selectedIndex must be at least zero and lower " + "than the length of String[] options");
         }
         if (explanation != null) {
             if (explanation.trim().length() == 0) {
@@ -113,17 +114,11 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
                 buttons[x].setEnabled(enabled[x]);
             }
             panel.add(buttons[x], CC.xy(2, 3 + 3 + 2 * x));
-            buttons[x].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    notifyUpdate();
-                }
+            buttons[x].addActionListener(arg0 -> {
+                notifyUpdate();
             });
-            buttons[x].addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    notifyUpdate();
-                }
+            buttons[x].addChangeListener(e -> {
+                notifyUpdate();
             });
             group.add(buttons[x]);
         }
@@ -208,7 +203,7 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
 
     private class MoveListener implements KeyListener {
 
-        private int index = 0;
+        private int index;
 
         public MoveListener(int index) {
             this.index = index;
@@ -219,7 +214,7 @@ public class WizardOptionPage extends AWizardPage implements UpdateListener {
             if (e.isConsumed()) {
                 return;
             }
-            if (!(e.getSource() == buttons[index])) {
+            if (e.getSource() != buttons[index]) {
                 return;
             }
             if (e.getKeyCode() == KeyEvent.VK_UP) {

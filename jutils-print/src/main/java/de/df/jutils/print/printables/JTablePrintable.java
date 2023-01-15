@@ -33,11 +33,11 @@ public class JTablePrintable implements Printable {
 
     public static final int OPT_ALL = OPT_HEADER | OPT_RENDERER;
 
-    private Printable printable = null;
-    private JTable table = null;
-    private JPanel panel = null;
+    private Printable printable;
+    private JTable table;
+    private JPanel panel;
 
-    private boolean resize = false;
+    private boolean resize;
 
     private JTable.PrintMode mode;
 
@@ -67,8 +67,6 @@ public class JTablePrintable implements Printable {
         }
         table.setSize(table.getPreferredSize());
 
-        
-        
         JScrollPane pane = new JScrollPane(table);
         panel = new JPanel(new BorderLayout());
         panel.add(pane, BorderLayout.CENTER);

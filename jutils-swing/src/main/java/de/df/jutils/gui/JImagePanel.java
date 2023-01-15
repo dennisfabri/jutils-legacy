@@ -2,7 +2,6 @@ package de.df.jutils.gui;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -70,19 +69,13 @@ public class JImagePanel extends JPanel {
         icon.setPreferredSize(new Dimension(maxwidth, maxheight));
 
         JButton open = new JButton(JUtilsI18n.get("de.dm.gui.imagepanel.OpenImage"));
-        open.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                readImage();
-            }
+        open.addActionListener(e -> {
+            readImage();
         });
 
         noimage = new JButton(JUtilsI18n.get("de.dm.gui.imagepanel.NoImage"));
-        noimage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setImage(null);
-            }
+        noimage.addActionListener(e -> {
+            setImage(null);
         });
         noimage.setEnabled(false);
 
@@ -95,7 +88,7 @@ public class JImagePanel extends JPanel {
         add(open, CC.xy(5, 4, "fill,fill"));
     }
 
-    private LinkedList<ChangeListener> listeners = new LinkedList<ChangeListener>();
+    private LinkedList<ChangeListener> listeners = new LinkedList<>();
 
     public void addChangeListener(ChangeListener cl) {
         listeners.addLast(cl);

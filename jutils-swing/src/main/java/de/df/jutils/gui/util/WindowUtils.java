@@ -84,9 +84,9 @@ public final class WindowUtils {
 
         private static final long serialVersionUID = 3257572818995525944L;
 
-        private final Runnable    executor;
+        private final Runnable executor;
 
-        public EscapeAction(Runnable exe) {
+        private EscapeAction(Runnable exe) {
             executor = exe;
         }
 

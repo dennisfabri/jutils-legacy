@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class TimeMeasurement {
 
-    private PrintStream out = null;
+    private PrintStream out;
     private long[] nano;
     private int level;
 

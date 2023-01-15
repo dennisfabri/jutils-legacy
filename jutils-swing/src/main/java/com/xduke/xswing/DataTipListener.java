@@ -174,7 +174,7 @@ abstract class DataTipListener extends MouseInputAdapter implements ComponentLis
 
         Dimension rendCompDim = rendererComponent.getMinimumSize();
         Rectangle rendCompBounds = new Rectangle(cellBounds.getLocation(), rendCompDim);
-        
+
         // Do not render the popup because of one pixel
         Rectangle reducedRendCompBounds = new Rectangle((int) rendCompBounds.getX() + TolerancePixelCount,
                 (int) rendCompBounds.getY() + TolerancePixelCount,

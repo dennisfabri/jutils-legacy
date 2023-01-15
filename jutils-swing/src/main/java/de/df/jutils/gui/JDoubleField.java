@@ -15,9 +15,9 @@ public class JDoubleField extends JWarningTextField {
     public static final double EMPTY_FIELD = -1;
     public static final double NO_MAXVALUE = 0;
 
-    private NumberFormatter nf = null;
+    private NumberFormatter nf;
 
-    private String[] specials = null;
+    private String[] specials;
 
     private JDoubleField(double value, double max, boolean required, boolean force) {
         super(required, force);
@@ -84,7 +84,7 @@ public class JDoubleField extends JWarningTextField {
         if (getDouble() == i) {
             return;
         }
-        
+
         if (i > EMPTY_FIELD) {
             try {
                 setText(nf.valueToString(i));
@@ -102,7 +102,7 @@ public class JDoubleField extends JWarningTextField {
             super.setText(t);
         }
     }
-    
+
     public double getDouble() {
         try {
             return ((Number) nf.stringToValue(getText())).doubleValue();
@@ -111,6 +111,7 @@ public class JDoubleField extends JWarningTextField {
         }
     }
 
+    @Override
     public boolean isSpecialString() {
         if (specials == null) {
             return false;
@@ -124,11 +125,13 @@ public class JDoubleField extends JWarningTextField {
         return false;
     }
 
+    @Override
     public void setSpecialStrings(String... specials) {
         this.specials = specials;
         repaint();
     }
 
+    @Override
     public void disableSpecialStrings() {
         specials = null;
         repaint();

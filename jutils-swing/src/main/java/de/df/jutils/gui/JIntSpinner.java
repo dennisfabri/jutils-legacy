@@ -23,10 +23,10 @@ public final class JIntSpinner extends javax.swing.JSpinner {
      */
     private static final long serialVersionUID = 4049635689765287987L;
 
-    public static final int   NO_MIN           = Integer.MIN_VALUE;
-    public static final int   NO_MAX           = Integer.MAX_VALUE;
+    public static final int NO_MIN = Integer.MIN_VALUE;
+    public static final int NO_MAX = Integer.MAX_VALUE;
 
-    private IntSpinnerModel   ism              = null;
+    private IntSpinnerModel ism;
 
     public JIntSpinner(final int current, final int min, final int max, final int increment) {
         this(min, max, increment);
@@ -110,10 +110,10 @@ public final class JIntSpinner extends javax.swing.JSpinner {
     private static class IntSpinnerModel extends AbstractSpinnerModel {
 
         private static final long serialVersionUID = -2013114715199003509L;
-        
-        private int min       = 0;
-        private int max       = 0;
-        private int current   = 0;
+
+        private int min;
+        private int max;
+        private int current;
         private int increment = 1;
 
         /** Creates new IntSpinnerModel */

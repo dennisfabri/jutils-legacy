@@ -36,10 +36,10 @@ public final class PrintManager {
     private static String location = "";
     private static String date = "";
 
-    private static BufferedImage adsPTop = null;
-    private static BufferedImage adsPBottom = null;
-    private static BufferedImage adsLTop = null;
-    private static BufferedImage adsLBottom = null;
+    private static BufferedImage adsPTop;
+    private static BufferedImage adsPBottom;
+    private static BufferedImage adsLTop;
+    private static BufferedImage adsLBottom;
     private static String[] adsJobs = new String[0];
 
     static {
@@ -53,7 +53,7 @@ public final class PrintManager {
         font = getDefaultFont();
     }
 
-    private static String fontlog = null;
+    private static String fontlog;
 
     public static Font getDefaultFont() {
         StringBuilder log = new StringBuilder();
@@ -73,31 +73,31 @@ public final class PrintManager {
         for (int x = 0; x < fonts.length; x++) {
             String fontname = fonts[x].getName();
 
-            if (fontname.equals("DLRG Univers 55 Roman")) {
+            if ("DLRG Univers 55 Roman".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont1 = fonts[x];
             }
-            if (fontname.equals("DLRG-Jugend Text")) {
+            if ("DLRG-Jugend Text".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont2 = fonts[x];
             }
-            if (fontname.equals("Arial")) {
+            if ("Arial".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont3 = fonts[x];
             }
-            if (fontname.equals("Tahoma")) {
+            if ("Tahoma".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont3 = fonts[x];
             }
-            if (fontname.equals("Helvetica")) {
+            if ("Helvetica".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont3 = fonts[x];
             }
-            if (fontname.equals("Lucida")) {
+            if ("Lucida".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 defaultfont3 = fonts[x];
             }
-            if (fontname.equals("Dialog")) {
+            if ("Dialog".equals(fontname)) {
                 log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
                 dialog = fonts[x];
             }
@@ -332,7 +332,8 @@ public final class PrintManager {
         return PrintUtils.getPrintable(tables, titles, optimize, shrink, enlarge, getFont());
     }
 
-    public static Printable getPrintable(JTable[] tables, String[] names, int optimize, boolean shrink, boolean enlarge) {
+    public static Printable getPrintable(JTable[] tables, String[] names, int optimize, boolean shrink,
+            boolean enlarge) {
         return PrintUtils.getPrintable(tables, names, optimize, shrink, enlarge, getFont());
     }
 }

@@ -11,7 +11,7 @@ import javax.swing.JComponent;
  */
 public class ButtonInfo implements Comparable<ButtonInfo> {
 
-    private int          priotity;
+    private int priotity;
     private JComponent[] buttons;
 
     public ButtonInfo(JComponent[] p, int prio) {

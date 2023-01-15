@@ -21,14 +21,15 @@ public final class JUtilsI18n {
         // Hide
     }
 
-    private static ResourceBundle fallback = null;
-    private static SafeTextProcessor   instance = null;
+    private static ResourceBundle fallback;
+    private static SafeTextProcessor instance;
 
     private static synchronized SafeTextProcessor getInstance() {
         if (instance == null) {
             MultipleResourceBundle rb = new MultipleResourceBundle();
             try {
-                ResourceBundle fileRB = ResourceBundle.getBundle("jutils", Locale.getDefault(), JUtilsI18n.class.getClassLoader());
+                ResourceBundle fileRB = ResourceBundle.getBundle("jutils", Locale.getDefault(),
+                        JUtilsI18n.class.getClassLoader());
                 rb.add(fileRB);
             } catch (RuntimeException re) {
                 re.printStackTrace();
