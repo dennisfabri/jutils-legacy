@@ -1,7 +1,6 @@
 package de.df.jutils.gui.window;
 
 import java.awt.Window;
-import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;

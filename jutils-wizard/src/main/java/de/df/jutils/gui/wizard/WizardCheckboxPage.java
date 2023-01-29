@@ -4,7 +4,6 @@
 package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
 import javax.swing.JCheckBox;

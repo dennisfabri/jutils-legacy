@@ -5,11 +5,8 @@ package de.df.jutils.print.printables;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Window;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 

@@ -13,7 +13,6 @@ import javax.swing.border.AbstractBorder;
 
 import de.df.jutils.graphics.ColorUtils;
 import de.df.jutils.gui.util.GraphicsUtils;
-import de.df.jutils.util.OSUtils;
 
 /**
  * @author Dennis Fabri

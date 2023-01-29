@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Dennis

@@ -4,7 +4,6 @@
 package de.df.jutils.gui.wizard;
 
 import java.awt.BorderLayout;
-import java.awt.event.ItemEvent;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;

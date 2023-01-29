@@ -1,15 +1,9 @@
 
 package de.df.jutils.swing.icons;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 

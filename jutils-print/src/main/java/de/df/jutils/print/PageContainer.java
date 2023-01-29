@@ -6,10 +6,8 @@ package de.df.jutils.print;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 import javax.imageio.ImageIO;
 

@@ -1,7 +1,6 @@
 package de.df.jutils.gui;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
