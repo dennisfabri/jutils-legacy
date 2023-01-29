@@ -123,36 +123,16 @@ public class JAboutDialog extends JDialog {
             pos += 2;
         }
         JButton close = new JButton(JUtilsI18n.get("Close"));
-        close.addActionListener(arg0 -> {
-            setVisible(false);
-        });
+        close.addActionListener(arg0 -> setVisible(false));
         add(close, CC.xy(2, pos, "right,fill"));
         pack();
     }
 
     private static Object[][] getSystemInfos() {
-        Enumeration<Object> props = System.getProperties().keys();
-        LinkedList<String> keys = new LinkedList<>();
-        while (props.hasMoreElements()) {
-            String key = (String) props.nextElement();
-            keys.addLast(key);
-        }
-        Collections.sort(keys);
-        LinkedList<String> values = new LinkedList<>();
-        ListIterator<String> li = keys.listIterator();
-        while (li.hasNext()) {
-            values.addLast(System.getProperty(li.next()));
-        }
-
-        Object[][] result = new String[keys.size()][2];
-        ListIterator<String> key = keys.listIterator();
-        ListIterator<String> value = values.listIterator();
-
-        for (int x = 0; x < result.length; x++) {
-            result[x][0] = key.next();
-            result[x][1] = value.next();
-        }
-        return result;
+        return System.getProperties().entrySet().stream()
+                .map(e -> new String[] { e.getKey().toString(), e.getValue().toString() })
+                .sorted((a, b) -> a[0].compareTo(b[0]))
+                .toArray(String[][]::new);
     }
 
     private static Object[][] getUISettings() {
