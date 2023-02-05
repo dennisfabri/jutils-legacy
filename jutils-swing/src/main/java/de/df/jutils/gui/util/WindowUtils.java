@@ -42,10 +42,6 @@ public final class WindowUtils {
         window.getRootPane().getActionMap().put(name, new EscapeAction(exe));
     }
 
-    private static void addEnterAction(JFrame window) {
-        addEnterAction(window, new CloseRunnable(window));
-    }
-
     public static void addEnterAction(JDialog window) {
         addEnterAction(window, new CloseRunnable(window));
     }
