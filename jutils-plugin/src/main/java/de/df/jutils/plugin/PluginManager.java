@@ -415,7 +415,13 @@ public class PluginManager implements IPluginManager {
     }
 
     private void setTitle() {
-        getWindow().setTitle(name + (info.length() > 0 ? " - " + info : "") + (changed ? "*" : ""));
+        String title = "";
+        if (info.length() > 0) {
+            title = info + (changed ? "*" : "") + " - " + name;
+        } else {
+            title = name + (changed ? "*" : "");
+        }
+        getWindow().setTitle(title);
     }
 
     @Override
