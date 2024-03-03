@@ -76,7 +76,7 @@ final class PanelInfoRenderer implements ListCellRenderer<PanelInfo> {
     @Override
     public Component getListCellRendererComponent(JList<? extends PanelInfo> list, PanelInfo pi, int index,
             boolean isSelected, boolean cellHasFocus) {
-        if ((list instanceof JHoverList) && ((JHoverList<? extends PanelInfo>) list).getHoveredItem() == pi) {
+        if (!isSelected && (list instanceof JHoverList) && ((JHoverList<? extends PanelInfo>) list).getHoveredItem() == pi) {
             isSelected = true;
         }
         button.setBorder(isSelected ? selected : unselected);

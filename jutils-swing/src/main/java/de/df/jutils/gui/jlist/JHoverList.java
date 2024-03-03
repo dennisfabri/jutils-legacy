@@ -37,7 +37,7 @@ public class JHoverList<T> extends JList<T> {
     }
 
     private boolean calculatingIndex;
-    
+
     public int getHoveredIndex() {
         if (calculatingIndex) {
             return -1;
