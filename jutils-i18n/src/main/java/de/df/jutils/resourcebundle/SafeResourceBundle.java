@@ -38,10 +38,7 @@ public final class SafeResourceBundle extends ResourceBundle {
             return "";
         }
         try {
-            String result = parentBundle.getString(id);
-            if (result != null) {
-                return result;
-            }
+            return parentBundle.getString(id);
         } catch (RuntimeException e) {
             if (isVerbose()) {
                 e.printStackTrace();

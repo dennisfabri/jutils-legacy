@@ -6,7 +6,7 @@ package de.df.jutils.i18n.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import de.df.jutils.i18n.EmptyResourceBundle;
+import de.df.jutils.i18n.IdResourceBundle;
 import de.df.jutils.i18n.SafeTextProcessor;
 import de.df.jutils.resourcebundle.IdentityResourceBundle;
 import de.df.jutils.resourcebundle.MultipleResourceBundle;
@@ -44,7 +44,7 @@ public final class JUtilsI18n {
 
     private static synchronized ResourceBundle getFallbackResourceBundle() {
         if (fallback == null) {
-            fallback = new EmptyResourceBundle();
+            fallback = new IdResourceBundle();
         }
         return fallback;
     }

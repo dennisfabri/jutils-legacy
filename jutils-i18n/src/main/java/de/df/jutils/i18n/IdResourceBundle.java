@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
-public class EmptyResourceBundle extends ResourceBundle {
+public class IdResourceBundle extends ResourceBundle {
 
     @Override
     public Enumeration<String> getKeys() {
@@ -13,7 +13,7 @@ public class EmptyResourceBundle extends ResourceBundle {
 
     @Override
     protected Object handleGetObject(String key) {
-        return "";
+        return key;
     }
 
 }

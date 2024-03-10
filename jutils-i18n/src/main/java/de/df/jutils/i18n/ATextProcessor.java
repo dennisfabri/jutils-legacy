@@ -40,7 +40,11 @@ abstract class ATextProcessor {
         if (bundle == null) {
             return null;
         }
-        return bundle.getString(key);
+        String value = bundle.getString(key);
+        if (value == null ) {
+            return key;
+        }
+        return value;
     }
 
     protected static String simpleProcess(final String translation) throws ParserException {
