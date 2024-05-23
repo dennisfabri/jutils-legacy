@@ -31,7 +31,7 @@ public class WarningQueue extends java.awt.EventQueue {
     }
 
     private static void check() {
-        long id = Thread.currentThread().getId();
+        long id = Thread.currentThread().threadId();
         // Request sufficient stack frames to find invokeAndWait.
         ThreadInfo thread = threadBean.getThreadInfo(id, 10);
         for (StackTraceElement trace : thread.getStackTrace()) {

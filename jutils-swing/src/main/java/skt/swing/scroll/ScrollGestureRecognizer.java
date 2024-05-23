@@ -67,8 +67,8 @@ public final class ScrollGestureRecognizer implements AWTEventListener {
 
         try {
             Robot robot = new Robot();
-            robot.mouseRelease(InputEvent.BUTTON2_MASK);
-            robot.mousePress(InputEvent.BUTTON2_MASK);
+            robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+            robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
         } catch (AWTException ignore) {
             glassPane.movingTimer.start();
         }

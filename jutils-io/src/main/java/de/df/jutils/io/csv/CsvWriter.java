@@ -1,20 +1,21 @@
-/*
- * Created on 05.02.2006
- */
 package de.df.jutils.io.csv;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 
 import javax.swing.table.TableModel;
 
 import de.df.jutils.gui.jtable.ExtendedTableModel;
 
+/**
+ * Created on 05.02.2006
+ */
 public class CsvWriter {
 
-    private char separator;
-    private LinkedList<CsvDataWriter> converters;
+    private final char separator;
+    private final LinkedList<CsvDataWriter> converters;
 
     CsvWriter(CsvDataWriter[] cdc, char separator) {
         converters = new LinkedList<>();
@@ -28,14 +29,14 @@ public class CsvWriter {
         converters.addLast(cdc);
     }
 
-    public boolean write(TableModel tm, OutputStream os) {
+    public boolean write(TableModel tm, OutputStream os, Charset charset) {
         if (tm == null) {
             throw new NullPointerException("TableModel must not be null!");
         }
         if (os == null) {
             throw new NullPointerException("OutputStream must not be null!");
         }
-        PrintStream ps = new PrintStream(os);
+        PrintStream ps = new PrintStream(os, false, charset);
         int cols = tm.getColumnCount();
         int rows = tm.getRowCount();
         if (cols == 0) {

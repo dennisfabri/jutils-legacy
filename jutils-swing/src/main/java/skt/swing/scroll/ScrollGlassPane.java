@@ -1,33 +1,18 @@
 package skt.swing.scroll;
 
-import java.awt.AWTException;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Robot;
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JViewport;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.event.MouseInputListener;
-
 /**
  * Modified version. The original can be found at:
  * 
  * @author Santhosh Kumar T
- * @email santhosh@in.fiorano.com
- * @link http://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing
+ * @link https://jroller.com/trackback/santhosh/Weblog/enhanced_scrolling_in_swing (no longer available)
  */
 class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListener, SwingConstants {
 
@@ -36,12 +21,12 @@ class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListen
     private static final Image[] IMAGES = ScrollUtils.createImages();
     private static final Cursor[] CURSORS = ScrollUtils.createCursors();
 
-    private Component oldGlassPane;
-    private Point location;
+    private final Component oldGlassPane;
+    private final Point location;
 
     Timer movingTimer;
     private Point mouseLocation;
-    private JViewport viewport;
+    private final JViewport viewport;
     private int oldDirection = -1;
 
     public ScrollGlassPane(Component oldGlassPane, JViewport viewport, Point location) {
@@ -139,7 +124,7 @@ class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListen
         if (movingTimer.isRunning()) {
             movingTimer.stop();
             try {
-                new Robot().mouseRelease(InputEvent.BUTTON2_MASK);
+                new Robot().mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
             } catch (AWTException ignore) {
                 // Nothing to do
             }
@@ -162,7 +147,7 @@ class ScrollGlassPane extends JPanel implements ActionListener, MouseInputListen
             try {
                 ignoreMousePress = true;
                 Robot robot = new Robot();
-                robot.mousePress(InputEvent.BUTTON2_MASK);
+                robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
             } catch (AWTException ignore) {
                 mousePressed(e);
             }

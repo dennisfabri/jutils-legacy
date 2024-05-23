@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,16 +46,17 @@ public class JPFrame extends JGlassFrame {
     /**
      * Comment for <code>serialVersionUID</code>
      */
+    @Serial
     private static final long serialVersionUID = 3258125869083210547L;
 
     protected PluginManager controller;
 
-    private JMenuBar menues = new JMenuBar();
-    private JToolBar quickbuttons = new JToolBar();
-    private JPanelContainer panelcontainer;
+    private final JMenuBar menues = new JMenuBar();
+    private final JToolBar quickbuttons = new JToolBar();
+    private final JPanelContainer panelcontainer;
 
-    private StatusBar statusbar = new StatusBar();
-    private JLabel statustext = new JLabel();
+    private final StatusBar statusbar = new StatusBar();
+    private final JLabel statustext = new JLabel();
 
     JPFrame(String title, List<Image> icons, PluginManager c, IPlugin[] plugins, boolean singleMode) {
         super(title);
@@ -94,7 +96,7 @@ public class JPFrame extends JGlassFrame {
         for (IPlugin plugin : plugins) {
             // Panels
             PanelInfo[] panels = plugin.getPanelInfos();
-            if ((panels != null) && (panels.length > 0)) {
+            if (panels != null) {
                 for (PanelInfo panel : panels) {
                     panelinfos.addLast(panel);
                 }
@@ -129,7 +131,7 @@ public class JPFrame extends JGlassFrame {
             ActionInfo[] acts = plugin.getActions();
             if (acts != null) {
                 for (ActionInfo act : acts) {
-                    String key = "" + act.getKey() + "x" + act.getModifiers();
+                    String key = act.getKey() + "x" + act.getModifiers();
                     if (actions.get(key) == null) {
                         actions.put(key, true);
                         WindowUtils.addAction(this, act.getAction(), act.getKey(), act.getModifiers(),
@@ -194,15 +196,12 @@ public class JPFrame extends JGlassFrame {
         statustext.setText(text);
     }
 
-    @SuppressWarnings("serial")
     private void addButtons(LinkedList<ButtonInfo> buttoninfos) {
         int prio = Integer.MIN_VALUE;
         Collections.sort(buttoninfos);
-        ListIterator<ButtonInfo> li = buttoninfos.listIterator();
-        while (li.hasNext()) {
-            ButtonInfo bi = li.next();
-            JComponent[] qbuttons = bi.getButtons();
-            if ((qbuttons != null) && (qbuttons.length > 0)) {
+        for (ButtonInfo bi : buttoninfos) {
+            JComponent[] qButtons = bi.getButtons();
+            if ((qButtons != null) && (qButtons.length > 0)) {
                 if ((prio + 100 <= bi.getPriotity()) && (quickbuttons.getComponentCount() > 0)) {
                     prio = bi.getPriotity();
                     JSeparator js = new JSeparator(SwingConstants.VERTICAL);
@@ -218,13 +217,11 @@ public class JPFrame extends JGlassFrame {
                     quickbuttons.add(js);
                     quickbuttons.add(c2);
                 }
-                for (JComponent qbutton : qbuttons) {
-                    if (qbutton instanceof JButton) {
-                        JButton button = (JButton) qbutton;
+                for (JComponent qButton : qButtons) {
+                    if (qButton instanceof JButton button) {
                         button.setRolloverEnabled(true);
-                        // button.setMargin(new Insets(1, 1, 1, 1));
                     }
-                    quickbuttons.add(qbutton);
+                    quickbuttons.add(qButton);
                 }
             }
         }
@@ -252,15 +249,10 @@ public class JPFrame extends JGlassFrame {
 
         menuinfos = new LinkedList<>();
         ListIterator<String> n = names.listIterator();
-        Comparator<MenuInfo> sorter = new Comparator<>() {
-            @Override
-            public int compare(MenuInfo m1, MenuInfo m2) {
-                return m1.getItemPriotity() - m2.getItemPriotity();
-            }
-        };
+        Comparator<MenuInfo> sorter = Comparator.comparingInt(MenuInfo::getItemPriotity);
         while (n.hasNext()) {
             LinkedList<MenuInfo> mi = table.get(n.next());
-            Collections.sort(mi, sorter);
+            mi.sort(sorter);
             menuinfos.addAll(mi);
         }
 

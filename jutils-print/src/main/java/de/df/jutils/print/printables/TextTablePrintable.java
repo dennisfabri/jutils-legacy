@@ -45,7 +45,7 @@ public class TextTablePrintable implements Printable {
             TableColumn c = table.getColumnModel().getColumn(1);
             EDTUtils.setWidth(c, (int) pf.getImageableWidth() - table.getWidth() + c.getWidth());
             JTableUtils.setPreferredRowHeights(table);
-            printable = new de.df.jutils.print.printables.TablePrintable(table, JTable.PrintMode.FIT_WIDTH, null, null);
+            printable = new TablePrintable(table, JTable.PrintMode.FIT_WIDTH, null, null);
         }
         return printable.print(g, pf, page);
     }
