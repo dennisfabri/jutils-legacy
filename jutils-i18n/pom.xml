@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.dennisfabri.jutils</groupId>
     <artifactId>jutils-legacy</artifactId>
-    <version>17.1.0</version>
+    <version>17.1.3</version>
   </parent>
   <artifactId>jutils-i18n</artifactId>
 </project>
