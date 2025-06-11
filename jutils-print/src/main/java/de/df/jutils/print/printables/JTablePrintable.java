@@ -59,6 +59,7 @@ public class JTablePrintable implements Printable {
         }
 
         table.setSelectionForeground(Color.BLACK);
+        table.setForeground(Color.BLACK);
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JTableUtils.setPreferredCellSizes(table, true, false);

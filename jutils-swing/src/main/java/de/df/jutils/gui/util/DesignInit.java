@@ -16,6 +16,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.jthemedetecor.OsThemeDetector;
 import com.l2fprod.common.shared.swing.LookAndFeelTweaks;
 
 import de.df.jutils.util.OSUtils;
@@ -30,7 +33,7 @@ public final class DesignInit {
     static {
         boolean result = false;
         String s = System.getProperty("swing.aatext", "false");
-        if ((s != null) && "true".equals(s)) {
+        if ("true".equals(s)) {
             result = true;
         }
         ANTIALISED_TEXT = result;
@@ -41,7 +44,7 @@ public final class DesignInit {
     }
 
     public static void init() {
-        init(true, UIPerformanceMode.Default);
+        init(!OSUtils.isLinux(), UIPerformanceMode.Default);
     }
 
     public static synchronized void init(boolean enableSystemLookAndFeel, UIPerformanceMode uimode) {
@@ -83,29 +86,50 @@ public final class DesignInit {
     private static void applyRenderingSettings(UIPerformanceMode uimode) {
         if (OSUtils.isWindows()) {
             switch (uimode) {
-            case Default:
-                break;
-            case OpenGL:
-                System.setProperty("sun.java2d.opengl", "true");
-                break;
-            case Software:
-                System.setProperty("sun.java2d.opengl", "false");
-                System.setProperty("sun.java2d.d3d", "false");
-                break;
-            default:
-                break;
+                case Default:
+                    break;
+                case OpenGL:
+                    System.setProperty("sun.java2d.opengl", "true");
+                    break;
+                case Software:
+                    System.setProperty("sun.java2d.opengl", "false");
+                    System.setProperty("sun.java2d.d3d", "false");
+                    break;
+                default:
+                    break;
             }
         }
     }
 
     private static void initializeLaF(boolean enableSystemLookAndFeel) {
         Commands commands = new Commands();
-        if (enableSystemLookAndFeel) {
+        if (enableSystemLookAndFeel && !OSUtils.isLinux()) {
             commands.add(DesignInit::initSystemLaF);
         }
+        commands.add(DesignInit::initFlatLaF);
         commands.add(DesignInit::setDefaultLaF);
 
         commands.executeUntilFirstSuccess();
+
+        SwingUtilities.invokeLater(DesignInit::patchLaF);
+    }
+
+    private static boolean initFlatLaF() {
+        try {
+            if (usesDarkTheme()) {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            } else {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            }
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    private static boolean usesDarkTheme() {
+        final OsThemeDetector detector = OsThemeDetector.getDetector();
+        return detector.isDark();
     }
 
     private static interface Condition {
@@ -170,42 +194,48 @@ public final class DesignInit {
     }
 
     private static boolean initSystemLaF() throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, UnsupportedLookAndFeelException {
+                                                  IllegalAccessException, UnsupportedLookAndFeelException {
         System.out.println("Initializing SystemLookAndFeel");
         if (!UIManager.getSystemLookAndFeelClassName().toLowerCase().endsWith("metallookandfeel")) {
             String laf = UIManager.getSystemLookAndFeelClassName();
             System.out.println(" with class " + laf);
             UIManager.setLookAndFeel(laf);
-            SwingUtilities.invokeLater(DesignInit::patchWindowsLaF);
             return true;
         }
         return false;
     }
 
-    private static void patchWindowsLaF() {
+    private static void patchLaF() {
         try {
+            Font font = null;
             if (OSUtils.isWindows()) {
-                UIDefaults uiDefaults = UIManager.getDefaults();
-                uiDefaults.remove("ScrollPane.border");
-                uiDefaults.remove("Table.scrollPaneBorder");
+                font = getWindowsStandardFont();
+            } else {
+                font = getLinuxStandardFont();
+                if (font == null) {
+                    font = getWindowsStandardFont();
+                }
+            }
+            UIDefaults uiDefaults = UIManager.getDefaults();
+            uiDefaults.remove("ScrollPane.border");
+            uiDefaults.remove("Table.scrollPaneBorder");
 
-                Font font = getWindowsStandardFont();
-
-                for (Object key : uiDefaults.keySet().toArray()) {
-                    String keyString = key.toString();
+            for (Object key : uiDefaults.keySet().toArray()) {
+                String keyString = key.toString();
+                if (OSUtils.isWindows()) {
                     if (keyString.endsWith(".shadow")) {
                         String borderKey = keyString.replace("shadow", "border");
                         uiDefaults.remove(borderKey);
                         uiDefaults.put(borderKey, new LineBorder(uiDefaults.getColor(keyString), 1));
                     }
-                    if (keyString.endsWith(".font")) {
-                        Font f = uiDefaults.getFont(keyString);
-                        if (font == null) {
-                            font = f;
-                        }
-                        uiDefaults.remove(keyString);
-                        uiDefaults.put(keyString, font.deriveFont(Font.PLAIN, f.getSize2D()));
+                }
+                if (keyString.endsWith(".font")) {
+                    Font f = uiDefaults.getFont(keyString);
+                    if (font == null) {
+                        font = f;
                     }
+                    uiDefaults.remove(keyString);
+                    uiDefaults.put(keyString, font.deriveFont(Font.PLAIN, f.getSize2D()));
                 }
             }
             for (Window w : Window.getWindows()) {
@@ -223,6 +253,18 @@ public final class DesignInit {
         }
         try {
             return new Font("Tahoma", Font.PLAIN, 12);
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
+    private static Font getLinuxStandardFont() {
+        try {
+            return new Font("Ubuntu Sans", Font.PLAIN, 12);
+        } catch (Exception ex) {
+        }
+        try {
+            return new Font("Sans", Font.PLAIN, 12);
         } catch (Exception ex) {
         }
         return null;

@@ -42,7 +42,6 @@ public final class JTimeField extends javax.swing.JPanel {
     /** Creates new form JTimeField */
     public JTimeField(final JIntegerField jnf) {
         source = jnf;
-        // setBorder(new LineBorder(SystemColor.controlShadow, 1));
         meinInit();
     }
 
@@ -158,12 +157,12 @@ public final class JTimeField extends javax.swing.JPanel {
             if (color != null) {
                 sekunden.setForeground(color);
             } else {
-                sekunden.setForeground(Color.BLACK);
+                sekunden.setForeground(minuten.getForeground());
             }
         }
         minuten.setText("" + m);
-        sekunden.setText("" + (s < 10 ? "0" : "") + s);
-        hundertstel.setText("" + (z < 10 ? "0" : "") + z);
+        sekunden.setText((s < 10 ? "0" : "") + s);
+        hundertstel.setText((z < 10 ? "0" : "") + z);
 
         value = (m * 6000) + (s * 100) + z;
     }

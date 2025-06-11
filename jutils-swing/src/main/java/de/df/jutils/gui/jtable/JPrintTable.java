@@ -155,6 +155,7 @@ public class JPrintTable extends JTable {
         table.setShowVerticalLines(!colors);
 
         table.setSelectionBackground(Color.WHITE);
+        table.setForeground(Color.BLACK);
         table.setOpaque(false);
     }
 }
