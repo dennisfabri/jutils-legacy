@@ -10,6 +10,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
@@ -37,11 +38,6 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
         NONE, LEFT, RIGHT, BOTH
     }
 
-    /**
-     * Comment for <code>serialVersionUID</code>
-     */
-    static final long serialVersionUID = 3257848792169330232L;
-
     private final int defaultAlign;
 
     private final int[] alignments;
@@ -51,27 +47,21 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
             new FormLayout("0dlu,fill:default:grow,0dlu", "0dlu,fill:default:grow,0dlu"));
     private final JLabel label = new JLabel();
 
-    private static TableCellRenderer fallback = new DefaultTableCellRenderer();
+    private static final TableCellRenderer fallback = new DefaultTableCellRenderer();
 
-    private DateFormatter df = new DateFormatter();
-    private NumberFormat nf = NumberFormat.getInstance();
+    private final DateFormatter df = new DateFormatter();
+    private final NumberFormat nf = NumberFormat.getInstance();
 
     private double[] colors = new double[0];
     private boolean[] visible = new boolean[0];
     private BorderPositions[] borders = new BorderPositions[0];
 
     public AlignmentCellRenderer(int[] aligns, int align) {
-        if (aligns == null) {
-            alignments = new int[0];
-        } else {
-            alignments = aligns;
-        }
+        alignments = Objects.requireNonNullElseGet(aligns, () -> new int[0]);
         defaultAlign = align;
         list.setOpaque(true);
         list.setBorder(null);
         list.setCellRenderer(new DefaultListCellRenderer() {
-            private static final long serialVersionUID = -1855198070805025589L;
-
             private final JLabel listlabel = new JLabel();
 
             @Override
@@ -130,17 +120,12 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
         if (column >= borders.length) {
             return new EmptyBorder(0, 0, 0, 0);
         }
-        switch (borders[column]) {
-        case BOTH:
-            return new ExtendedLineBorder(Color.BLACK, 0, 1, 0, 1);
-        case LEFT:
-            return new ExtendedLineBorder(Color.BLACK, 0, 1, 0, 0);
-        case NONE:
-            return new EmptyBorder(0, 0, 0, 0);
-        case RIGHT:
-            return new ExtendedLineBorder(Color.BLACK, 0, 0, 0, 1);
-        }
-        return new EmptyBorder(0, 0, 0, 0);
+        return switch (borders[column]) {
+            case BOTH -> new ExtendedLineBorder(Color.BLACK, 0, 1, 0, 1);
+            case LEFT -> new ExtendedLineBorder(Color.BLACK, 0, 1, 0, 0);
+            case NONE -> new EmptyBorder(0, 0, 0, 0);
+            case RIGHT -> new ExtendedLineBorder(Color.BLACK, 0, 0, 0, 1);
+        };
     }
 
     @Override
@@ -163,8 +148,7 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
             value = ((TableRenderDataProvider) value).getTableRenderData();
         }
 
-        if (value instanceof FixedDecimal) {
-            FixedDecimal fd = (FixedDecimal) value;
+        if (value instanceof FixedDecimal fd) {
             int post = fd.getLength();
             nf.setGroupingUsed(false);
             nf.setRoundingMode(RoundingMode.HALF_UP);
@@ -176,8 +160,7 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
         if (value == null) {
             value = "\u00a0";
         }
-        if (value instanceof String[]) {
-            String[] s = (String[]) value;
+        if (value instanceof String[] s) {
             if (s.length == 0) {
                 value = "\u00a0";
             } else if (s.length == 1) {
@@ -194,10 +177,8 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
 
         // If different data is found:
         Component c = fallback.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        // c.setForeground(UIManager.getDefaults().getColor("Text"));
         label.setForeground(c.getForeground());
         label.setBackground(c.getBackground());
-        // label.setOpaque(c.isOpaque());
         label.setOpaque(true);
         label.setFont(c.getFont());
 
@@ -232,18 +213,14 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
             }
         }
 
-        if (value instanceof String[]) {
-            String[] s = (String[]) value;
+        if (value instanceof String[] s) {
 
             listPanel.removeAll();
             listPanel.add(list, CC.xy(2, 2));
-            // listPanel.setForeground(label.getForeground());
             listPanel.setBackground(label.getBackground());
             listPanel.setOpaque(true);
 
             list.removeAll();
-            // list.setForeground(label.getForeground());
-            // list.setBackground(label.getBackground());
             list.setOpaque(false);
 
             Object[] labels = new Object[s.length];
@@ -275,12 +252,10 @@ public class AlignmentCellRenderer<T> implements TableCellRenderer {
                     // Fix for OpenJDK-Bug
                 }
             }
-            // list.setBorder(label.getBorder());
             return listPanel;
         }
 
-        if (c instanceof JLabel) {
-            JLabel l = (JLabel) c;
+        if (c instanceof JLabel l) {
             l.setHorizontalAlignment(alignment);
         }
 

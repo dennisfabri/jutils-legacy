@@ -32,14 +32,13 @@ public class AlternatingTableCellRenderer implements TableCellRenderer {
         if (value == null) {
             value = "\u00a0";
         } else {
-            if ((value instanceof String) && (value.toString().length() == 0)) {
+            if ((value instanceof String) && (value.toString().isEmpty())) {
                 value = "\u00a0";
             }
-            if (value instanceof String) {
-                value = value.toString().replace(' ', '\u00A0');
+            if (value instanceof String s) {
+                value = s.replace(' ', '\u00A0');
             }
-            if (value instanceof String[]) {
-                String[] s = (String[]) value;
+            if (value instanceof String[] s) {
                 for (int x = 0; x < s.length; x++) {
                     s[x] = s[x].replace(' ', '\u00A0');
                 }

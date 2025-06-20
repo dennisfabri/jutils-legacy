@@ -45,9 +45,9 @@ public final class JTableUtils {
 
     /**
      * This is based on code found at
-     * <http://java.sun.com/docs/books/tutorial/ui/swingComponents/table.html>,
+     * <a href="http://java.sun.com/docs/books/tutorial/ui/swingComponents/table.html">Java Swing Table</a>,
      * somewhat modified. Added some lines from
-     * http://www.jroller.com/page/santhosh/20050523#fit_tablecolumns_on_demand to
+     * <a href="http://www.jroller.com/page/santhosh/20050523#fit_tablecolumns_on_demand">JRoller Santosh Table-Columns</a> to
      * handle header width correctly
      */
     public static void setPreferredCellSizes(JTable table, boolean includeHeader, boolean tablesize) {
@@ -90,9 +90,9 @@ public final class JTableUtils {
                     }
                 }
                 int max = column.getMaxWidth();
-                int realwidth = 4 + Math.round(Math.min(max, longestCell + table.getIntercellSpacing().width));
-                EDTUtils.setPreferredWidth(column, realwidth);
-                twidth += realwidth;
+                int realWidth = 4 + Math.min(max, longestCell + table.getIntercellSpacing().width);
+                EDTUtils.setPreferredWidth(column, realWidth);
+                twidth += realWidth;
             }
         }
         for (int i = 0; i < model.getColumnCount(); i++) {
@@ -223,10 +223,10 @@ public final class JTableUtils {
 
         private Component renderer;
 
-        private JTable table;
-        private int x;
-        private int y;
-        private Object value;
+        private final JTable table;
+        private final int x;
+        private final int y;
+        private final Object value;
 
         private RendererGetter(JTable t, int i, int j, Object v) {
             this.table = t;
@@ -296,9 +296,6 @@ public final class JTableUtils {
         return UIManager.getColor("Table.background");
     }
 
-    /**
-     * @param table
-     */
     public static void setAlternatingTableCellRenderer(JTable table) {
         setAlternatingTableCellRenderer(table, getOddDefault(), getEvenDefault());
     }
@@ -306,8 +303,7 @@ public final class JTableUtils {
     static void setAlternatingTableCellRenderer(JTable table, Color odd, Color even) {
         for (Class<?> c : CLASSES) {
             TableCellRenderer tcr = table.getDefaultRenderer(c);
-            if (tcr instanceof AlternatingTableCellRenderer) {
-                AlternatingTableCellRenderer atcr = (AlternatingTableCellRenderer) tcr;
+            if (tcr instanceof AlternatingTableCellRenderer atcr) {
                 atcr.setColors(odd, even);
             } else {
                 table.setDefaultRenderer(c, new AlternatingTableCellRenderer(odd, even, tcr));

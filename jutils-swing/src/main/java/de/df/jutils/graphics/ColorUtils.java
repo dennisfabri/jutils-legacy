@@ -51,7 +51,7 @@ public final class ColorUtils {
             if (b1) {
                 foreground = ColorUtils.invert(foreground);
             }
-        } else if (!b2) {
+        } else {
             if (!b1) {
                 foreground = ColorUtils.invert(foreground);
             }
