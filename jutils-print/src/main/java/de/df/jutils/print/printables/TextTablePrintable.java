@@ -128,6 +128,8 @@ public class TextTablePrintable implements Printable {
                     } else {
                         label.setFont(label.getFont().deriveFont(Font.BOLD));
                     }
+                    label.setBackground(Color.WHITE);
+                    label.setForeground(Color.BLACK);
                     return label;
                 } else {
                     int width = table.getColumnModel().getColumn(column).getWidth();
@@ -135,6 +137,8 @@ public class TextTablePrintable implements Printable {
                     area.setMaximumSize(new Dimension(width, Integer.MAX_VALUE));
                     area.setSize(new Dimension(width, Integer.MAX_VALUE));
                     area.setText(value.toString());
+                    area.setBackground(Color.WHITE);
+                    area.setForeground(Color.BLACK);
                     return area;
                 }
             }

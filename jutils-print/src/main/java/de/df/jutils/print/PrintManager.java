@@ -1,5 +1,6 @@
 package de.df.jutils.print;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -276,6 +277,7 @@ public final class PrintManager {
     public static JLabel getPrintLabel(String text) {
         JLabel l = new JLabel(text);
         l.setFont(getFont());
+        l.setForeground(Color.BLACK);
         return l;
     }
 

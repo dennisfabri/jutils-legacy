@@ -3,6 +3,7 @@
  */
 package de.df.jutils.gui.layout;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.text.NumberFormat;
@@ -32,6 +33,7 @@ public class SimpleFormBuilder {
     private final LinkedList<Integer> grows = new LinkedList<>();
 
     private Font font;
+    private Color color;
     private boolean group = true;
 
     private final String spacer;
@@ -40,7 +42,7 @@ public class SimpleFormBuilder {
         if (space < 0) {
             throw new IllegalArgumentException("space must be at least 0.");
         }
-        spacer = "" + space + "dlu";
+        spacer = space + "dlu";
         if (layout == null) {
             int intend = 4;
             if (space > 0) {
@@ -115,6 +117,10 @@ public class SimpleFormBuilder {
         this.font = font;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public void addSeparator(String name) {
         addRow();
         int index = layout.getRowCount();
@@ -122,7 +128,7 @@ public class SimpleFormBuilder {
             fills.removeLast();
         }
         addEmptyRow();
-        if ((name == null) || (name.length() == 0)) {
+        if ((name == null) || name.isEmpty()) {
             panel.add(new JSeparator(), CC.xyw(2, index, 4, "fill,bottom"));
         } else {
             panel.add(new JLabelSeparator(name, font), CC.xyw(2, index, 4, "fill,bottom"));
@@ -133,7 +139,7 @@ public class SimpleFormBuilder {
         addRow();
         int index = layout.getRowCount();
         addEmptyRow();
-        if ((name == null) || (name.length() == 0)) {
+        if ((name == null) || name.isEmpty()) {
             panel.add(createLabel(""), CC.xyw(2, index, 4, "fill,bottom"));
         } else {
             panel.add(createLabel(name), CC.xyw(2, index, 4, "fill,bottom"));
@@ -180,6 +186,9 @@ public class SimpleFormBuilder {
         JLabel l = new JLabel(value);
         if (font != null) {
             l.setFont(font);
+        }
+        if (color != null) {
+            l.setForeground(color);
         }
         return l;
     }
