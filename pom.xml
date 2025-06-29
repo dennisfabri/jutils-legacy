@@ -17,8 +17,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>5.12.1</junit.version>
-        <openpdf.version>2.0.3</openpdf.version>
+        <junit.version>5.13.2</junit.version>
+        <openpdf.version>2.2.3</openpdf.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
     </properties>
     <modules>
@@ -159,7 +159,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.4.1</version>
+                    <version>3.5.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
@@ -179,7 +179,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.2</version>
+                    <version>3.5.3</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -206,7 +206,7 @@
                 <plugin>
                     <groupId>org.openrewrite.maven</groupId>
                     <artifactId>rewrite-maven-plugin</artifactId>
-                    <version>6.3.2</version>
+                    <version>6.12.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -241,7 +241,7 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-migrate-java</artifactId>
-                        <version>3.4.0</version>
+                        <version>3.12.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
