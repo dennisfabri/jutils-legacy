@@ -3,8 +3,7 @@
  */
 package de.df.jutils.gui.layout;
 
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -28,6 +27,11 @@ public class SimpleListBuilder {
     private final LinkedList<Integer> fills = new LinkedList<>();
 
     private final String spacer;
+    private Color color;
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     public SimpleListBuilder(JPanel panel, FormLayout layout, int spacing) {
         spacer = "" + spacing + "dlu";
@@ -65,6 +69,9 @@ public class SimpleListBuilder {
     public void addText(String name) {
         JLabel jls = new JLabel(name);
         jls.setFont(panel.getFont());
+        if (color != null) {
+            jls.setForeground(color);
+        }
         add(jls);
     }
 
@@ -85,6 +92,9 @@ public class SimpleListBuilder {
         int index = layout.getRowCount();
         addEmptyRow();
         c.setFont(panel.getFont());
+        if (color != null) {
+            c.setForeground(color);
+        }
         panel.add(c, CC.xy(2, index));
     }
 
@@ -98,6 +108,9 @@ public class SimpleListBuilder {
         } else {
             JLabelSeparator jls = new JLabelSeparator(name);
             jls.setFont(panel.getFont());
+            if (color != null) {
+                jls.setForeground(color);
+            }
             add(jls);
         }
     }

@@ -9,10 +9,7 @@ import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import com.jgoodies.forms.factories.CC;
@@ -128,11 +125,16 @@ public class SimpleFormBuilder {
             fills.removeLast();
         }
         addEmptyRow();
+        JComponent separator;
         if ((name == null) || name.isEmpty()) {
-            panel.add(new JSeparator(), CC.xyw(2, index, 4, "fill,bottom"));
+            separator = new JSeparator();
         } else {
-            panel.add(new JLabelSeparator(name, font), CC.xyw(2, index, 4, "fill,bottom"));
+            separator = new JLabelSeparator(name, font);
         }
+        if (color != null) {
+            separator.setForeground(color);
+        }
+        panel.add(separator, CC.xyw(2, index, 4, "fill,bottom"));
     }
 
     public void addText(String name) {
@@ -259,6 +261,9 @@ public class SimpleFormBuilder {
     }
 
     public void add(String name, Component c, GrowModel grow) {
+        if (color != null) {
+            c.setForeground(color);
+        }
         add(name == null ? null : createLabel(name), c, grow);
     }
 
@@ -268,21 +273,21 @@ public class SimpleFormBuilder {
         int height = 2;
         String contraint = "fill,default";
         switch (grow) {
-        case TrippleSize:
-            height = 3;
-            addRow(false);
-            addRow(false);
-            break;
-        case DoubleSize:
-            addRow(false);
-            break;
-        case None:
-            // addRow(false, false);
-            contraint = "fill,top";
-            break;
-        case Resize:
-        default:
-            addRow(true);
+            case TrippleSize:
+                height = 3;
+                addRow(false);
+                addRow(false);
+                break;
+            case DoubleSize:
+                addRow(false);
+                break;
+            case None:
+                // addRow(false, false);
+                contraint = "fill,top";
+                break;
+            case Resize:
+            default:
+                addRow(true);
         }
         addEmptyRow();
 
@@ -350,11 +355,11 @@ public class SimpleFormBuilder {
             if (filledRows.length <= 1 && growingRows.length <= 1) {
                 // Nothing to do
             } else if (filledRows.length > 1 && growingRows.length > 1) {
-                layout.setRowGroups(new int[][] { filledRows, growingRows });
+                layout.setRowGroups(new int[][]{filledRows, growingRows});
             } else if (filledRows.length > 1) {
-                layout.setRowGroups(new int[][] { filledRows });
+                layout.setRowGroups(new int[][]{filledRows});
             } else {
-                layout.setRowGroups(new int[][] { growingRows });
+                layout.setRowGroups(new int[][]{growingRows});
             }
         }
         return panel;

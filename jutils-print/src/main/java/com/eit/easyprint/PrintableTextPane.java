@@ -19,12 +19,11 @@
 
 package com.eit.easyprint;
 
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-
-import javax.swing.JTextPane;
 
 /**
  * The JTextPane enhanced with Printablility (we essentially implement the Print
@@ -41,6 +40,8 @@ class PrintableTextPane extends JTextPane implements Printable {
     public PrintableTextPane() {
         super();
         setDoubleBuffered(false);
+        setForeground(Color.BLACK);
+        setBackground(Color.WHITE);
     }
 
     /**
