@@ -19,7 +19,7 @@
         <slf4j.version>2.0.17</slf4j.version>
         <junit.version>5.13.2</junit.version>
         <openpdf.version>2.2.3</openpdf.version>
-        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
     </properties>
     <modules>
         <module>jutils-print</module>
