@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.dennisfabri.jutils</groupId>
     <artifactId>jutils-legacy</artifactId>
-    <version>17.2.1</version>
+    <version>18.0.0</version>
     <packaging>pom</packaging>
     <name>jutils-legacy</name>
     <description>Unordered class collection</description>
@@ -133,7 +133,7 @@
             <dependency>
                 <groupId>com.formdev</groupId>
                 <artifactId>flatlaf</artifactId>
-                <version>3.6.2</version>
+                <version>3.7</version>
             </dependency>
             <dependency>
                 <groupId>org.openani.jsystemthemedetector</groupId>
