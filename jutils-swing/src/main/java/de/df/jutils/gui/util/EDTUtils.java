@@ -3,21 +3,14 @@
  */
 package de.df.jutils.gui.util;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Window;
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Supplier;
-
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.table.TableColumn;
 
 public final class EDTUtils {
 
@@ -467,4 +460,15 @@ public final class EDTUtils {
         executeOnEDT(() -> {
         });
     }
+
+    public static void requestFocus(Window w, Component c) {
+        SwingUtilities.invokeLater(() -> focusWindow(w));
+        SwingUtilities.invokeLater(c::requestFocus);
+    }
+
+    private static void focusWindow(java.awt.Window w) {
+        w.toFront();
+        w.requestFocusInWindow();
+    }
+
 }
