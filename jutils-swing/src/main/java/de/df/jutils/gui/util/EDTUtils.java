@@ -461,14 +461,23 @@ public final class EDTUtils {
         });
     }
 
+    public static void requestFocus(Component c) {
+        if (c == null) {
+            return;
+        }
+        requestFocus(SwingUtilities.getWindowAncestor(c), c);
+    }
+
     public static void requestFocus(Window w, Component c) {
         SwingUtilities.invokeLater(() -> focusWindow(w));
         SwingUtilities.invokeLater(c::requestFocus);
     }
 
     private static void focusWindow(java.awt.Window w) {
+        if (w == null) {
+            return;
+        }
         w.toFront();
         w.requestFocusInWindow();
     }
-
 }
