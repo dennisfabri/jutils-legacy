@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.dennisfabri.jutils</groupId>
     <artifactId>jutils-legacy</artifactId>
-    <version>18.0.0</version>
+    <version>18.0.1</version>
     <packaging>pom</packaging>
     <name>jutils-legacy</name>
     <description>Unordered class collection</description>
@@ -17,8 +17,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>6.0.1</junit.version>
-        <openpdf.version>3.0.0</openpdf.version>
+        <junit.version>6.0.3</junit.version>
+        <openpdf.version>3.0.1</openpdf.version>
         <commons-lang3.version>3.20.0</commons-lang3.version>
     </properties>
     <modules>
@@ -175,11 +175,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.14.1</version>
+                    <version>3.15.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.4</version>
+                    <version>3.5.5</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -196,7 +196,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.20.1</version>
+                    <version>2.21.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -246,9 +246,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jdeprscan-plugin</artifactId>
-                <version>3.0.0-alpha-1</version>
+                <version>3.0.0</version>
                 <configuration>
-                    <release>17</release>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
         </plugins>
