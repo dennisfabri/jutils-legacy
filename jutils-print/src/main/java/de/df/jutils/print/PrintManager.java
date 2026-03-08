@@ -1,23 +1,23 @@
 package de.df.jutils.print;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.image.BufferedImage;
-import java.awt.print.Printable;
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.util.Date;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-
 import de.df.jutils.gui.jtable.ExtendedTableModel;
 import de.df.jutils.print.printables.BannerPrintable;
 import de.df.jutils.print.printables.HeaderFooterPrintable;
 import de.df.jutils.util.StringTools;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.print.Printable;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 /**
  * @author Dennis Fabri
@@ -43,6 +43,26 @@ public final class PrintManager {
     private static BufferedImage adsLBottom;
     private static String[] adsJobs = new String[0];
 
+    private static final List<String> defaultFontNames = List.of("DLRG Univers 55 Roman",
+                                                                 "DLRG-Jugend Text",
+                                                                 "Liberation Sans",
+                                                                 "DejaVu Sans",
+                                                                 "Noto Sans Regular",
+                                                                 "Aptos",
+                                                                 "Calibri",
+                                                                 "Ubuntu Sans Regular",
+                                                                 "Tahoma",
+                                                                 "Arial",
+                                                                 "Nimbus Sans",
+                                                                 "Lucida Sans",
+                                                                 "Garamond",
+                                                                 "Linux Libertine O",
+                                                                 "Linux Biolinum O",
+                                                                 "Times New Roman",
+                                                                 "Dialog.plain");
+
+    private static List<String> fontlog = List.of();
+
     static {
         leftFooter = new MessageFormat("");
         centerFooter = new MessageFormat("");
@@ -54,111 +74,61 @@ public final class PrintManager {
         font = getDefaultFont();
     }
 
-    private static String fontlog;
-
     public static Font getDefaultFont() {
-        StringBuilder log = new StringBuilder();
+        List<String> log = new ArrayList<>();
 
-        Font defaultfont1 = null;
-        Font defaultfont2 = null;
-        Font defaultfont3 = null;
+        Font defaultfont = null;
 
-        Font dialog = null;
+        Map<String, Font> fonts = stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()).collect(Collectors.toMap(Font::getFontName, f -> f));
 
-        // Try different fonts
-        // 1. DLRG-Font
-        // 2. DLRG-Jugend-Font
-        // 3. OS-StandardFonts
-        // 4. Dialog
-        Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-        for (int x = 0; x < fonts.length; x++) {
-            String fontname = fonts[x].getName();
-
-            if ("DLRG Univers 55 Roman".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont1 = fonts[x];
-            }
-            if ("DLRG-Jugend Text".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont2 = fonts[x];
-            }
-            if ("Arial".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont3 = fonts[x];
-            }
-            if ("Tahoma".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont3 = fonts[x];
-            }
-            if ("Helvetica".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont3 = fonts[x];
-            }
-            if ("Lucida".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                defaultfont3 = fonts[x];
-            }
-            if ("Dialog".equals(fontname)) {
-                log.append("Found ").append(fontname).append(" at index ").append(x).append("\n");
-                dialog = fonts[x];
+        for (String fontname : defaultFontNames) {
+            if (fonts.containsKey(fontname)) {
+                log.add("Found %s".formatted(fontname));
+                if (defaultfont == null) {
+                    defaultfont = fonts.get(fontname);
+                }
+            } else {
+                log.add("Not found: %s".formatted(fontname));
+                stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()).filter(f -> f.getFontName().contains(fontname))
+                                                                                       .forEach(f -> log.add("  Similar: %s".formatted(f.getFontName())));
             }
         }
 
-        log.append("defaultfont1: ").append(defaultfont1).append("\n");
-        log.append("defaultfont2: ").append(defaultfont2).append("\n");
-        log.append("defaultfont3: ").append(defaultfont3).append("\n");
+        log.add("Current default: %s".formatted(toText(defaultfont)));
 
-        if (defaultfont1 == null) {
-            defaultfont1 = defaultfont2;
+        if (defaultfont != null) {
+            defaultfont = defaultfont.deriveFont(Font.PLAIN, 10);
+            log.add("Derived Font: %s".formatted(toText(defaultfont)));
         }
-        if (defaultfont1 == null) {
-            defaultfont1 = defaultfont3;
-        }
+        log.add("Result: %s".formatted(toText(defaultfont)));
 
-        log.append("Current default: ").append(defaultfont1).append("\n");
+        fontlog = log;
 
-        // Try Window default font
-        if (defaultfont1 == null) {
-            JFrame f = new JFrame();
-            f.pack();
-            defaultfont1 = f.getFont();
-            f.dispose();
-            log.append("JFrame: ").append(defaultfont1).append("\n");
-        }
-
-        // Choose first one
-        if (defaultfont1 == null) {
-            defaultfont1 = fonts[0];
-            log.append("fonts[0]: ").append(defaultfont1).append("\n");
-        }
-
-        // If nothing helps use DIALOG.
-        if (defaultfont1 == null) {
-            defaultfont1 = dialog;
-            log.append("dialog: ").append(defaultfont1).append("\n");
-        }
-
-        if (defaultfont1 != null) {
-            defaultfont1 = defaultfont1.deriveFont(Font.PLAIN, 10);
-            log.append("Derived Font: ").append(defaultfont1).append("\n");
-        }
-        log.append("Result: ").append(defaultfont1).append("\n");
-
-        if (fontlog == null) {
-            fontlog = log.toString();
-        }
-        return defaultfont1;
+        return defaultfont;
     }
 
-    public static String getDefaultFontLog() {
-        if (fontlog == null) {
-            return "No log";
+    private static String toText(Font defaultfont) {
+        if (defaultfont == null) {
+            return "<null>";
         }
+        return "%s (%d %s, %s)".formatted(defaultfont.getFontName(), defaultfont.getSize(), toStyle(defaultfont.getStyle()), defaultfont.getFamily());
+    }
+
+    private static String toStyle(int style) {
+        return switch (style) {
+            case Font.PLAIN -> "PLAIN";
+            case Font.BOLD -> "BOLD";
+            case Font.ITALIC -> "ITALIC";
+            case Font.BOLD | Font.ITALIC -> "BOLD|ITALIC";
+            default -> String.valueOf(style);
+        };
+    }
+
+    public static List<String> getDefaultFontLog() {
         return fontlog;
     }
 
-    public static void registerAds(BufferedImage iptop, BufferedImage ipbottom, BufferedImage iltop,
-            BufferedImage ilbottom, String... jobs) {
+    public static void registerAds(BufferedImage iptop, BufferedImage ipbottom, BufferedImage iltop, BufferedImage ilbottom, String... jobs) {
         adsJobs = jobs;
         adsPTop = iptop;
         adsPBottom = ipbottom;
@@ -197,32 +167,21 @@ public final class PrintManager {
     }
 
     public static MessageFormat getFooterMessage(int align) {
-        switch (align) {
-        case HeaderFooterPrintable.CENTER:
-            return centerFooter;
-        case HeaderFooterPrintable.LEFT:
-            return leftFooter;
-        case HeaderFooterPrintable.RIGHT:
-            return rightFooter;
-        default:
-            throw new IndexOutOfBoundsException();
-
-        }
+        return switch (align) {
+            case HeaderFooterPrintable.CENTER -> centerFooter;
+            case HeaderFooterPrintable.LEFT -> leftFooter;
+            case HeaderFooterPrintable.RIGHT -> rightFooter;
+            default -> throw new IndexOutOfBoundsException();
+        };
     }
 
     public static MessageFormat getHeaderMessage(int align) {
-        switch (align) {
-        case HeaderFooterPrintable.CENTER:
-            throw new IllegalArgumentException("Value HeaderFooterPrintable.CENTER not allowed!");
-        // return centerHeader;
-        case HeaderFooterPrintable.LEFT:
-            return leftHeader;
-        case HeaderFooterPrintable.RIGHT:
-            return rightHeader;
-        default:
-            throw new IndexOutOfBoundsException();
-
-        }
+        return switch (align) {
+            case HeaderFooterPrintable.CENTER -> throw new IllegalArgumentException("Value HeaderFooterPrintable.CENTER not allowed!");
+            case HeaderFooterPrintable.LEFT -> leftHeader;
+            case HeaderFooterPrintable.RIGHT -> rightHeader;
+            default -> throw new IndexOutOfBoundsException();
+        };
     }
 
     public static void setFont(Font f) {
@@ -247,8 +206,7 @@ public final class PrintManager {
         return getFinalPrintable(printable, currentDate, header ? new MessageFormat("") : null, jobname);
     }
 
-    public static Printable getFinalPrintable(Printable printable, Date currentDate, MessageFormat header,
-            String jobname) {
+    public static Printable getFinalPrintable(Printable printable, Date currentDate, MessageFormat header, String jobname) {
         HeaderFooterPrintable hfp = new HeaderFooterPrintable(printable, null, null, font);
         hfp.addDynamic(name);
         hfp.addDynamic(location);
@@ -295,7 +253,7 @@ public final class PrintManager {
 
     public static void setName(String name, String shortname) {
         shortname = StringTools.firstLine(shortname);
-        if (shortname != null && shortname.trim().length() > 0) {
+        if (shortname != null && !shortname.isBlank()) {
             PrintManager.name = shortname;
         } else {
             PrintManager.name = StringTools.firstLine(name);
@@ -314,13 +272,11 @@ public final class PrintManager {
         return PrintUtils.getPrintable(table, title, optimize, shrink, enlarge, getFont());
     }
 
-    public static Printable getPrintable(ExtendedTableModel tableModel, String title, int optimize, boolean shrink,
-            boolean enlarge) {
+    public static Printable getPrintable(ExtendedTableModel tableModel, String title, int optimize, boolean shrink, boolean enlarge) {
         return PrintUtils.getPrintable(tableModel, title, optimize, shrink, enlarge, getFont());
     }
 
-    public static Printable getPrintable(ExtendedTableModel[] tableModels, int optimize, boolean shrink,
-            boolean enlarge) {
+    public static Printable getPrintable(ExtendedTableModel[] tableModels, int optimize, boolean shrink, boolean enlarge) {
         return PrintUtils.getPrintable(tableModels, optimize, shrink, enlarge, getFont());
     }
 
@@ -329,13 +285,11 @@ public final class PrintManager {
         return PrintUtils.getHeaderPrintable(printable, title, getFont());
     }
 
-    public static Printable getPrintable(JTable[] tables, Component[] titles, int optimize, boolean shrink,
-            boolean enlarge) {
+    public static Printable getPrintable(JTable[] tables, Component[] titles, int optimize, boolean shrink, boolean enlarge) {
         return PrintUtils.getPrintable(tables, titles, optimize, shrink, enlarge, getFont());
     }
 
-    public static Printable getPrintable(JTable[] tables, String[] names, int optimize, boolean shrink,
-            boolean enlarge) {
+    public static Printable getPrintable(JTable[] tables, String[] names, int optimize, boolean shrink, boolean enlarge) {
         return PrintUtils.getPrintable(tables, names, optimize, shrink, enlarge, getFont());
     }
 }
