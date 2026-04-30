@@ -3,12 +3,11 @@
  */
 package de.df.jutils.gui.util;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Rectangle;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -60,6 +59,17 @@ public final class WindowUtils {
 
     public static void addEnterAction(JDialog window, Runnable exe) {
         addAction(window, exe, KeyEvent.VK_ENTER, 0, "ENTER");
+    }
+
+    public static void addTraversalKeys(JComponent component) {
+        Set<AWTKeyStroke> set = new HashSet<>(
+                component.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        set.add(KeyStroke.getKeyStroke("TAB"));
+        component.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
+
+        set = new HashSet<>(component.getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
+        set.add(KeyStroke.getKeyStroke("shift TAB"));
+        component.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, set);
     }
 
     public static final class CloseRunnable implements Runnable {
