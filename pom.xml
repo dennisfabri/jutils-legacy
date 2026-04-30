@@ -11,7 +11,7 @@
     <description>Unordered class collection</description>
     <url>https://www.dennisfabri.de</url>
     <properties>
-        <project.build.sourceEncoding>Windows-1252</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>25</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>

@@ -29,7 +29,7 @@ public final class Transform {
         StreamResult streamResult = new StreamResult(out);
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer serializer = tf.newTransformer();
-        serializer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
+        serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         if (dtd != null) {
             serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, dtd);
         }

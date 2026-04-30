@@ -2,8 +2,10 @@ package de.df.jutils.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -87,10 +89,8 @@ public final class StringTools {
     }
 
     public static String toHtml(String text) {
-        String[][] tokens = new String[][] { { "&", "&amp;" }, { "\u00e4", "&auml;" }, { "\u00f6", "&ouml;" },
-                { "\u00fc", "&uuml;" }, { "\u00c4", "&Auml;" },
-                { "\u00d6", "&Ouml;" }, { "\u00dc", "&Uuml;" }, { "\u00df", "&szlig;" }, { "<", "&lt;" },
-                { ">", "&gt;" }
+        String[][] tokens = new String[][] { { "&", "&amp;" }, { "\u00e4", "&auml;" }, { "\u00f6", "&ouml;" }, { "\u00fc", "&uuml;" }, { "\u00c4", "&Auml;" },
+                                             { "\u00d6", "&Ouml;" }, { "\u00dc", "&Uuml;" }, { "\u00df", "&szlig;" }, { "<", "&lt;" }, { ">", "&gt;" }
 
         };
         for (String[] token : tokens) {
@@ -139,79 +139,79 @@ public final class StringTools {
 
     private static int hexToByte(char c) {
         switch (c) {
-        case '0':
-            return 0;
-        case '1':
-            return 1;
-        case '2':
-            return 2;
-        case '3':
-            return 3;
-        case '4':
-            return 4;
-        case '5':
-            return 5;
-        case '6':
-            return 6;
-        case '7':
-            return 7;
-        case '8':
-            return 8;
-        case '9':
-            return 9;
-        case 'a':
-            return 10;
-        case 'b':
-            return 11;
-        case 'c':
-            return 12;
-        case 'd':
-            return 13;
-        case 'e':
-            return 14;
-        case 'f':
-            return 15;
-        default:
-            return -1;
+            case '0':
+                return 0;
+            case '1':
+                return 1;
+            case '2':
+                return 2;
+            case '3':
+                return 3;
+            case '4':
+                return 4;
+            case '5':
+                return 5;
+            case '6':
+                return 6;
+            case '7':
+                return 7;
+            case '8':
+                return 8;
+            case '9':
+                return 9;
+            case 'a':
+                return 10;
+            case 'b':
+                return 11;
+            case 'c':
+                return 12;
+            case 'd':
+                return 13;
+            case 'e':
+                return 14;
+            case 'f':
+                return 15;
+            default:
+                return -1;
         }
     }
 
     private static char toHex(byte i) {
         switch (i) {
-        case 0:
-            return '0';
-        case 1:
-            return '1';
-        case 2:
-            return '2';
-        case 3:
-            return '3';
-        case 4:
-            return '4';
-        case 5:
-            return '5';
-        case 6:
-            return '6';
-        case 7:
-            return '7';
-        case 8:
-            return '8';
-        case 9:
-            return '9';
-        case 10:
-            return 'a';
-        case 11:
-            return 'b';
-        case 12:
-            return 'c';
-        case 13:
-            return 'd';
-        case 14:
-            return 'e';
-        case 15:
-            return 'f';
-        default:
-            return ' ';
+            case 0:
+                return '0';
+            case 1:
+                return '1';
+            case 2:
+                return '2';
+            case 3:
+                return '3';
+            case 4:
+                return '4';
+            case 5:
+                return '5';
+            case 6:
+                return '6';
+            case 7:
+                return '7';
+            case 8:
+                return '8';
+            case 9:
+                return '9';
+            case 10:
+                return 'a';
+            case 11:
+                return 'b';
+            case 12:
+                return 'c';
+            case 13:
+                return 'd';
+            case 14:
+                return 'e';
+            case 15:
+                return 'f';
+            default:
+                return ' ';
         }
     }
 
@@ -235,7 +235,7 @@ public final class StringTools {
 
     /**
      * Erzeugt aus einer Zahl den entsprechenden Buchstaben des Alphabets.
-     * 
+     *
      * @param zahl Nummer des Buchstaben im Alphabet
      * @return Der zahl-te Buchstabe im Alphabet
      */
@@ -384,13 +384,13 @@ public final class StringTools {
             count++;
         }
         switch (count) {
-        case 0:
-            return dir + fs + file;
-        case 1:
-            return dir + file;
-        case 2:
-        default:
-            return dir + file.substring(fs.length());
+            case 0:
+                return dir + fs + file;
+            case 1:
+                return dir + file;
+            case 2:
+            default:
+                return dir + file.substring(fs.length());
         }
     }
 
@@ -431,7 +431,7 @@ public final class StringTools {
     /**
      * Wandelt den in Sekunden gegebenen double in einen String vom Format mm:ss,ss
      * um.
-     * 
+     *
      * @param zeit Enth\u00e4\u00fc00e4lt die Zeit in Hundertstel-Sekunden. @return
      *             Liefert die Zeit im \u00fcblichen Format.
      */
@@ -461,7 +461,7 @@ public final class StringTools {
     /**
      * Diese Methode wandelt eine Zahl (double) in die f\u00fcr Punkte korrekte
      * Darstellen (2 Nachkommastellen) um.
-     * 
+     *
      * @param punkte Die Punkte die formatiert werden sollen @return Liefert einen
      *               korrekt formatierten String f\u00fcr Punkte zur\u00fcck.
      */
@@ -580,17 +580,13 @@ public final class StringTools {
     }
 
     public static String crc(String pre) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(1024);
-        PrintStream ps;
-        try {
-            ps = new PrintStream(bos, true, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            ps = new PrintStream(bos);
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(1024); PrintStream ps = new PrintStream(bos, true, StandardCharsets.UTF_8)) {
+            ps.print(pre);
+            CRC32 crc = new CRC32();
+            crc.update(bos.toByteArray());
+            return StringTools.asCode(crc.getValue());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        ps.print(pre);
-        CRC32 crc = new CRC32();
-        crc.update(bos.toByteArray());
-        return StringTools.asCode(crc.getValue());
     }
 }
