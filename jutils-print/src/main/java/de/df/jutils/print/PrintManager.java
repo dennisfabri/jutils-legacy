@@ -79,7 +79,8 @@ public final class PrintManager {
 
         Font defaultfont = null;
 
-        Map<String, Font> fonts = stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()).collect(Collectors.toMap(Font::getFontName, f -> f));
+        Map<String, Font> fonts =
+                stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()).collect(Collectors.toMap(Font::getFontName, f -> f, (a, b) -> a));
 
         for (String fontname : defaultFontNames) {
             if (fonts.containsKey(fontname)) {
