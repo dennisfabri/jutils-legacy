@@ -25,6 +25,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -75,9 +76,13 @@ class JPrintPreview extends JInfiniteProgressFrame {
 
     private Window parent;
     PageContainer pages1;
-    boolean render;
-    boolean pause;
-    boolean stopped;
+    volatile boolean render;
+    volatile boolean pause;
+    // Guards pause; notified whenever pause or render changes
+    private final Object renderLock = new Object();
+    private PrintableToImages renderer;
+    private SwingWorker<Printable, Object> rendererStarter;
+    private boolean closed;
 
     private ImageIcon imageIcon;
     private JLabel image;
@@ -124,7 +129,6 @@ class JPrintPreview extends JInfiniteProgressFrame {
 
         render = true;
         pause = false;
-        stopped = true;
 
         imageIcon = new ImageIcon();
         image = new JLabel();
@@ -171,14 +175,7 @@ class JPrintPreview extends JInfiniteProgressFrame {
 
         setAnimated(true);
 
-        try {
-            new PrintableToImages(printable.create()).start();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            render = false;
-            pause = false;
-            stopped = true;
-        }
+        startRendering();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -215,17 +212,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         panel.setFloatable(false);
 
-        print.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setEnabled(false);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        PrintExecutor.print(createPrintable(), name, true, JPrintPreview.this);
-                    }
-                }).start();
-            }
+        print.addActionListener(arg0 -> {
+            PrintExecutor.print(printable, name, true, JPrintPreview.this);
         });
         setup.addActionListener(arg0 -> {
             doSetup();
@@ -272,7 +260,67 @@ class JPrintPreview extends JInfiniteProgressFrame {
     }
 
     protected void pauseRendering(boolean p) {
-        pause = p;
+        // setEnabled may be called by the superclass constructor before
+        // renderLock is initialized
+        if (renderLock == null) {
+            pause = p;
+            return;
+        }
+        synchronized (renderLock) {
+            pause = p;
+            renderLock.notifyAll();
+        }
+    }
+
+    private void stopRendering() {
+        synchronized (renderLock) {
+            render = false;
+            renderLock.notifyAll();
+        }
+    }
+
+    /**
+     * Stops the current rendering, creates the printable in a background thread
+     * and renders it afresh. Must be called on the EDT.
+     */
+    private void startRendering() {
+        PrintableToImages old = renderer;
+        renderer = null;
+        stopRendering();
+        setStatus(true);
+        rendererStarter = new SwingWorker<Printable, Object>() {
+            @Override
+            protected Printable doInBackground() throws Exception {
+                if (old != null) {
+                    old.join();
+                }
+                EDTUtils.executeOnEDT(() -> {
+                    pageNumber.removeAllItems();
+                    pages1.clear();
+                });
+                return printable.create();
+            }
+
+            @Override
+            protected void done() {
+                // Superseded by a newer call to startRendering
+                if (closed || rendererStarter != this) {
+                    return;
+                }
+                try {
+                    renderer = new PrintableToImages(get());
+                    render = true;
+                    renderer.start();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    setStatus(false);
+                } catch (ExecutionException | RuntimeException e) {
+                    e.printStackTrace();
+                    setStatus(false);
+                }
+            }
+        };
+        rendererStarter.execute();
     }
 
     protected void updateButtons() {
@@ -401,10 +449,6 @@ class JPrintPreview extends JInfiniteProgressFrame {
 
         @Override
         public void run() {
-            render = true;
-            pause = false;
-            stopped = false;
-
             PageFormat pF = PageSetup.getPageFormat(name);
             int pageIndex = 0;
             while (render) {
@@ -436,11 +480,17 @@ class JPrintPreview extends JInfiniteProgressFrame {
                     oome.printStackTrace();
                     render = false;
                 }
-                while (pause && render) {
-                    EDTUtils.waitOnEDT();
+                synchronized (renderLock) {
+                    while (pause && render) {
+                        try {
+                            renderLock.wait();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            render = false;
+                        }
+                    }
                 }
             }
-            stopped = true;
             setStatus(false);
         }
     }
@@ -460,7 +510,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
     }
 
     void exit() {
-        render = false;
+        closed = true;
+        stopRendering();
         parent.setEnabled(true);
         setVisible(false);
 
@@ -525,17 +576,8 @@ class JPrintPreview extends JInfiniteProgressFrame {
         pauseRendering(true);
         boolean ok = PageSetup.show(name);
         if (ok) {
-            render = false;
-            while (!stopped) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // Nothing to do
-                }
-            }
-            pageNumber.removeAllItems();
-            pages1.clear();
-            new PrintableToImages(printable.create()).start();
+            startRendering();
+            pauseRendering(false);
         } else {
             pauseRendering(false);
         }
