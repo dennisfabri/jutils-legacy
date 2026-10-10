@@ -179,8 +179,6 @@ public class JWarningTextField extends JTextField {
         }
     }
 
-    private static final Icons icons = new Icons();
-
     private Border originalBorder;
     private Border warnBorder;
     private Border errorBorder;
@@ -188,8 +186,8 @@ public class JWarningTextField extends JTextField {
     private void initializeBorders() {
         if (originalBorder == null) {
             originalBorder = getBorder();
-            warnBorder = new IconBorder(icons.getWarningIcon(), originalBorder);
-            errorBorder = new IconBorder(icons.getErrorIcon(), originalBorder);
+            warnBorder = new IconBorder(Icons.getWarningIcon(), originalBorder);
+            errorBorder = new IconBorder(Icons.getErrorIcon(), originalBorder);
         }
     }
 
@@ -202,7 +200,7 @@ public class JWarningTextField extends JTextField {
     private Border getValidationBorder() {
         initializeBorders();
         if (isEnabled() && !isOk()) {
-            if (getText().length() == 0) {
+            if (getText().isEmpty()) {
                 return warnBorder;
             } else {
                 return errorBorder;

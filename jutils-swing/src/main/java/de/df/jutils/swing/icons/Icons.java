@@ -4,17 +4,39 @@ import javax.swing.ImageIcon;
 
 public class Icons {
 
-    private final ResourceManager resourceManager = new ResourceManager(Icons.class.getPackageName() + ".icons");
+    public interface IconProvider {
+        ImageIcon getErrorIcon();
 
-    public ImageIcon getErrorIcon() {
-        return resourceManager.readImage("ErrorProvider.ErrorIcon");
+        ImageIcon getWarningIcon();
     }
 
-    public ImageIcon getWarningIcon() {
-        return resourceManager.readImage("ErrorProvider.WarningIcon");
+    private static class DefaultIconProvider implements IconProvider {
+
+        private final ResourceManager resourceManager = new ResourceManager(Icons.class.getPackageName() + ".icons");
+
+        @Override
+        public ImageIcon getErrorIcon() {
+            return resourceManager.readImage("ErrorProvider.ErrorIcon");
+        }
+
+        @Override
+        public ImageIcon getWarningIcon() {
+            return resourceManager.readImage("ErrorProvider.WarningIcon");
+        }
     }
 
-    public ImageIcon getInfoIcon() {
-        return resourceManager.readImage("ErrorProvider.InfoIcon");
+    private static IconProvider iconProvider = new DefaultIconProvider();
+
+    public static ImageIcon getErrorIcon() {
+        return iconProvider.getErrorIcon();
+    }
+
+    public static ImageIcon getWarningIcon() { return iconProvider.getWarningIcon(); }
+
+    public static void setIconProvider(IconProvider provider) {
+        if (provider == null) {
+            throw new IllegalArgumentException("provider must not be null");
+        }
+        iconProvider = provider;
     }
 }
