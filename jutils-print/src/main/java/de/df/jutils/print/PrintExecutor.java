@@ -1,5 +1,6 @@
 package de.df.jutils.print;
 
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.print.Printable;
@@ -8,9 +9,11 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterIOException;
 import java.awt.print.PrinterJob;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import de.df.jutils.gui.JInfiniteProgressDialog;
 import de.df.jutils.gui.util.AIconBundle;
@@ -34,6 +37,59 @@ public final class PrintExecutor {
     public static void preview(JFrame parent, PrintableCreator p, String jobname, AIconBundle ib, List<Image> icons) {
         JFrame jd = new JPrintPreview(parent, p, jobname, ib, icons);
         ModalFrameUtil.showAsModal(jd, parent);
+    }
+
+    public static void print(PrintableCreator creator, String jobname, JFrame parent) {
+        print(creator, jobname, true, parent);
+    }
+
+    /**
+     * Creates the printable in a background thread to keep the EDT responsive
+     * while the data is prepared. Afterwards the print dialog is shown on the EDT
+     * and the job is queued. The parent is disabled while the printable is
+     * created. Must be called on the EDT.
+     */
+    public static void print(PrintableCreator creator, String jobname, boolean showDialog, JFrame parent) {
+        if (creator == null) {
+            throw new IllegalArgumentException("creator must not be null!");
+        }
+
+        setBusy(parent, true);
+        new SwingWorker<Printable, Void>() {
+            @Override
+            protected Printable doInBackground() {
+                return creator.create();
+            }
+
+            @Override
+            protected void done() {
+                setBusy(parent, false);
+                Printable printable;
+                try {
+                    printable = get();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                } catch (ExecutionException e) {
+                    e.getCause().printStackTrace();
+                    printable = null;
+                }
+                if (printable == null) {
+                    DialogUtils.warn(parent, JUtilsI18n.get("de.dm.print.error.general.text"),
+                            JUtilsI18n.get("de.dm.print.error.general.note"));
+                    return;
+                }
+                print(printable, jobname, showDialog, parent);
+            }
+        }.execute();
+    }
+
+    private static void setBusy(JFrame parent, boolean busy) {
+        if (parent == null) {
+            return;
+        }
+        parent.setCursor(busy ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : null);
+        parent.setEnabled(!busy);
     }
 
     public static void print(Printable printable, String jobname, JFrame parent) {
