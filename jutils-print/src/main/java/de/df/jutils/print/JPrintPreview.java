@@ -427,6 +427,21 @@ class JPrintPreview extends JInfiniteProgressFrame {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             setEnabled(true);
             pauseRendering(false);
+
+            boolean saved;
+            try {
+                saved = get();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                saved = false;
+            } catch (ExecutionException e) {
+                e.getCause().printStackTrace();
+                saved = false;
+            }
+            if (!saved) {
+                DialogUtils.warn(JPrintPreview.this, JUtilsI18n.get("de.dm.print.SaveFailed", filename),
+                        JUtilsI18n.get("de.dm.print.SaveFailed.Note", filename));
+            }
         }
     }
 
