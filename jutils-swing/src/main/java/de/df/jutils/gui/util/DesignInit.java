@@ -1,6 +1,3 @@
-/*
- * Created on 08.09.2005
- */
 package de.df.jutils.gui.util;
 
 import java.awt.Font;
@@ -79,8 +76,6 @@ public final class DesignInit {
         }
 
         Toolkit.getDefaultToolkit().setDynamicLayout(true);
-
-        LookAndFeelTweaks.tweak();
     }
 
     private static void applyRenderingSettings(UIPerformanceMode uimode) {
@@ -110,6 +105,11 @@ public final class DesignInit {
         commands.add(DesignInit::setDefaultLaF);
 
         commands.executeUntilFirstSuccess();
+
+        // Must run after the look and feel is installed: it copies List.font into the fonts of text fields, tables
+        // and tooltips. Called earlier, it copies the font of the default look and feel, which then overrides the
+        // (possibly larger) fonts of the installed look and feel.
+        LookAndFeelTweaks.tweak();
 
         SwingUtilities.invokeLater(DesignInit::patchLaF);
     }
