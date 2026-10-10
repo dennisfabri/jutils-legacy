@@ -9,11 +9,14 @@ import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import org.openpdf.text.Document;
 import org.openpdf.text.DocumentException;
@@ -23,9 +26,8 @@ import org.openpdf.text.Rectangle;
 import org.openpdf.text.pdf.DefaultFontMapper;
 import org.openpdf.text.pdf.FontMapper;
 import org.openpdf.text.pdf.PdfContentByte;
-import org.openpdf.text.pdf.PdfCopy;
 import org.openpdf.text.pdf.PdfGraphics2D;
-import org.openpdf.text.pdf.PdfReader;
+import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
 
 import de.df.jutils.i18n.util.JUtilsI18n;
@@ -44,7 +46,7 @@ public final class PdfOutput {
 
     private static DefaultFontMapper fontMapper;
 
-    private static FontMapper getFontMapper() {
+    private static synchronized FontMapper getFontMapper() {
         if (fontMapper == null) {
             fontMapper = new DefaultFontMapper();
             if (new File(WINDOWS_FONTPATH).exists()) {
@@ -55,116 +57,100 @@ public final class PdfOutput {
     }
 
     public static boolean write(OutputStream out, Printable source, boolean portrait, Insets margin, Feedback fb) {
-        boolean success = true;
-
-        int pages = 0;
-
         FontFactory.defaultEmbedding = true;
 
-        ByteArrayOutputStream fos = new ByteArrayOutputStream(1024 * 1024);
+        Document document;
+        if (portrait) {
+            document = new Document(PageSize.A4);
+        } else {
+            document = new Document(PageSize.A4.rotate());
+        }
+        Rectangle size = document.getPageSize();
+        Paper paper = new Paper();
+        paper.setSize(size.getWidth(), size.getHeight());
+        paper.setImageableArea(margin.left, margin.top, size.getWidth() - margin.left - margin.right,
+                size.getHeight() - margin.top - margin.bottom);
+        PageFormat pf = new PageFormat();
+        pf.setOrientation(PageFormat.PORTRAIT);
+        pf.setPaper(paper);
+
+        int pages = 0;
         try {
-            Document document;
-            if (portrait) {
-                document = new Document(PageSize.A4);
-            } else {
-                document = new Document(PageSize.A4.rotate());
-            }
-            Rectangle size = document.getPageSize();
-            Paper paper = new Paper();
-            paper.setSize(size.getWidth(), size.getHeight());
-            paper.setImageableArea(margin.left, margin.top, size.getWidth() - margin.left - margin.right,
-                    size.getHeight() - margin.top - margin.bottom);
-            PageFormat pf = new PageFormat();
-            pf.setOrientation(PageFormat.PORTRAIT);
-            pf.setPaper(paper);
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, fos);
-                document.open();
-                PdfContentByte cb = writer.getDirectContent();
-
-                int result = Printable.PAGE_EXISTS;
-                int index = 0;
-
-                while (result != Printable.NO_SUCH_PAGE) {
-                    pages++;
-
-                    fb.showFeedback(JUtilsI18n.get("PageNr", pages));
-
-                    // Create the graphics with pdf fonts
-                    if (index > 0) {
-                        document.newPage();
-                    }
-
-                    Graphics2D g2 = new PdfGraphics2D(cb, size.getWidth(), size.getHeight(), getFontMapper(), false,
-                            false, 0);
-
-                    // Print the table to the graphics
-                    g2.clipRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
-                    result = source.print(g2, pf, index);
-
-                    g2.dispose();
-
-                    index++;
-                }
-            } catch (PrinterException pe) {
-                pe.printStackTrace();
-                success = false;
-            } catch (DocumentException de) {
-                de.printStackTrace();
-                success = false;
-            }
-
-            document.close();
-
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            try {
-                fos.close();
-            } catch (IOException ioe) {
-                // Nothing to do
-            }
-            return false;
-        }
-
-        if (!success) {
-            return false;
-        }
-
-        if (pages == 1) {
-            return false;
-        }
-
-        fb.showFeedback(JUtilsI18n.get("de.dm.io.pdf.WritingFile"));
-
-        try {
-            PdfReader reader = new PdfReader(fos.toByteArray());
-            Document document = new Document(reader.getPageSizeWithRotation(1));
-            PdfCopy copy = new PdfCopy(document, out);
+            PdfWriter writer = PdfWriter.getInstance(document, out);
             document.open();
-            for (int x = 0; x < pages - 1; x++) {
-                copy.addPage(copy.getImportedPage(reader, x + 1));
+            PdfContentByte cb = writer.getDirectContent();
+
+            while (true) {
+                fb.showFeedback(JUtilsI18n.get("PageNr", pages + 1));
+
+                // Whether a page exists is only known after printing it, so each
+                // page is drawn into a template that is added only if it exists
+                PdfTemplate page = cb.createTemplate(size.getWidth(), size.getHeight());
+                Graphics2D g2 = new PdfGraphics2D(page, size.getWidth(), size.getHeight(), getFontMapper(), false,
+                        false, 0);
+                int result;
+                try {
+                    g2.clipRect(0, 0, (int) size.getWidth(), (int) size.getHeight());
+                    result = source.print(g2, pf, pages);
+                } finally {
+                    g2.dispose();
+                }
+                if (result != Printable.PAGE_EXISTS) {
+                    break;
+                }
+
+                if (pages > 0) {
+                    document.newPage();
+                }
+                cb.addTemplate(page, 0, 0);
+                pages++;
             }
-            document.close();
-            return true;
-        } catch (IOException e) {
+        } catch (PrinterException | DocumentException e) {
             e.printStackTrace();
             return false;
-        } catch (DocumentException e) {
-            e.printStackTrace();
-            return false;
+        } finally {
+            if (pages > 0) {
+                fb.showFeedback(JUtilsI18n.get("de.dm.io.pdf.WritingFile"));
+                document.close();
+            }
         }
+        return pages > 0;
     }
 
+    /**
+     * Writes into a temporary file first so that an existing file is only
+     * replaced when the new one has been written completely.
+     */
     public static boolean write(String filename, Printable printable, boolean portrait, Feedback fb) {
+        Path target = Path.of(filename).toAbsolutePath();
+        Path temp = null;
         try {
-            FileOutputStream out = new FileOutputStream(new File(filename));
-            boolean result = write(out, printable, portrait, fb);
-            out.close();
-            return result;
+            temp = Files.createTempFile(target.getParent(), "." + target.getFileName(), ".tmp");
+            boolean result;
+            try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(temp))) {
+                result = write(out, printable, portrait, fb);
+            }
+            if (!result) {
+                return false;
+            }
+            try {
+                Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+            temp = null;
+            return true;
         } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
+        } finally {
+            if (temp != null) {
+                try {
+                    Files.deleteIfExists(temp);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
         }
     }
 
