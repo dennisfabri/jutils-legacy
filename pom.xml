@@ -16,10 +16,38 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>6.0.3</junit.version>
-        <openpdf.version>3.0.1</openpdf.version>
-        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <maven.min.version>3.8.0</maven.min.version>
+
+        <!-- Dependencies: compile & runtime -->
+        <slf4j.version>2.0.20</slf4j.version>
+        <openpdf.version>3.0.5</openpdf.version>
+        <commons-lang3.version>3.21.0</commons-lang3.version>
+        <jgoodies-forms.version>1.9.0</jgoodies-forms.version>
+        <radiance-substance.version>4.5.0</radiance-substance.version>
+        <swingbits.version>1.3.0</swingbits.version>
+        <l2fprod.version>7.4.0-SNAPSHOT</l2fprod.version>
+        <filechooser.version>1.0.0-SNAPSHOT</filechooser.version>
+        <uistate.version>0.6.0-SNAPSHOT</uistate.version>
+        <swingfx.version>1.0.0-SNAPSHOT</swingfx.version>
+        <flatlaf.version>3.7.2</flatlaf.version>
+        <jSystemThemeDetector.version>3.9</jSystemThemeDetector.version>
+
+        <!-- Dependencies: test -->
+        <junit.version>6.1.3</junit.version>
+
+        <!-- Plugins -->
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-site-plugin.version>3.22.0</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
+        <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
+        <maven-install-plugin.version>3.2.0</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.2.0</maven-deploy-plugin.version>
+        <versions-maven-plugin.version>2.22.0</versions-maven-plugin.version>
+        <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+        <maven-jdeprscan-plugin.version>3.0.0</maven-jdeprscan-plugin.version>
     </properties>
     <modules>
         <module>jutils-print</module>
@@ -82,37 +110,37 @@
             <dependency>
                 <groupId>com.jgoodies</groupId>
                 <artifactId>jgoodies-forms</artifactId>
-                <version>1.9.0</version>
+                <version>${jgoodies-forms.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.pushing-pixels</groupId>
                 <artifactId>radiance-substance</artifactId>
-                <version>4.5.0</version>
+                <version>${radiance-substance.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.oxbow</groupId>
                 <artifactId>swingbits</artifactId>
-                <version>1.3.0</version>
+                <version>${swingbits.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.lisasp.legacy</groupId>
                 <artifactId>l2fprod-common-tasks</artifactId>
-                <version>7.4.0-SNAPSHOT</version>
+                <version>${l2fprod.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.lisasp.swing</groupId>
                 <artifactId>filechooser-core</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${filechooser.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.lisasp.legacy</groupId>
                 <artifactId>uistate</artifactId>
-                <version>0.6.0-SNAPSHOT</version>
+                <version>${uistate.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.java.swingfx</groupId>
                 <artifactId>swingfx</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${swingfx.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -133,12 +161,12 @@
             <dependency>
                 <groupId>com.formdev</groupId>
                 <artifactId>flatlaf</artifactId>
-                <version>3.7</version>
+                <version>${flatlaf.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openani.jsystemthemedetector</groupId>
                 <artifactId>jSystemThemeDetector</artifactId>
-                <version>3.9</version>
+                <version>${jSystemThemeDetector.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -159,49 +187,49 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>${maven-clean-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.21.0</version>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.9.0</version>
+                    <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.4.0</version>
+                    <version>${maven-resources-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.15.0</version>
+                    <version>${maven-compiler-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.5</version>
+                    <version>${maven-surefire-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>${maven-jar-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.4</version>
+                    <version>${maven-install-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.4</version>
+                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.21.0</version>
+                    <version>${versions-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.6.2</version>
+                    <version>${maven-enforcer-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -236,7 +264,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.8.0</version>
+                                    <version>${maven.min.version}</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -246,7 +274,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jdeprscan-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-jdeprscan-plugin.version}</version>
                 <configuration>
                     <release>${java.version}</release>
                 </configuration>
