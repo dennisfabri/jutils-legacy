@@ -79,20 +79,4 @@ public class JGradientLabel extends JPanel {
 
         GraphicsUtils.paintGradient((Graphics2D) g, 0, 0, getWidth(), getHeight() - 1, start, end);
     }
-
-    public Color getLeftColor() {
-        return left;
-    }
-
-    public Color getRightColor() {
-        return right;
-    }
-
-    public void setLeftColor(Color left) {
-        this.left = left;
-    }
-
-    public void setRightColor(Color right) {
-        this.right = right;
-    }
 }

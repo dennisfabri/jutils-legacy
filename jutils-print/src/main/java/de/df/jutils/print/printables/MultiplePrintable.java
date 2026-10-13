@@ -75,10 +75,6 @@ public class MultiplePrintable implements Printable {
         }
     }
 
-    public int getPrintableCount() {
-        return printables.size();
-    }
-
     /*
      * (non-Javadoc)
      * 

@@ -82,16 +82,6 @@ public class SimpleTableLayout implements LayoutManager, Serializable {
         this.select = specialRow;
     }
 
-    public void setSelectedRow(int row) {
-        if (row >= spalten) {
-            row = spalten - 1;
-        }
-        if (row < 0) {
-            row = spalten - 1;
-        }
-        select = row;
-    }
-
     /**
      * Gets the horizontal gap between components.
      * 

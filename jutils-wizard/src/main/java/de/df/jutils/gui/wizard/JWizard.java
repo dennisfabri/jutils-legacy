@@ -46,7 +46,6 @@ public class JWizard extends JPanel {
     private boolean nextEnabled = true;
     private boolean previousEnabled = true;
     private boolean finishEnabled;
-    private boolean cancelEnabled = true;
 
     private UIElementsProvider provider;
 
@@ -186,7 +185,7 @@ public class JWizard extends JPanel {
         EDTUtils.setEnabled(next, (getPageCount() > getCurrentPageIndex() + 1) && nextEnabled);
         EDTUtils.setEnabled(previous, (!pageStack.isEmpty()) && previousEnabled);
         EDTUtils.setEnabled(finish, finishEnabled);
-        EDTUtils.setEnabled(cancel, cancelEnabled);
+        EDTUtils.setEnabled(cancel, true);
     }
 
     protected void disableButtons() {
@@ -375,11 +374,6 @@ public class JWizard extends JPanel {
 
     public void setFinishButtonEnabled(boolean enabled) {
         finishEnabled = enabled;
-        updateButtons();
-    }
-
-    public void setCancelButtonEnabled(boolean enabled) {
-        cancelEnabled = enabled;
         updateButtons();
     }
 

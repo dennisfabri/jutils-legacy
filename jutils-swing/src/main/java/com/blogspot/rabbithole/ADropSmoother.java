@@ -121,20 +121,6 @@ abstract class ADropSmoother<T> extends AbstractComponentDecorator {
         }
     }
 
-    /** Track a drag which originated somewhere else. */
-    public synchronized void startDragOver(Point where) {
-        initialize(where);
-        insertionIndex = getIndex(where, false);
-    }
-
-    /** Stop tracking an external drag. */
-    public synchronized void endDragOver(Point where, Transferable t) {
-        int idx = getIndex(where, false);
-        if (idx != -1) {
-            drop(t, idx);
-        }
-    }
-
     /** Start an internal drag. */
     public synchronized void startDrag(Point where) {
         initialize(where);

@@ -110,12 +110,6 @@ public final class ColorUtils {
         return new Color(c, c, c);
     }
 
-    public static Color toSaturated(Color source, float weight) {
-        float[] hsb = color2HSB(source);
-        hsb[1] = Math.max(0.0f, Math.min(1.0f, hsb[1] + (1.0f - hsb[1]) * weight));
-        return hSB2Color(hsb[0], hsb[1], hsb[2]);
-    }
-
     public static Color brighter(Color source, float weight) {
         float[] hsb = color2HSB(source);
         hsb[2] = Math.max(0.0f, Math.min(1.0f, hsb[2] + (1.0f - hsb[2]) * weight));

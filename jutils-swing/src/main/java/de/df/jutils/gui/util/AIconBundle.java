@@ -11,8 +11,6 @@ import javax.swing.ImageIcon;
 public abstract class AIconBundle {
 
     public static final int SMALL = 16;
-    public static final int MEDIUM = 32;
-    public static final int LARGE = 48;
 
     private Map<String, ImageIcon> icons;
 
@@ -43,13 +41,5 @@ public abstract class AIconBundle {
 
     public final ImageIcon getSmallIcon(String name) {
         return getIcon(name, SMALL);
-    }
-
-    public final ImageIcon getMediumIcon(String name) {
-        return getIcon(name, MEDIUM);
-    }
-
-    public final ImageIcon getLargeIcon(String name) {
-        return getIcon(name, LARGE);
     }
 }

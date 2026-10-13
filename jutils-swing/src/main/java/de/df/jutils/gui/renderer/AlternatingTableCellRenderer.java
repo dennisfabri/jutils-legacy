@@ -22,10 +22,6 @@ public class AlternatingTableCellRenderer implements TableCellRenderer {
         this.tcr = tcr;
     }
 
-    public TableCellRenderer getTableCellRenderer() {
-        return tcr;
-    }
-
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
             int row, int column) {

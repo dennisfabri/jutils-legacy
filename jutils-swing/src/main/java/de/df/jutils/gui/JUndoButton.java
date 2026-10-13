@@ -213,10 +213,6 @@ public class JUndoButton<T> extends JPanel {
         listeners.addLast(ul);
     }
 
-    public void removeUndoListener(UndoListener<T> ul) {
-        listeners.remove(ul);
-    }
-
     public JButton getMainButton() {
         return button;
     }

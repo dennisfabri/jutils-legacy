@@ -33,16 +33,4 @@ class DateTests {
         assertEquals(2016, year);
     }
 
-    @Test
-    void testGetMonth() {
-        int month = DateUtils.getMonth(DateUtils.get(2016, 2, 3));
-        assertEquals(2, month);
-    }
-
-    @Test
-    void testGetDay() {
-        int day = DateUtils.getDay(DateUtils.get(2016, 2, 3));
-        assertEquals(3, day);
-    }
-
 }

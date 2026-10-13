@@ -62,22 +62,6 @@ public class ResourceManager {
     }
 
     /**
-     * Reads long from the properties file
-     * 
-     * @param key
-     * @return
-     */
-    public long readLong(String key) {
-        long val = 0;
-        try {
-            val = Long.parseLong(properties.getString(key));
-        } catch (Exception ex) {
-            // ignore
-        }
-        return val;
-    }
-
-    /**
      * Reads the string from the properties file
      * 
      * @param key

@@ -96,10 +96,6 @@ public class ExtendedTableModel extends DefaultTableModel {
         return s;
     }
 
-    public void setColumnFormat(int index, String f) {
-        formats[index] = f;
-    }
-
     public void setColumnFormats(String[] f) {
         System.arraycopy(f, 0, formats, 0, formats.length);
     }

@@ -49,8 +49,4 @@ public final class CsvManager {
     public static void addWriterConverter(CsvDataWriter dc) {
         converters.addLast(dc);
     }
-
-    public static boolean removeWriterConverter(CsvDataWriter dc) {
-        return converters.remove(dc);
-    }
 }
