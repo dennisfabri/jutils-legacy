@@ -40,15 +40,8 @@ public class BannerPrintable implements Printable {
 
     @Override
     public int print(Graphics g, PageFormat pf, int index) throws PrinterException {
-        BufferedImage top = null;
-        BufferedImage bottom = null;
-        if (pf.getOrientation() == PageFormat.PORTRAIT) {
-            top = iptop;
-            bottom = ipbottom;
-        } else {
-            top = iltop;
-            bottom = ilbottom;
-        }
+        BufferedImage top = isLandscape(pf) ? iltop : iptop;
+        BufferedImage bottom = isLandscape(pf) ? ilbottom : ipbottom;
         if ((top == null) && (bottom == null)) {
             return inner.print(g, pf, index);
         }
@@ -60,5 +53,9 @@ public class BannerPrintable implements Printable {
         }
 
         return ehfp.print(g, pf, index);
+    }
+
+    static boolean isLandscape(PageFormat pf) {
+        return pf.getWidth() > pf.getHeight();
     }
 }
