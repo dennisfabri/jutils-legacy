@@ -23,17 +23,7 @@ import javax.swing.SwingUtilities;
  * @author Scott Delap some improvements from Alexander Potochkin
  */
 public class CheckThreadViolationRepaintManager extends RepaintManager {
-    // it is recommended to pass the complete check
-    private boolean completeCheck;
     private WeakReference<JComponent> lastComponent;
-
-    public boolean isCompleteCheck() {
-        return completeCheck;
-    }
-
-    public void setCompleteCheck(boolean completeCheck) {
-        this.completeCheck = completeCheck;
-    }
 
     @Override
     public synchronized void addInvalidComponent(JComponent component) {
@@ -48,7 +38,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
     }
 
     private void checkThreadViolations(JComponent c) {
-        if (!SwingUtilities.isEventDispatchThread() && (completeCheck || c.isShowing())) {
+        if (!SwingUtilities.isEventDispatchThread() && c.isShowing()) {
             boolean repaint = false;
             boolean fromSwing = false;
             StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

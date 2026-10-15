@@ -253,29 +253,6 @@ public final class JTableUtils {
         return rg.getRenderer();
     }
 
-    /**
-     * Takes a column in an existing table and makes it fixed-width. Specifically,
-     * it sets the column's minimum and maximum widths to its preferred width, and
-     * disables auto-resize for the table as a whole.
-     * <p>
-     * Later on this should take a column array for efficiency.
-     * 
-     * @param table JTable The table to modify @param colIndex int Which column to
-     *              fix @return int The width of the column as it was fixed
-     */
-    private static int fixColumnToPreferredWidth(JTable table, int colIndex) {
-        TableColumnModel tcm = table.getColumnModel();
-        TableColumn col = tcm.getColumn(colIndex);
-        int width = col.getPreferredWidth();
-
-        col.setMaxWidth(width);
-        col.setMinWidth(width);
-
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        return width;
-    }
-
     public static Color getOddDefault() {
         Color odd = UIManager.getColor("textHighlight");
         Color base = UIManager.getColor("Table.background");

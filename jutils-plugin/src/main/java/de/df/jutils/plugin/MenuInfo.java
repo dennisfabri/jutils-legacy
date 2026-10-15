@@ -39,10 +39,6 @@ public class MenuInfo implements Comparable<MenuInfo> {
         return menuname;
     }
 
-    public int getMenuPriority() {
-        return menuPriority;
-    }
-
     @Override
     public int hashCode() {
         return priotity;

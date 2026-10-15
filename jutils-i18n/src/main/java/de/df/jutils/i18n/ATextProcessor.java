@@ -32,10 +32,6 @@ abstract class ATextProcessor {
         bundle = rb;
     }
 
-    public final ResourceBundle getResourceBundle() {
-        return bundle;
-    }
-
     final String getString(final String key) {
         if (bundle == null) {
             return null;

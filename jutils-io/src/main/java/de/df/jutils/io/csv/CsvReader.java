@@ -25,10 +25,6 @@ public class CsvReader {
         converters.addLast(cdc);
     }
 
-    public void removeConverter(CsvDataReader cdc) {
-        converters.remove(cdc);
-    }
-
     public CsvTableModel read(InputStream is) {
         if (is == null) {
             throw new NullPointerException("InputStream must not be null!");

@@ -78,10 +78,6 @@ public class JWarningTextField extends JTextField {
         updateOk();
     }
 
-    public boolean isRequired() {
-        return required;
-    }
-
     private String[] specials;
 
     public boolean isSpecialString() {
@@ -146,11 +142,6 @@ public class JWarningTextField extends JTextField {
 
     public void setForbiddenStrings(String... forbidden) {
         this.forbidden = forbidden;
-        updateOk();
-    }
-
-    public void disableForbiddenStrings() {
-        forbidden = null;
         updateOk();
     }
 

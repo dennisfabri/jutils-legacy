@@ -32,10 +32,6 @@ public class JHoverList<T> extends JList<T> {
         initialize();
     }
 
-    public boolean isHovering() {
-        return point != null;
-    }
-
     private boolean calculatingIndex;
 
     public int getHoveredIndex() {

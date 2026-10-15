@@ -24,9 +24,4 @@ public final class ReflectionUtils {
             NoSuchMethodException {
         return Class.forName(klasse).getConstructor(NO_PARAMETER_TYPES).newInstance(NO_ARGUMENTS);
     }
-
-    public static Object executeMethod(final String klasse, final String method)
-            throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return Class.forName(klasse).getMethod(method, NO_PARAMETER_TYPES).invoke(null, NO_ARGUMENTS);
-    }
 }

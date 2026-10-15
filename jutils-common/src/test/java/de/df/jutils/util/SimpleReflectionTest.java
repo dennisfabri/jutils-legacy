@@ -3,7 +3,6 @@
  */
 package de.df.jutils.util;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
@@ -50,22 +49,6 @@ public class SimpleReflectionTest {
             fail();
         } catch (SecurityException | IllegalArgumentException | ClassNotFoundException | NoSuchMethodException
                 | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            // ok
-        }
-    }
-
-    @Test
-    public void testExecuteMethod()
-            throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
-        o = ReflectionUtils.executeMethod("java.lang.System", "currentTimeMillis");
-        assertNotNull(o);
-
-        try {
-            o = ReflectionUtils.executeMethod("java.lang.System", "currentTimeMillis2");
-            fail();
-        } catch (SecurityException | IllegalArgumentException | ClassNotFoundException | NoSuchMethodException
-                | IllegalAccessException | InvocationTargetException e) {
             // ok
         }
     }

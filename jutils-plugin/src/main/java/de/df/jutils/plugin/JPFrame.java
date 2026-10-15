@@ -183,14 +183,6 @@ public class JPFrame extends JGlassFrame {
         panelcontainer.setPanelEnabled(name, isEnabled);
     }
 
-    public void setStatusBarVisible(boolean v) {
-        statusbar.setVisible(v);
-    }
-
-    public boolean isStatusBarVisible() {
-        return statusbar.isVisible();
-    }
-
     public void setStatusBarText(String text) {
         statusbar.setVisible(text != null);
         statustext.setText(text);

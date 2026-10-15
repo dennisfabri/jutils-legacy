@@ -78,20 +78,6 @@ public final class MultipleResourceBundle extends ResourceBundle {
         return null;
     }
 
-    /**
-     * @return
-     */
-    public LinkedList<ResourceBundle> getResourceBundles() {
-        return resourceBundles;
-    }
-
-    /**
-     * @param list
-     */
-    public void setResourceBundles(final LinkedList<ResourceBundle> list) {
-        resourceBundles = list;
-    }
-
     public boolean isVerbose() {
         return verbose;
     }

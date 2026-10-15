@@ -167,24 +167,6 @@ public final class PrintManager {
         rightFooter = right;
     }
 
-    public static MessageFormat getFooterMessage(int align) {
-        return switch (align) {
-            case HeaderFooterPrintable.CENTER -> centerFooter;
-            case HeaderFooterPrintable.LEFT -> leftFooter;
-            case HeaderFooterPrintable.RIGHT -> rightFooter;
-            default -> throw new IndexOutOfBoundsException();
-        };
-    }
-
-    public static MessageFormat getHeaderMessage(int align) {
-        return switch (align) {
-            case HeaderFooterPrintable.CENTER -> throw new IllegalArgumentException("Value HeaderFooterPrintable.CENTER not allowed!");
-            case HeaderFooterPrintable.LEFT -> leftHeader;
-            case HeaderFooterPrintable.RIGHT -> rightHeader;
-            default -> throw new IndexOutOfBoundsException();
-        };
-    }
-
     public static void setFont(Font f) {
         if (f == null) {
             throw new NullPointerException("Font must not be null");

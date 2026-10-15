@@ -12,7 +12,6 @@ public abstract class AWizardPage {
 
     private final String title;
     private final String note;
-    private int index = NEXT_PAGE_BY_INDEX;
     private boolean enabled = true;
 
     public AWizardPage() {
@@ -47,11 +46,7 @@ public abstract class AWizardPage {
     }
 
     public int getNextPageIndex() {
-        return index;
-    }
-
-    public void setNextPageIndex(int index) {
-        this.index = index;
+        return NEXT_PAGE_BY_INDEX;
     }
 
     public abstract JComponent getPage();

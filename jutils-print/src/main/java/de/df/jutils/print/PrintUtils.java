@@ -104,15 +104,6 @@ public final class PrintUtils {
         return getPrintable(JPrintTable.createTable(tm), title, optimize, shrink, enlarge, font);
     }
 
-    public static Printable[] getPrintables(JTable[] tm, String[] title, int optimize, boolean shrink, boolean enlarge,
-            Font font) {
-        Printable[] ps = new Printable[tm.length];
-        for (int x = 0; x < tm.length; x++) {
-            ps[x] = getPrintable(tm[x], title[x], optimize, shrink, enlarge, font);
-        }
-        return ps;
-    }
-
     private static final class GetPrintable implements Runnable {
 
         volatile Printable printable;

@@ -123,20 +123,12 @@ final class LabeledBorder extends AbstractBorder {
         vgap = i;
     }
 
-    public boolean getRightBordered() {
-        return rightBordered;
-    }
-
     public void setRightBordered(final boolean b) {
         rightBordered = b;
     }
 
     public int getHeight() {
         return minheight;
-    }
-
-    public void setHeight(int height) {
-        this.minheight = height;
     }
 
     private void drawText(Graphics2D g2, int x, int y, int width, int height, String text, Color foreground) {

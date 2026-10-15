@@ -22,7 +22,7 @@ public class JProgressDialog extends JDialog {
      */
     private static final long serialVersionUID = 3256719593694181424L;
 
-    private long delay = 500;
+    private static final long DELAY = 500;
     private boolean finished = true;
     private JProgressBar progress = new JProgressBar();
 
@@ -37,15 +37,8 @@ public class JProgressDialog extends JDialog {
         WindowUtils.center(this);
     }
 
-    public void setDelay(final long d) {
-        if (d < 0) {
-            return;
-        }
-        delay = d;
-    }
-
     public long getDelay() {
-        return delay;
+        return DELAY;
     }
 
     @Override

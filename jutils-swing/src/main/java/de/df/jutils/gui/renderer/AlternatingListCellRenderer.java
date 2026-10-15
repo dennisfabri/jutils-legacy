@@ -24,10 +24,6 @@ public class AlternatingListCellRenderer<E> implements ListCellRenderer<E> {
         this.tcr = tcr;
     }
 
-    public ListCellRenderer<E> getListCellRenderer() {
-        return tcr;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public Component getListCellRendererComponent(JList<? extends E> list, E value, int row, boolean isSelected,
