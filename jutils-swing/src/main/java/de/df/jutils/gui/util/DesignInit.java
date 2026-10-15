@@ -16,7 +16,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.jthemedetecor.OsThemeDetector;
-import com.l2fprod.common.shared.swing.LookAndFeelTweaks;
 
 import de.df.jutils.util.OSUtils;
 import net.java.swingfx.waitwithstyle.InfiniteProgressPanel;
@@ -109,9 +108,18 @@ public final class DesignInit {
         // Must run after the look and feel is installed: it copies List.font into the fonts of text fields, tables
         // and tooltips. Called earlier, it copies the font of the default look and feel, which then overrides the
         // (possibly larger) fonts of the installed look and feel.
-        LookAndFeelTweaks.tweak();
+        tweakFonts();
 
         SwingUtilities.invokeLater(DesignInit::patchLaF);
+    }
+
+    static void tweakFonts() {
+        Object listFont = UIManager.get("List.font");
+        UIManager.put("Table.font", listFont);
+        UIManager.put("ToolTip.font", listFont);
+        UIManager.put("TextField.font", listFont);
+        UIManager.put("FormattedTextField.font", listFont);
+        UIManager.put("Viewport.background", "Table.background");
     }
 
     private static boolean initFlatLaF() {
