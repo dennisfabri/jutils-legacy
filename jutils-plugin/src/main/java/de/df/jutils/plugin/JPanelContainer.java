@@ -5,7 +5,10 @@ package de.df.jutils.plugin;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -16,12 +19,10 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JComponent;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import com.jgoodies.forms.factories.CC;
@@ -30,8 +31,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import de.df.jutils.gui.JInvisibleSplitPane;
 import de.df.jutils.gui.border.BorderUtils;
 import de.df.jutils.gui.border.ShadowBorder;
-import de.df.jutils.gui.jlist.JHoverList;
-import de.df.jutils.gui.jlist.ModifiableListModel;
 import de.df.jutils.gui.util.EDTUtils;
 
 public class JPanelContainer extends JComponent {
@@ -50,10 +49,8 @@ public class JPanelContainer extends JComponent {
     private final CardLayout topLayout;
     private final JPanel topPanel;
     private final JPanel bottomPanel;
-    private final JHoverList<PanelInfo> topElements;
-    private final JHoverList<PanelInfo> bottomElements;
-    private final ModifiableListModel<PanelInfo> topModel;
-    private final ModifiableListModel<PanelInfo> bottomModel;
+    private final PanelSelector topModel = new PanelSelector();
+    private final PanelSelector bottomModel = new PanelSelector();
     private JSplitPane sp;
 
     private boolean single;
@@ -72,52 +69,40 @@ public class JPanelContainer extends JComponent {
         topPanel = new JPanel(topLayout);
         bottomPanel = new JPanel(bottomLayout);
 
-        topModel = new ModifiableListModel<>();
-        bottomModel = new ModifiableListModel<>();
-
-        topElements = new JHoverList<>(topModel);
-        bottomElements = new JHoverList<>(bottomModel);
-        topElements.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        bottomElements.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        topElements.setCellRenderer(new PanelInfoRenderer());
-        bottomElements.setCellRenderer(new PanelInfoRenderer());
-
         setLayout(new BorderLayout(5, 5));
-        topElements.setBorder(BorderUtils.createSpaceBorder());
-        bottomElements.setBorder(BorderUtils.createSpaceBorder());
 
         addPanels(panels);
 
         JPanel panel1 = topPanel;
-        if (topModel.getSize() + bottomModel.getSize() > 1) {
+        if (topModel.size() + bottomModel.size() > 1) {
             FormLayout layout = new FormLayout("0dlu,fill:MAX(70dlu;default),4dlu,fill:0px:grow,0dlu",
                     "0dlu,fill:0dlu:grow,0dlu");
 
             panel1 = new JPanel(layout);
-            JScrollPane scroller2 = new JScrollPane(topElements, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane scroller2 = new SelectorScrollPane(topModel.getComponent());
             scroller2.getVerticalScrollBar().setUnitIncrement(10);
             scroller2.getHorizontalScrollBar().setUnitIncrement(10);
             scroller2.setBorder(new ShadowBorder());
+            relayoutWhenScrollbarChanges(scroller2);
             panel1.add(scroller2, CC.xy(2, 2));
             panel1.add(topPanel, CC.xy(4, 2));
         }
         JPanel panel2 = bottomPanel;
-        if (topModel.getSize() + bottomModel.getSize() > 1) {
+        if (topModel.size() + bottomModel.size() > 1) {
             FormLayout layout = new FormLayout("0dlu,fill:MAX(70dlu;default),4dlu,fill:0px:grow,0dlu",
                     "0dlu,fill:default:grow,0dlu");
 
             panel2 = new JPanel(layout);
-            JScrollPane scroller2 = new JScrollPane(bottomElements, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JScrollPane scroller2 = new SelectorScrollPane(bottomModel.getComponent());
             scroller2.getVerticalScrollBar().setUnitIncrement(10);
             scroller2.getHorizontalScrollBar().setUnitIncrement(10);
             scroller2.setBorder(new ShadowBorder());
+            relayoutWhenScrollbarChanges(scroller2);
             panel2.add(scroller2, CC.xy(2, 2));
             panel2.add(bottomPanel, CC.xy(4, 2));
         }
 
-        if (topModel.getSize() > 0 && bottomModel.getSize() > 0) {
+        if (topModel.size() > 0 && bottomModel.size() > 0) {
             panel1.setMinimumSize(new Dimension(panel1.getMinimumSize().width, 150));
             panel2.setMinimumSize(new Dimension(panel2.getMinimumSize().width, 150));
 
@@ -128,19 +113,15 @@ public class JPanelContainer extends JComponent {
 
             add(sp, BorderLayout.CENTER);
         } else {
-            if (topModel.getSize() > 0) {
+            if (topModel.size() > 0) {
                 add(panel1, BorderLayout.CENTER);
             } else {
                 add(panel2, BorderLayout.CENTER);
             }
         }
 
-        topElements.addListSelectionListener(e -> {
-            selectedListitem(true);
-        });
-        bottomElements.addListSelectionListener(e -> {
-            selectedListitem(false);
-        });
+        topModel.setSelectionListener(pi -> buttonPressed(pi.getName(), true));
+        bottomModel.setSelectionListener(pi -> buttonPressed(pi.getName(), false));
 
         if (panelinfos.size() > 1) {
             setBorder(BorderUtils.createSpaceBorder());
@@ -149,10 +130,54 @@ public class JPanelContainer extends JComponent {
         }
 
         if (!single) {
-            LinkedList<PanelInfo> elements = bottomModel.getAllElements();
+            List<PanelInfo> elements = bottomModel.getAllElements();
             if (elements.size() > 0) {
-                PanelInfo pi = elements.getFirst();
+                PanelInfo pi = elements.get(0);
                 showPanel(pi.getName());
+            }
+        }
+    }
+
+    private static final class SelectorScrollPane extends JScrollPane {
+
+        private static final long serialVersionUID = 1L;
+
+        private SelectorScrollPane(JComponent view) {
+            super(view, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            getVerticalScrollBar().setVisible(false);
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            Dimension preferred = super.getPreferredSize();
+            if (getVerticalScrollBar().isVisible()) {
+                preferred.width += getVerticalScrollBar().getPreferredSize().width;
+            }
+            return preferred;
+        }
+    }
+
+    private static void relayoutWhenScrollbarChanges(JScrollPane scroller) {
+        scroller.getVerticalScrollBar().addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                relayout(scroller);
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                relayout(scroller);
+            }
+        });
+    }
+
+    private static void relayout(JScrollPane scroller) {
+        Container parent = scroller.getParent();
+        if (parent != null) {
+            parent.invalidate();
+            parent.repaint();
+            if (parent instanceof JComponent component) {
+                component.revalidate();
             }
         }
     }
@@ -181,13 +206,13 @@ public class JPanelContainer extends JComponent {
     public final void addPanel(PanelInfo pi) {
         if (isOnTop(pi)) {
             topModel.addLast(pi);
-            if (topModel.getSize() == 1) {
-                topElements.setSelectedIndex(0);
+            if (topModel.size() == 1) {
+                topModel.select(pi);
             }
         } else {
             bottomModel.addLast(pi);
-            if (bottomModel.getSize() == 1) {
-                bottomElements.setSelectedIndex(0);
+            if (bottomModel.size() == 1) {
+                bottomModel.select(pi);
             }
         }
     }
@@ -202,7 +227,7 @@ public class JPanelContainer extends JComponent {
 
     private void removePanel(PanelInfo pi, boolean full) {
         JPanel panel = isOnTop(pi) ? topPanel : bottomPanel;
-        ModifiableListModel<PanelInfo> buttons = pi.isOnTop() ? topModel : bottomModel;
+        PanelSelector buttons = pi.isOnTop() ? topModel : bottomModel;
 
         if (buttons.contains(pi)) {
             panel.remove(pi.getPanel());
@@ -290,8 +315,8 @@ public class JPanelContainer extends JComponent {
                     break;
                 }
             }
-            if ((pi != null) && (pi != topElements.getSelectedValue())) {
-                topElements.setSelectedValue(pi, false);
+            if ((pi != null) && (pi != topModel.getSelected())) {
+                topModel.select(pi);
             }
             if (topPanels.get(id) == null) {
                 createPanel(id);
@@ -305,8 +330,8 @@ public class JPanelContainer extends JComponent {
                     break;
                 }
             }
-            if ((pi != null) && (pi != bottomElements.getSelectedValue())) {
-                bottomElements.setSelectedValue(pi, false);
+            if ((pi != null) && (pi != bottomModel.getSelected())) {
+                bottomModel.select(pi);
             }
             if (bottomPanels.get(id) == null) {
                 createPanel(id);
@@ -315,22 +340,9 @@ public class JPanelContainer extends JComponent {
         }
     }
 
-    void selectedListitem(boolean top) {
-        JList<PanelInfo> list;
-        if (top) {
-            list = topElements;
-        } else {
-            list = bottomElements;
-        }
-        PanelInfo pi = list.getSelectedValue();
-        if (pi != null) {
-            buttonPressed(pi.getName(), top);
-        }
-    }
-
     public void resetSplitPane() {
         if (sp != null) {
-            int height = Math.max(topElements.getPreferredSize().height, topPanel.getPreferredSize().height);
+            int height = Math.max(topModel.getComponent().getPreferredSize().height, topPanel.getPreferredSize().height);
             for (JPanel p : topPanels.values()) {
                 height = Math.max(height, p.getPreferredSize().height);
             }
@@ -377,7 +389,7 @@ public class JPanelContainer extends JComponent {
             panelIsEnabled.add(id);
         } else {
             if (ontop) {
-                boolean changeSelection = topElements.getSelectedValue() == pi;
+                boolean changeSelection = topModel.getSelected() == pi;
                 removePanel(pi, false);
                 topModel.remove(pi);
                 JPanel panel = topPanels.get(pi.getName());
@@ -390,7 +402,7 @@ public class JPanelContainer extends JComponent {
                     showPanel(topModel.getElementAt(0).getName());
                 }
             } else {
-                boolean changeSelection = bottomElements.getSelectedValue() == pi;
+                boolean changeSelection = bottomModel.getSelected() == pi;
                 bottomModel.remove(pi);
                 JPanel panel = bottomPanels.get(pi.getName());
                 if (panel != null) {

@@ -19,7 +19,6 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -30,9 +29,9 @@ import javax.swing.WindowConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import com.l2fprod.common.shared.swing.StatusBar;
 
 import de.df.jutils.gui.JGlassFrame;
+import de.df.jutils.gui.JStatusBar;
 import de.df.jutils.gui.border.ExtendedLineBorder;
 import de.df.jutils.gui.layout.RowLayout;
 import de.df.jutils.gui.util.WindowUtils;
@@ -55,8 +54,7 @@ public class JPFrame extends JGlassFrame {
     private final JToolBar quickbuttons = new JToolBar();
     private final JPanelContainer panelcontainer;
 
-    private final StatusBar statusbar = new StatusBar();
-    private final JLabel statustext = new JLabel();
+    private final JStatusBar statusbar = new JStatusBar();
 
     JPFrame(String title, List<Image> icons, PluginManager c, IPlugin[] plugins, boolean singleMode) {
         super(title);
@@ -83,7 +81,6 @@ public class JPFrame extends JGlassFrame {
         quickbuttons.setBorder(
                 new CompoundBorder(new ExtendedLineBorder(0, 0, 1, 0), new EmptyBorder(new Insets(0, 5, 0, 5))));
 
-        statusbar.addZone("info", statustext, "*");
         statusbar.setVisible(false);
 
         boolean quickButtonsNeeded = false;
@@ -185,7 +182,7 @@ public class JPFrame extends JGlassFrame {
 
     public void setStatusBarText(String text) {
         statusbar.setVisible(text != null);
-        statustext.setText(text);
+        statusbar.setText(text);
     }
 
     private void addButtons(LinkedList<ButtonInfo> buttoninfos) {
